@@ -112,7 +112,10 @@
         });
 
         $('.imgcam').click(function(){
-            $(location).attr("href", "{{ url('/camaras/ver_camara/') }}/"+$(this).data('id'));
+            if ($(this).data('id')!=0) {
+                $(location).attr("href", "{{ url('/camaras/ver_camara/') }}/"+$(this).data('id'));
+            }
+
         })
 
 

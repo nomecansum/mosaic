@@ -1,0 +1,198 @@
+<script>
+    ///Variables globales de la aplicacion ////
+    let modal_open = false;   //Indica si hay ventanas modales abiertas
+
+
+    function toast_ok(titulo,mensaje){
+        $.toast({
+            heading: titulo,
+            text: mensaje,
+            position: 'bottom-right',
+            showHideTransition: 'slide',
+            loaderBg: '#ff8000',
+            icon: 'success',
+            hideAfter: 3000,
+            stack: 6,
+            bgColor : '#d4edda',
+            textColor : '#155724',
+        });
+    }
+    function toast_error(titulo,mensaje){
+        $.toast({
+            heading: titulo,
+            text: mensaje,
+            position: 'bottom-right',
+            showHideTransition: 'slide',
+            loaderBg: '#ff8000',
+            icon: 'error',
+            hideAfter: 10000,
+            stack: 6,
+            bgColor : '#f8d7da',
+            textColor : '#721c24',
+        });
+    }
+    function toast_warning(titulo,mensaje){
+        $.toast({
+            heading: titulo,
+            text: mensaje,
+            position: 'bottom-right',
+            showHideTransition: 'slide',
+            loaderBg: '#ff8000',
+            icon: 'warning',
+            hideAfter: 6000,
+            stack: 6,
+            bgColor : '#fff3cd',
+            textColor : '#856404',
+        });
+    }
+
+    function block_espere(mensaje="Cargando... espere"){
+        //Mostrara un sweet alert indicando que hay algo leyendo en la pagina. Para quitarlo se llama a fin_espere()
+        sw=Swal.fire({
+            title: mensaje,
+            footer: '<img src="/imgs/onthespot_10.png" class="float-right">',
+            allowEscapeKey: true,
+            allowOutsideClick: false,
+            timer: 90000
+            });
+        Swal.showLoading();
+    }
+
+    function fin_espere(){
+        Swal.close();
+    }
+
+    function animateCSS(element, animationName, callback) {
+        const node = document.querySelector(element)
+        node.classList.add('animated', animationName)
+
+        function handleAnimationEnd() {
+            node.classList.remove('animated', animationName)
+            node.removeEventListener('animationend', handleAnimationEnd)
+
+            if (typeof callback === 'function') callback()
+        }
+
+        node.addEventListener('animationend', handleAnimationEnd)
+    }
+
+    $('.select2').select2();
+
+    $('.hover-this').click(function(event) {
+        if (!modal_open) {
+            if ($(this).data('href')) {
+                window.open($(this).data('href'),'_self');
+            }
+        }
+    });
+
+    $('.toggle-password').click(function(event) {
+        if ($(this).parent().prev().attr('type') == "password") {
+            $(this).parent().prev().attr('type',"text")
+        }else{
+            $(this).parent().prev().attr('type',"password")
+        }
+    });
+
+    // when any modal is opening
+    $('.modal').on('shown.bs.modal', function (e) {
+      // disable your handler
+      modal_open = true;
+    })
+
+    // when any modal is closing
+    $('.modal').on('hidden.bs.modal', function (e) {
+      // enable your handler
+      modal_open = false;
+    })
+
+
+    $('.form-ajax').submit(function(event) {
+        event.preventDefault();
+
+        //$(this).block({ message: "<br><img src='{{url('ajax-loader.gif')}}' style='width:50px'><br><br>" });
+        //block_espere();
+
+        let form = $(this);
+
+        let data = new FormData(form[0]);
+
+        $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            contentType: false,
+            processData: false,
+            data: data,
+        })
+        .done(function(data) {
+            if(data.error){
+                toast_error(data.title,data.error);
+            } else if(data.alert){
+                toast_warning(data.title,data.alert);
+            } else{
+                toast_ok(data.title,data.message);
+            }
+
+            if (data.theme && data.is_auth) {
+                //console.log(data);
+                localStorage.setItem('theme',data.theme)
+                //$('#theme').attr('href','{{url('monster-admin/main')}}/css/colors/'+data.theme+'.css')
+            }
+            $('.modal').modal('hide');
+
+
+
+            setTimeout(()=>{
+                if(data.url=="reload()"){
+                    top.location.reload();
+                }else if(data.url=="reload_acciones()"){
+                    $('#acciones_regla').load("{{ url('/eventos/acciones/') }}/"+data.id);
+                } else {
+                    window.open(data.url,'_self');
+                }
+            },3000)
+        })
+        .fail(function(err) {
+            let error = JSON.parse(err.responseText);
+            let html = "";
+            console.log(error);
+            $.each(error.errors, function(index, val) {
+                 html += "- "+$(this)[0]+"<br>";
+            });
+            toast_error("{{trans('strings.error')}}",html);
+        })
+        .always(function() {
+            //fin_espere();
+            console.log("FORM complete");
+            form.find('[type="submit"]').attr('disabled',false);
+        });
+    });
+
+
+    $('#loginform,#recoverform').submit(function(event) {
+        event.preventDefault();
+        $('#spin_login').show();
+        $.post($(this).attr('action'), $(this).serializeArray(), function(data, textStatus, xhr) {
+            if (data.recover) {
+                console.log("Enviado login")
+                toast_ok("Login", data.msg)
+
+                $('#recoverform')[0].reset();
+                setTimeout(()=>{
+                    $('#recoverform').hide();
+                    $('#loginform').show();
+                    $('#login_email').val($('#login_remember').val());
+                },3000)
+            }else{
+                localStorage.setItem('theme',data.theme);
+                window.open('{{url('/')}}','_self');
+            }
+        }).fail(function(r){
+            // alert(JSON.parse(r.responseText)[0]);
+            toast_error("Login",JSON.parse(r.responseText)[0])
+        })
+        .always(function(){
+            $('#spin_login').hide();
+        });
+    });
+</script>

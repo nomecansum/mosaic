@@ -1,0 +1,12 @@
+[
+    {
+        "model-name": "niveles_acceso",
+        "resource-file": "niveles_accesos.json",
+        "table-name": "niveles_acceso"
+    },
+    {
+        "model-name": "users",
+        "resource-file": "users.json",
+        "table-name": "users"
+    }
+]

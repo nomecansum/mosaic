@@ -33,13 +33,15 @@ class camaras extends Model
      * @var array
      */
     protected $fillable = [
-                  'url',
-                  'ip',
-                  'username',
-                  'password',
-                  'status',
                   'etiqueta',
-                  'thumbnail'
+                  'ip',
+                  'password',
+                  'port',
+                  'status',
+                  'thumbnail',
+                  'url',
+                  'username',
+                  'val_color'
               ];
 
     /**

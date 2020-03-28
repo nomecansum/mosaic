@@ -28,8 +28,8 @@ function savebitacora($des_bitacora,$user,$seccion,$tipo)
     ]);
 }
 
-function fullAccess()
-{
+
+function isAdmin(){
     try{
         return Auth::User()->val_nivel_acceso == 200 ? true : false;
     } catch(\Exception $e){
@@ -37,11 +37,11 @@ function fullAccess()
     }
 }
 
-function isAdmin(){
-    try{
-        return Auth::User()->val_nivel_acceso == 200 ? true : false;
-    } catch(\Exception $e){
-        return false;
+function mensaje_excepcion($e){
+    if(isAdmin()){
+        return $e->getMessage().' {'.get_class($e).'}  ['.debug_backtrace()[1]['function'].']';
+    } else {
+        return substr($e->getMessage(),1,15);
     }
 }
 

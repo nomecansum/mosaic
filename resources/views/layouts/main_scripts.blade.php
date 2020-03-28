@@ -78,6 +78,23 @@
 
     $('.select2').select2();
 
+    $('.minicolors').minicolors({
+        control: $(this).attr('data-control') || 'hue',
+        defaultValue: $(this).attr('data-defaultValue') || '',
+        format: $(this).attr('data-format') || 'hex',
+        keywords: $(this).attr('data-keywords') || '',
+        inline: $(this).attr('data-inline') === 'true',
+        letterCase: $(this).attr('data-letterCase') || 'lowercase',
+        opacity: $(this).attr('data-opacity'),
+        position: $(this).attr('data-position') || 'bottom',
+        swatches: $(this).attr('data-swatches') ? $(this).attr('data-swatches').split('|') : [],
+        change: function(value, opacity) {
+        if( !value ) return;
+        if( opacity ) value += ', ' + opacity;
+        },
+        theme: 'bootstrap'
+    });
+
     $('.hover-this').click(function(event) {
         if (!modal_open) {
             if ($(this).data('href')) {
@@ -107,7 +124,9 @@
     })
 
 
-    $('.form-ajax').submit(function(event) {
+    $('.form-ajax').submit(form_ajax_submit);
+
+    function form_ajax_submit(event){
         event.preventDefault();
 
         //$(this).block({ message: "<br><img src='{{url('ajax-loader.gif')}}' style='width:50px'><br><br>" });
@@ -154,19 +173,19 @@
         })
         .fail(function(err) {
             let error = JSON.parse(err.responseText);
-            let html = "";
+            let html =error.message;
             console.log(error);
             $.each(error.errors, function(index, val) {
                  html += "- "+$(this)[0]+"<br>";
             });
-            toast_error("{{trans('strings.error')}}",html);
+            toast_error("Error:",html);
         })
         .always(function() {
             //fin_espere();
             console.log("FORM complete");
             form.find('[type="submit"]').attr('disabled',false);
         });
-    });
+    }
 
 
     $('#loginform,#recoverform').submit(function(event) {

@@ -107,7 +107,7 @@ class PermissionsController extends Controller
 	{
 		$secciones = DB::table('secciones')
 		->where(function($q){
-			if (!fullAccess()) {
+			if (!isAdmin()) {
 				$q->wherein('des_seccion',array_column(session('P'), 'des_seccion'));
 			}
 		})
@@ -121,7 +121,7 @@ class PermissionsController extends Controller
 	{
 	    $secciones = DB::table('secciones')
         ->where(function($q){
-            if (!fullAccess()) {
+            if (!isAdmin()) {
                 $q->wherein('des_seccion',array_column(session('P'), 'des_seccion'));
             }
         })

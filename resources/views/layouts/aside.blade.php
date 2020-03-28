@@ -39,7 +39,7 @@
                 <div class="list-group bg-trans">
                     <a href="#" class="list-group-item">
                         <div class="media-left pos-rel">
-                            <img class="img-circle img-xs" src="img/profile-photos/2.png" alt="Profile Picture">
+                            <img class="img-circle img-xs" src="/img/profile-photos/2.png" alt="Profile Picture">
                             <i class="badge badge-success badge-stat badge-icon pull-left"></i>
                         </div>
                         <div class="media-body">
@@ -49,7 +49,7 @@
                     </a>
                     <a href="#" class="list-group-item">
                         <div class="media-left pos-rel">
-                            <img class="img-circle img-xs" src="img/profile-photos/7.png" alt="Profile Picture">
+                            <img class="img-circle img-xs" src="/img/profile-photos/7.png" alt="Profile Picture">
                         </div>
                         <div class="media-body">
                             <p class="mar-no text-main">Brittany Meyer</p>
@@ -58,7 +58,7 @@
                     </a>
                     <a href="#" class="list-group-item">
                         <div class="media-left pos-rel">
-                            <img class="img-circle img-xs" src="img/profile-photos/1.png" alt="Profile Picture">
+                            <img class="img-circle img-xs" src="/img/profile-photos/1.png" alt="Profile Picture">
                             <i class="badge badge-info badge-stat badge-icon pull-left"></i>
                         </div>
                         <div class="media-body">
@@ -68,7 +68,7 @@
                     </a>
                     <a href="#" class="list-group-item">
                         <div class="media-left pos-rel">
-                            <img class="img-circle img-xs" src="img/profile-photos/4.png" alt="Profile Picture">
+                            <img class="img-circle img-xs" src="/img/profile-photos/4.png" alt="Profile Picture">
                         </div>
                         <div class="media-body">
                             <p class="mar-no text-main">Donald Brown</p>
@@ -77,7 +77,7 @@
                     </a>
                     <a href="#" class="list-group-item">
                         <div class="media-left pos-rel">
-                            <img class="img-circle img-xs" src="img/profile-photos/8.png" alt="Profile Picture">
+                            <img class="img-circle img-xs" src="/img/profile-photos/8.png" alt="Profile Picture">
                             <i class="badge badge-warning badge-stat badge-icon pull-left"></i>
                         </div>
                         <div class="media-body">
@@ -87,7 +87,7 @@
                     </a>
                     <a href="#" class="list-group-item">
                         <div class="media-left pos-rel">
-                            <img class="img-circle img-xs" src="img/profile-photos/9.png" alt="Profile Picture">
+                            <img class="img-circle img-xs" src="/img/profile-photos/9.png" alt="Profile Picture">
                             <i class="badge badge-danger badge-stat badge-icon pull-left"></i>
                         </div>
                         <div class="media-body">

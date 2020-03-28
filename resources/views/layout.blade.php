@@ -9,6 +9,8 @@
     <!--=================================================-->
     <!--Open Sans Font [ OPTIONAL ]-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+     <!--JQueryUI [OPTIONAL]-->
+     <link href="{{ url('/plugins/jquery-ui/jquery-ui.css') }}" rel="stylesheet">
     <!--Bootstrap Stylesheet [ REQUIRED ]-->
     <link href="{{ url('/css/bootstrap.min.css') }}" rel="stylesheet">
     <!--Nifty Stylesheet [ REQUIRED ]-->
@@ -37,6 +39,8 @@
     <link rel="stylesheet" href="{{ URL('/plugins/select2/css/select2.min.css') }}">
     {{--  Toast  --}}
     <link href="{{url('/plugins/toast-master/css/jquery.toast.css')}}" rel="stylesheet" media="all">
+    {{--  Colorpicker  --}}
+    <link href="{{url('/plugins/jquery-minicolors-master/jquery.minicolors.css')}}" rel="stylesheet" media="all">
 
     <!--=================================================
 
@@ -194,6 +198,8 @@
     <!--=================================================-->
     <!--jQuery [ REQUIRED ]-->
     <script src="{{ url('js/jquery.min.js') }}"></script>
+    <!--jQueryUI [ REQUIRED ]-->
+    <script src="{{ url('/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!--BootstrapJS [ RECOMMENDED ]-->
     <script src="{{ url('js/bootstrap.min.js') }}"></script>
     <!--NiftyJS [ RECOMMENDED ]-->
@@ -209,6 +215,12 @@
     <script src="{{ url('/plugins/select2/js/select2.full.min.js') }}"></script>
     {{--  Toast  --}}
     <script src="{{url('/plugins/toast-master/js/jquery.toast.js')}}"></script>
+    {{--  Colorpicker  --}}
+    <script src="{{url('/plugins/jquery-minicolors-master/jquery.minicolors.min.js')}}"></script>
+    {{--  Inputmask  --}}
+    <script type="text/javascript" src="{{url('/plugins/inputmask')}}/dist/inputmask.js"></script>
+    <script type="text/javascript" src="{{url('/plugins/inputmask')}}/dist/jquery.inputmask.js"></script>
+    <script type="text/javascript" src="{{url('/plugins/inputmask')}}/dist/bindings/inputmask.binding.js"></script>
 
     @include('layouts.main_scripts')
     @yield('scripts')

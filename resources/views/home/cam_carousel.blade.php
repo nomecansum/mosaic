@@ -27,14 +27,13 @@
         @for ($i = 0; $i < 6; $i++)
         <div class="col-md-4">
             <div id="feedimg{{$i}}" class="mar-lft mar-rgt mar-top rounded_cam" style="border: thin solid gray; with:300px; height: 300px">
-                <img id="imgcam{{$i}}" style="width:100%; height:100%" class="rounded_cam imgcam">
-                <div class="p-2 mb-4 bg-mid-gray"><span class="badge badge-header badge-success float-left"></span><span id="label{{$i}}" class="float-left"></span></div>
+                <img id="imgcam{{$i}}" style="width:100%; height:100%" data-id="0" data-url="" class="rounded_cam imgcam">
+                <div class="p-2 mb-4 bg-mid-gray"><span class="badge badge-header badge-success float-left" id="dot{{$i}}"></span><span id="label{{$i}}" class="float-left"></span></div>
             </div>
 
         </div>
         @endfor
     </div>
-    <button id="save">Save</button>
 
 </div>
 @section('scripts')
@@ -50,11 +49,26 @@
             indice=0;
             $.each(bloque,function(j,item){
                 setTimeout(() => {
-                    $('#imgcam'+indice).attr("src",item.url);
                     $('#label'+indice).html(item.etiqueta);
                     $('#paginade').html(pagina+1);
                     $('#paginatotal').html(paginas);
+                    $('#imgcam'+indice).data("id",item.id);
+                    $('#imgcam'+indice).data("url",item.url);
+                    $('#imgcam'+indice).attr("src",item.url);
+                    if(item.status==1){
+                        $('#dot'+indice).removeClass('badge-danger');
+                        $('#dot'+indice).addClass('badge-success');
+                    } else {
+                        $('#dot'+indice).addClass('badge-danger');
+                        $('#dot'+indice).removeClass('badge-success');
+                    }
+                    //$.get("{{ url('camaras/status') }}/"+item.id+"/1");
                     indice++;
+                }, 500);
+            })
+            $.each(bloque,function(j,item){
+                setTimeout(() => {
+                    $.get("{{ url('/camaras/savesnapshot') }}/"+item.id);
                 }, 500);
             })
             pagina++;
@@ -90,23 +104,16 @@
                 src=$(this).attr("src");
                 $(this).attr("src",'');
                 $(this).attr("src",src);
-            }, 500);
+            }, 1000);
+            console.log($(this).data("id"));
+            $.get("{{ url('camaras/status') }}/"+$(this).data("id")+"/0");
+            $('#dot'+indice).removeClass('badge-success');
+            $('#dot'+indice).addClass('badge-danger');
         });
 
-
-        document.getElementById('save').onclick = function () {
-
-        var c = document.createElement('canvas');
-        var img = document.getElementById('imgcam1');
-        c.width = img.width;
-        c.height = img.height;
-        var ctx = c.getContext('2d');
-
-
-        ctx.drawImage(img, 0, 0);
-        //window.location = c.toDataURL('image/png');
-        window.open(c.toDataURL('image/png'))
-        };
+        $('.imgcam').click(function(){
+            $(location).attr("href", "{{ url('/camaras/ver_camara/') }}/"+$(this).data('id'));
+        })
 
 
     </script>

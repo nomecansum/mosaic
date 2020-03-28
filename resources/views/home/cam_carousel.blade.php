@@ -42,6 +42,8 @@
         let datos;
         let pagina=0;
         let refresco=20000;
+        let enlace=0;
+        let int_proceso;
 
         function proceso(){
             bloque=datos[pagina];
@@ -54,7 +56,8 @@
                     $('#paginatotal').html(paginas);
                     $('#imgcam'+indice).data("id",item.id);
                     $('#imgcam'+indice).data("url",item.url);
-                    $('#imgcam'+indice).attr("src",item.url);
+                    if(enlace==0)
+                        $('#imgcam'+indice).attr("src",item.url);
                     if(item.status==1){
                         $('#dot'+indice).removeClass('badge-danger');
                         $('#dot'+indice).addClass('badge-success');
@@ -104,7 +107,7 @@
                 src=$(this).attr("src");
                 $(this).attr("src",'');
                 $(this).attr("src",src);
-            }, 1000);
+            }, 500);
             console.log($(this).data("id"));
             $.get("{{ url('camaras/status') }}/"+$(this).data("id")+"/0");
             $('#dot'+indice).removeClass('badge-success');
@@ -115,9 +118,14 @@
             if ($(this).data('id')!=0) {
                 $(location).attr("href", "{{ url('/camaras/ver_camara/') }}/"+$(this).data('id'));
             }
-
         })
 
+        $('a').click(function(){
+            console.log('link');
+            enlace=1;
+            clearInterval(int_proceso);
+
+        });
 
     </script>
 @endsection

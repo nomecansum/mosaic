@@ -28,6 +28,9 @@ function savebitacora($des_bitacora,$user,$seccion,$tipo)
     ]);
 }
 
+function fullAccess(){
+    return isAdmin();
+}
 
 function isAdmin(){
     try{

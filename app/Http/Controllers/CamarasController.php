@@ -61,6 +61,14 @@ class CamarasController extends Controller
 
     }
 
+    public function delete($id){
+        $camara=camaras::find($id);
+        $camara->delete();
+        flash('Camara '.$camara->etiqueta.' Borrada')->success();
+        return redirect('/camaras');
+
+    }
+
     public function update(Request $r){
         try{
 

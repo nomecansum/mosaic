@@ -3,6 +3,7 @@
     let modal_open = false;   //Indica si hay ventanas modales abiertas
 
 
+    //Funciones para mostrar los mensajes Toast
     function toast_ok(titulo,mensaje){
         $.toast({
             heading: titulo,
@@ -46,8 +47,8 @@
         });
     }
 
+    //Mostrara un sweet alert indicando que hay algo leyendo en la pagina. Para quitarlo se llama a fin_espere()
     function block_espere(mensaje="Cargando... espere"){
-        //Mostrara un sweet alert indicando que hay algo leyendo en la pagina. Para quitarlo se llama a fin_espere()
         sw=Swal.fire({
             title: mensaje,
             footer: '<img src="/imgs/onthespot_10.png" class="float-right">',
@@ -62,6 +63,7 @@
         Swal.close();
     }
 
+    //Para poner animaciones en caulquier elennto
     function animateCSS(element, animationName, callback) {
         const node = document.querySelector(element)
         node.classList.add('animated', animationName)
@@ -75,6 +77,8 @@
 
         node.addEventListener('animationend', handleAnimationEnd)
     }
+
+    $('div.alert').not('.alert-important,.alert-danger,.not-dismissable').delay(5000).fadeOut(350);
 
     $('.select2').select2();
 

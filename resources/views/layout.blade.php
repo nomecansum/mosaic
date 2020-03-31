@@ -41,6 +41,8 @@
     <link href="{{url('/plugins/toast-master/css/jquery.toast.css')}}" rel="stylesheet" media="all">
     {{--  Colorpicker  --}}
     <link href="{{url('/plugins/jquery-minicolors-master/jquery.minicolors.css')}}" rel="stylesheet" media="all">
+    {{--  sweetAlert  --}}
+    <link href="{{url('/plugins/sweetalert/dist/sweetalert2.min.css')}}" rel="stylesheet" media="all">
 
     <!--=================================================
 
@@ -221,6 +223,8 @@
     <script type="text/javascript" src="{{url('/plugins/inputmask')}}/dist/inputmask.js"></script>
     <script type="text/javascript" src="{{url('/plugins/inputmask')}}/dist/jquery.inputmask.js"></script>
     <script type="text/javascript" src="{{url('/plugins/inputmask')}}/dist/bindings/inputmask.binding.js"></script>
+    {{--  Colorpicker  --}}
+    <script src="{{url('/plugins/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
 
     @include('layouts.main_scripts')
     @yield('scripts')

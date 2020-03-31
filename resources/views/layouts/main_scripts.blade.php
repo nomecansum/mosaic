@@ -78,10 +78,13 @@
         node.addEventListener('animationend', handleAnimationEnd)
     }
 
+    //PAra ocultar automaticamente las notificaciones flash que no sean errores
     $('div.alert').not('.alert-important,.alert-danger,.not-dismissable').delay(5000).fadeOut(350);
 
+    //Inicilizacion de los controles select2
     $('.select2').select2();
 
+    //Inicializacion del picker de colores
     $('.minicolors').minicolors({
         control: $(this).attr('data-control') || 'hue',
         defaultValue: $(this).attr('data-defaultValue') || '',
@@ -99,6 +102,7 @@
         theme: 'bootstrap'
     });
 
+    //Esta clase te permite poner un link en cualquier elemento
     $('.hover-this').click(function(event) {
         if (!modal_open) {
             if ($(this).data('href')) {
@@ -107,6 +111,7 @@
         }
     });
 
+    //Para mostrar los password
     $('.toggle-password').click(function(event) {
         if ($(this).parent().prev().attr('type') == "password") {
             $(this).parent().prev().attr('type',"text")
@@ -130,11 +135,12 @@
 
     $('.form-ajax').submit(form_ajax_submit);
 
+    //Form enviado por AJAX con notificaciones mediabte TOAST
     function form_ajax_submit(event){
         event.preventDefault();
 
         //$(this).block({ message: "<br><img src='{{url('ajax-loader.gif')}}' style='width:50px'><br><br>" });
-        //block_espere();
+        block_espere();
 
         let form = $(this);
 
@@ -185,7 +191,7 @@
             toast_error("Error:",html);
         })
         .always(function() {
-            //fin_espere();
+            fin_espere();
             console.log("FORM complete");
             form.find('[type="submit"]').attr('disabled',false);
         });

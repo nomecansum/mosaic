@@ -42,7 +42,11 @@ class users extends Model
                   'collapse',
                   'last_login',
                   'nivel_acceso',
+<<<<<<< HEAD
                   'cod_nivel',
+=======
+                  'cod_nivel'
+>>>>>>> 3d8fa3cbeca8264e76c342d3d01e7233448ab798
               ];
 
     /**

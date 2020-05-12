@@ -93,8 +93,13 @@
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-2">
+<<<<<<< HEAD
             <div class="form-group {{ $errors->has('cod_nivel') ? 'has-error' : '' }}">
                 <label for="cod_nivel" class="control-label">Perfil</label>
+=======
+            <div class="form-group {{ $errors->has('id_perfil') ? 'has-error' : '' }}">
+                <label for="id_perfil" class="control-label">Perfil</label>
+>>>>>>> 3d8fa3cbeca8264e76c342d3d01e7233448ab798
                 <select class="form-control" id="cod_nivel" name="cod_nivel">
                     @foreach ($Perfiles as $Perfile)
                         <option value="{{ $Perfile->cod_nivel }}" {{ old('cod_nivel', optional($users)->cod_nivel) == $Perfile->cod_nivel ? 'selected' : '' }}>

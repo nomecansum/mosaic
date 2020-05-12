@@ -97,7 +97,7 @@
         }
 
         $(function(){
-            cargar_camaras();
+            //cargar_camaras();
         });
 
         $('.imgcam').on('error', function(){

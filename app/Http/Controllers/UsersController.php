@@ -59,8 +59,9 @@ class UsersController extends Controller
             return back()->withInput();
         }
 
-        $img_usuario = "";
         $data = $this->getData($request);
+
+        $img_usuario = "";
         try {
              if ($request->hasFile('img_usuario')) {
                 $file = $request->file('img_usuario');
@@ -69,12 +70,17 @@ class UsersController extends Controller
                 $file->move($path,$img_usuario);
             }
 
-
-
             $data['img_usuario']=$img_usuario;
+            $data["password"]=Hash::make($data["password"]);
+            $data["cod_nivel"]=$request->cod_nivel;
+
             users::create($data);
+<<<<<<< HEAD
             //$data['cod_nivel']=$cod_nivel;
             //carusers::create($data);Hola que tal
+=======
+
+>>>>>>> 3d8fa3cbeca8264e76c342d3d01e7233448ab798
             return [
                 'title' => "Usuarios",
                 'message' => 'Usuario '.$request->name. ' creado con exito',

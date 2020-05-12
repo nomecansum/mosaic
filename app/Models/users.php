@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class users extends Model
 {
-    
+
 
     /**
      * The database table used by the model.
@@ -41,7 +41,8 @@ class users extends Model
                   'theme',
                   'collapse',
                   'last_login',
-                  'nivel_acceso'
+                  'nivel_acceso',
+                  'cod_nivel'
               ];
 
     /**
@@ -50,14 +51,14 @@ class users extends Model
      * @var array
      */
     protected $dates = [];
-    
+
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [];
-    
+
 
     /**
      * Set the email_verified_at.

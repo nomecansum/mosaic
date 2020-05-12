@@ -75,12 +75,6 @@ class UsersController extends Controller
             $data["cod_nivel"]=$request->cod_nivel;
 
             users::create($data);
-<<<<<<< HEAD
-            //$data['cod_nivel']=$cod_nivel;
-            //carusers::create($data);Hola que tal
-=======
-
->>>>>>> 3d8fa3cbeca8264e76c342d3d01e7233448ab798
             return [
                 'title' => "Usuarios",
                 'message' => 'Usuario '.$request->name. ' creado con exito',

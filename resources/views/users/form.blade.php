@@ -93,16 +93,16 @@
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-2">
-            <div class="form-group {{ $errors->has('id_perfil') ? 'has-error' : '' }}">
-                <label for="id_perfil" class="control-label">Perfil</label>
-                <select class="form-control" id="id_perfil" name="id_perfil">
+            <div class="form-group {{ $errors->has('cod_nivel') ? 'has-error' : '' }}">
+                <label for="cod_nivel" class="control-label">Perfil</label>
+                <select class="form-control" id="cod_nivel" name="cod_nivel">
                     @foreach ($Perfiles as $Perfile)
-                        <option value="{{ $Perfile->cod_nivel }}" {{ old('id_perfil', optional($users)->id_perfil) == $Perfile->cod_nivel ? 'selected' : '' }}>
+                        <option value="{{ $Perfile->cod_nivel }}" {{ old('cod_nivel', optional($users)->cod_nivel) == $Perfile->cod_nivel ? 'selected' : '' }}>
                             {{ $Perfile->des_nivel_acceso }}
                         </option>
                     @endforeach
                 </select>
-                {!! $errors->first('id_perfil', '<p class="help-block">:message</p>') !!}
+                {!! $errors->first('cod_nivel', '<p class="help-block">:message</p>') !!}
             </div>
 
         </div>

@@ -76,8 +76,8 @@
                             <td class="pt-3">{{ $users->name }}</td>
                             <td>{{ $users->email }}</td>
                             <td>
-                                @if(isset($users->id_perfil))
-                                    {{ DB::table('niveles_acceso')->where('cod_nivel',$users->id_perfil)->value('des_nivel_acceso')}}
+                                @if(isset($users->cod_nivel))
+                                    {{ DB::table('niveles_acceso')->where('cod_nivel',$users->cod_nivel)->value('des_nivel_acceso')}}
                                 @else
                                     <div>
                                         <i class="fa fa-warning" style="color:orange">Pendiente</i>

@@ -31,7 +31,7 @@ class HomeController extends Controller
     }
 
     public function mosaico_camaras($pagina=1){
-        $camaras=camaras::all()->chunk(6);
+        //$camaras=camaras::all()->chunk(6);
         return $camaras->toJson();
     }
 }

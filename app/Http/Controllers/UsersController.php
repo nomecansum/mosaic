@@ -73,6 +73,8 @@ class UsersController extends Controller
 
             $data['img_usuario']=$img_usuario;
             users::create($data);
+            //$data['cod_nivel']=$cod_nivel;
+            //carusers::create($data);Hola que tal
             return [
                 'title' => "Usuarios",
                 'message' => 'Usuario '.$request->name. ' creado con exito',
@@ -99,7 +101,7 @@ class UsersController extends Controller
     public function show($id)
     {
         $users = DB::table('users')
-        ->join('niveles_acceso','users.cod_nivel', 'niveles_acceso.cod_nivel')
+        ->leftjoin('niveles_acceso','users.cod_nivel', 'niveles_acceso.cod_nivel')
         ->where('id',$id)
         -first();
 

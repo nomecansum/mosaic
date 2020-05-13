@@ -49,11 +49,20 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $val=Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+        if($val->fails()) {
+            $mensaje_error="ERROR: Ocurrio un error con los datos de registro  <br>".implode("<br>",$val->messages()->all());
+            return response()->json([
+                "response" => "ERROR",
+                "message" => "Error de validacion de datos ". $mensaje_error
+                ],400)->throwResponse();
+        } else {
+            return $val;
+        }
     }
 
     /**

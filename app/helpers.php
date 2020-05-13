@@ -1,6 +1,8 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 function getProfilePic()
 {
@@ -301,12 +303,43 @@ function beauty_fecha($date,$mostrar_hora=-1){
 }
 
 
-function weather_datos(){
-    $client = new Client([
-        'base_uri' => 'https://forecast7.com/',
-        'timeout'  => 2.0,
-    ]);
-    $response = $client->get("/en/40d47n3d60/barajas/");
-    $body=$response->getBody();
-    return (string)$body;
+function validar_request($r,$metodo_notif,$tipo,$reglas,$mensajes=[]){
+    $validator = Validator::make($r->all(), $reglas,$mensajes);
+    if($validator->fails()) {
+        $mensaje_error="ERROR: Ocurrio un error al validar los datos de ".$tipo." <br>".implode("<br>",$validator->messages()->all());
+
+        switch($metodo_notif){
+            case "flash":
+                flash($mensaje_error)->error();
+                return redirect()->back()->withInput();
+                break;
+
+            case "toast":
+            return response()->json(['title' => $tipo,
+                    'error' => $mensaje_error,
+                ],200)->throwResponse();
+                break;
+
+            case "texto":
+                return $mensaje_error;
+                break;
+
+            case "json":
+                $mensaje_error=str_replace("<br>"," ",$mensaje_error);
+                return response()->json([
+                    "response" => "ERROR",
+                    "message" => "Error de validacion de datos ". $mensaje_error,
+                    "TS" => Carbon::now()->format('Y-m-d h:i:s')
+                    ],400)->throwResponse();
+                break;
+
+            default:
+                return redirect()->to($this->getRedirectUrl())
+                ->withInput($r->input())
+                ->withErrors($mensaje_error, $this->errorBag());
+                break;
+        }
+    }  else{
+        return true;
+    }
 }

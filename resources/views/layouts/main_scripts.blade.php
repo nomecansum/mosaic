@@ -217,8 +217,11 @@
                 window.open('{{url('/')}}','_self');
             }
         }).fail(function(r){
-            // alert(JSON.parse(r.responseText)[0]);
-            toast_error("Login",JSON.parse(r.responseText)[0])
+            //alert(JSON.parse(r.responseText)[0]);
+            //alert(r.responseJSON.errors.name[0]);
+            //console.log(r.responseJSON.errors.email);
+            //toast_error("Login",JSON.parse(r.responseText)[0]);
+            toast_error("Login",r.responseJSON.errors.name[0]);
         })
         .always(function(){
             $('#spin_login').hide();

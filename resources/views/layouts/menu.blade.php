@@ -157,7 +157,105 @@
                 <!--End widget-->
             </div>
         </div>
-    </div>
+
     <!--================================-->
     <!--End menu-->
+    @if(checkPermissions(['Usuarios'],['R']))
+
+        <ul class="collapse">
+            <li><a href="/users">Usuarios</a></li>
+        </ul>
+
+        @endif
+
+
+        @if(checkPermissions(['Perfiles'],['R']))
+
+            <ul class="collapse">
+                <li><a href="/profiles">Perfiles</a></li>
+            </ul>
+
+        @endif
+
+        @if(checkPermissions(['Secciones'],['R']))
+
+            <ul class="collapse">
+                <li><a href="/sections">Secciones</a></li>
+            </ul>
+
+
+        @endif
+
+        @if(checkPermissions(['Permisos'],['R']))
+
+            <ul class="collapse">
+                <li><a href="/profile-permissions">Permisos</a></li>
+            </ul>
+
+        @endif
+
+        @if(checkPermissions(['Bitacora'],['R']))
+
+            <ul class="collapse">
+                <li class="nav-item">
+                    <a  class="nav-link" href="{{ url('bitacoras') }}"><i class="nav-icon fab fa-stack-exchange"></i><p><span>Bitacora</span></p></a>
+                </li>
+            </ul>
+
+        @endif
+
+        @if(checkPermissions(['Configuracion'],['R']))
+            @if(checkPermissions(['Acceso'],['R']))
+            <li>
+                <a href="#">
+                    <i class="fa fa-cog"></i>
+                    <span class="menu-title">Configuracion</span>
+                    <i class="arrow"></i>
+                </a>
+
+                <!--Submenu-->
+                <ul class="collapse">
+                    <li><a href="/users">Usuarios</a></li>
+                    <li><a href="/profiles">Perfiles</a></li>
+                    <li><a href="/sections">Secciones</a></li>
+                    <li><a href="/profile-permissions">Permisos</a></li>
+
+                </ul>
+            </li>
+            @endif
+
+            @if(checkPermissions(['Permisos'],['R']))
+                <li><a href="/profile-permissions">Permisos</a></li>
+            @endif
+
+        @endif
+
+
+        @if(checkPermissions(['Camaras'],['R']))
+
+            <a href="{{ url('/camaras') }}">
+                <i class="fa fa-video-camera"></i>
+                <span class="menu-title">Gestion de camaras</span>
+                <i class="arrow"></i>
+            </a>
+
+            <li>
+                <a href="#">
+                    <i class="fa fa-cog"></i>
+                    <span class="menu-title">Configuracion</span>
+                    <i class="arrow"></i>
+                </a>
+
+                <!--Submenu-->
+                <ul class="collapse">
+                    <li><a href="/users">Usuarios</a></li>
+                    <li><a href="/profiles">Perfiles</a></li>
+                    <li><a href="/sections">Secciones</a></li>
+                    <li><a href="/profile-permissions">Permisos</a></li>
+
+                </ul>
+            </li>
+
+        @endif
+</div>
 

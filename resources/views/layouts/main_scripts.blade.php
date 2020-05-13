@@ -218,19 +218,12 @@
             }
         }).fail(function(r){
             //alert(JSON.parse(r.responseText)[0]);
-            //alert(r.responseJSON.errors.email[0]);
-            //console.log(r.responseJSON.errors.name[0]);
-
-            //console.log(r.responseJSON.errors.name[0]||r.responseJSON.errors.email[0]||r.responseJSON.errors.password[0]);
-
+            //alert(r.responseJSON.errors.name[0]);
+            //console.log(r.responseJSON.errors.email);
             //toast_error("Login",JSON.parse(r.responseText)[0]);
-
-            //toast_error("Login",r.responseJSON.errors.name[0]||r.responseJSON.errors.email[0]||r.responseJSON.errors.password[0]);
-
+            toast_error("Login",r.responseJSON.errors.password[0]);
             toast_error("Login",r.responseJSON.errors.name[0]);
             toast_error("Login",r.responseJSON.errors.email[0]);
-            toast_error("Login",r.responseJSON.errors.password[0]);
-
         })
         .always(function(){
             $('#spin_login').hide();

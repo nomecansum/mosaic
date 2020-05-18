@@ -18,22 +18,22 @@ class CustomersController extends Controller
     //
     public function index()
     {
-        $clientes = DB::table('cug_clientes')
-        ->select('cug_clientes.cod_cliente','cug_clientes.img_logo','cug_clientes.nom_cliente','cug_sistema.cod_sistema','supra.nom_cliente as emp_matriz','cug_clientes.nom_contacto')
-        ->selectRaw('(SELECT count(cug_empleados.cod_empleado) FROM cug_empleados WHERE cug_empleados.cod_cliente = cug_clientes.cod_cliente) as empleados')
-        ->selectRaw('(SELECT count(cug_centros.cod_centro) FROM cug_centros WHERE cug_centros.cod_cliente = cug_clientes.cod_cliente) as centros')
-        ->selectRaw('(SELECT count(cug_departamentos.cod_departamento) FROM cug_departamentos WHERE cug_departamentos.cod_cliente = cug_clientes.cod_cliente) as departamentos')
-        ->selectRaw('(SELECT count(cug_dispositivos.cod_dispositivo) FROM cug_dispositivos WHERE cug_dispositivos.cod_cliente = cug_clientes.cod_cliente) as dispositivos')
-        ->leftjoin('cug_clientes as supra','cug_clientes.cod_supracliente','supra.cod_cliente')
-        ->join('cug_sistema','cug_sistema.cod_cliente','cug_clientes.cod_cliente')
+        $clientes = DB::table('clientes')
+        ->select('clientes.cod_cliente','clientes.img_logo','clientes.nom_cliente','sistema.cod_sistema','supra.nom_cliente as emp_matriz','clientes.nom_contacto')
+        ->selectRaw('(SELECT count(empleados.cod_empleado) FROM empleados WHERE empleados.cod_cliente = clientes.cod_cliente) as empleados')
+        ->selectRaw('(SELECT count(centros.cod_centro) FROM centros WHERE centros.cod_cliente = clientes.cod_cliente) as centros')
+        ->selectRaw('(SELECT count(departamentos.cod_departamento) FROM departamentos WHERE departamentos.cod_cliente = clientes.cod_cliente) as departamentos')
+        ->selectRaw('(SELECT count(dispositivos.cod_dispositivo) FROM dispositivos WHERE dispositivos.cod_cliente = clientes.cod_cliente) as dispositivos')
+        ->leftjoin('clientes as supra','clientes.cod_supracliente','supra.cod_cliente')
+        ->join('sistema','sistema.cod_cliente','clientes.cod_cliente')
         ->where(function($q){
             if (!isAdmin()){
-                $q->WhereIn('cug_clientes.cod_cliente',clientes());
+                $q->WhereIn('clientes.cod_cliente',clientes());
             }
         })
-        ->whereNull('cug_clientes.fec_borrado')
+        ->whereNull('clientes.fec_borrado')
         ->get();
-        
+
         //$app_svc = new APPApiService;
         //$resp = $app_svc->update_incidencia([1027]);
         //dd($resp);
@@ -43,32 +43,32 @@ class CustomersController extends Controller
         //if($resultado_app["result"] == "ERROR"){
         //    throw new \Exception("Error en la provision del cliente en la APP: " . $resultado_app["msg"]);
         //}
-        
+
         return view('customers.index',compact('clientes'));
     }
 
     public function edit($id)
     {
-        validar_acceso_tabla($id,"cug_clientes");
-        $c = DB::table('cug_clientes')
-        ->whereNull('cug_clientes.fec_borrado')
+        validar_acceso_tabla($id,"clientes");
+        $c = DB::table('clientes')
+        ->whereNull('clientes.fec_borrado')
         ->where('cod_cliente',$id)->first();
     	return view('customers.create',compact('c'));
     }
     public function create()
     {
-        $cod_sistema = DB::table('cug_sistema')->where('COD_SISTEMA','>=',10000)->orderby('COD_SISTEMA','desc')->first()->COD_SISTEMA;//+1;
+        $cod_sistema = DB::table('sistema')->where('COD_SISTEMA','>=',10000)->orderby('COD_SISTEMA','desc')->first()->COD_SISTEMA;//+1;
         if(empty($cod_sistema))
             $cod_sistema = 10000;
         else $cod_sistema++;
         return view('customers.create',compact('cod_sistema'));
     }
     public function save(Request $r)
-    {    
+    {
         $clsvc = new ClienteService;
         //Validarlos datos
         $clsvc->validar_request($r,'toast');
-       
+
         DB::beginTransaction();
         try {
             //Insertar el cliente
@@ -83,14 +83,12 @@ class CustomersController extends Controller
             if(!fullAccess()){
                 $clsvc->add_a_usuario($c,Auth::user()->cod_usuario);
             }
-            //APPMovil->Lo provisiona si tiene  $r->mca_appmovil=S
-            $clsvc->provisionar_appmpovil($c,$r,null);
 
 			//Creamos la cuenta en el CRM
             $res = altaClienteCrm($r, $sistema);
 			if($res["Error"] === false)
 			{
-				$fichacrm = ""; 
+				$fichacrm = "";
 				$account = $res["body"]->accountid;
 				//altaContactoCrm($r, $account);
 			}
@@ -104,17 +102,17 @@ class CustomersController extends Controller
                 //'url' => url('business')
                 'url' => url('business/edit') . "/" . $c
             ];
-            
+
         } catch (\Exception $e) {
             DB::rollback();
             error_log(json_encode($e->getMessage()));
             savebitacora("Error al crear cliente ".$r->nom_cliente. $e->getMessage(),null);
-            
+
             return [
                 'error' => trans('strings.business'),
                 'message' => "Error al crear cliente ".mensaje_excepcion($e),
                 //'url' => url('business')
-            ];  
+            ];
         }
     }
 
@@ -123,7 +121,7 @@ class CustomersController extends Controller
         try {
             // Estos son los datos del cliente antes de actualizarlo
             $cliente_old=clientes::find($r->id);
-            
+
             $clsvc = new ClienteService;
             //Validarlos datos
             $clsvc->validar_request($r,'toast');
@@ -142,7 +140,7 @@ class CustomersController extends Controller
             } else {
                 $clsvc->provisionar_appmpovil($c, $r, 'U');
             }
-            
+
             savebitacora("Actualizados datos de cliente ".$r->nom_cliente,$r->cod_cliente);
 
             return [
@@ -153,27 +151,27 @@ class CustomersController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             savebitacora("Error al actualizar cliente ".$r->nom_cliente. $e->getMessage(),null);
-            
+
             return [
                 'error' => trans('strings.business'),
                 'message' => "Error al actualizar cliente ".mensaje_excepcion($e),
                 //'url' => url('business')
-            ];  
+            ];
         }
     }
 
     public function delete($id)
 	{
-        validar_acceso_tabla($id,"cug_clientes");
+        validar_acceso_tabla($id,"clientes");
 
         $clsvc = new ClienteService;
         $cliente = $clsvc->delete($id);
-        
+
         savebitacora("Borrado de cliente [".$id."] completado con éxito", null);
-		flash("Borrado de cliente " . DB::table('cug_clientes')->where('cod_cliente', $id)->value('nom_cliente') . " con id " . $id . " completado con éxito")->success();
+		flash("Borrado de cliente " . DB::table('clientes')->where('cod_cliente', $id)->value('nom_cliente') . " con id " . $id . " completado con éxito")->success();
         return redirect()->back();
     }
-    
+
     public function delete_completo($id)
     {
         //Baja en la app
@@ -182,30 +180,29 @@ class CustomersController extends Controller
         {
             $clientes->fec_borrado = Carbon::now();
             $clientes->mca_appmovil = "N";
-            $clientes->mca_actualizacion = "B";
             $clientes->completado = "N";
-            
+
             $clientes->save();
-            
+
             $app_svc = new APPApiService;
             $resultado_app = $app_svc->update_cliente([$id]);
             if($resultado_app["result"] == "ERROR"){
                 throw new \Exception("Error en la provision del cliente en la APP: " . $resultado_app["msg"]);
             }
         }
-        
+
         //Borramos en las tablas principales para que se disparen el resto de cascade
-        DB::table('cug_centros')->where('cod_cliente',$id)->delete();
-        DB::table('cug_empleados')->where('cod_cliente',$id)->delete();
-        DB::table('cug_colectivos')->where('cod_cliente',$id)->delete();
-        DB::table('cug_usuarios')->where('cod_cliente',$id)->delete();
-        DB::table('cug_clientes')->where('cod_cliente',$id)->delete();
+        //DB::table('centros')->where('cod_cliente',$id)->delete();
+        //DB::table('empleados')->where('cod_cliente',$id)->delete();
+        //DB::table('colectivos')->where('cod_cliente',$id)->delete();
+        DB::table('users')->where('cod_cliente',$id)->delete();
+        DB::table('clientes')->where('cod_cliente',$id)->delete();
 
         savebitacora("Borrado de cliente [".$id."] completado con éxito", null);
-        flash("Borrado completo de cliente " . DB::table('cug_clientes')->where('cod_cliente', $id)->value('nom_cliente') . " con id " . $id . " completado con éxito")->success();  
+        flash("Borrado completo de cliente " . DB::table('clientes')->where('cod_cliente', $id)->value('nom_cliente') . " con id " . $id . " completado con éxito")->success();
         return redirect()->back();
     }
-    
+
     public function gen_key()
 	{
 		return Str::random(64);

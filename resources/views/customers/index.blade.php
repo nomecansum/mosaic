@@ -1,4 +1,9 @@
 @extends('layout')
+
+@section('css')
+
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row page-titles">

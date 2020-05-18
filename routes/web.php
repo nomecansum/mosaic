@@ -73,3 +73,12 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('removePermissions_user',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@removePermissions_user']);
 });
 
+    Route::group(['prefix' => 'clientes'], function() {
+        Route::get('/',['middleware'=>'permissions:["Empresas"],["R"]', 'uses' => 'CustomersController@index']);
+        Route::get('create',['middleware'=>'permissions:["Empresas"],["W"]', 'uses' => 'CustomersController@create']);
+        Route::post('save',['middleware'=>'permissions:["Empresas"],["W"]', 'uses' => 'CustomersController@save']);
+        Route::get('edit/{id}',['middleware'=>'permissions:["Empresas"],["C"]', 'uses' => 'CustomersController@edit']);
+        Route::post('update',['middleware'=>'permissions:["Empresas"],["C"]', 'uses' => 'CustomersController@update']);
+        Route::get('delete/{id}',['middleware'=>'permissions:["Empresas"],["D"]', 'uses' => 'CustomersController@delete']);
+});
+

@@ -74,11 +74,11 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
     Route::group(['prefix' => 'clientes'], function() {
-        Route::get('/',['middleware'=>'permissions:["Empresas"],["R"]', 'uses' => 'CustomersController@index']);
-        Route::get('create',['middleware'=>'permissions:["Empresas"],["W"]', 'uses' => 'CustomersController@create']);
-        Route::post('save',['middleware'=>'permissions:["Empresas"],["W"]', 'uses' => 'CustomersController@save']);
-        Route::get('edit/{id}',['middleware'=>'permissions:["Empresas"],["C"]', 'uses' => 'CustomersController@edit']);
-        Route::post('update',['middleware'=>'permissions:["Empresas"],["C"]', 'uses' => 'CustomersController@update']);
-        Route::get('delete/{id}',['middleware'=>'permissions:["Empresas"],["D"]', 'uses' => 'CustomersController@delete']);
+        Route::get('/',['middleware'=>'permissions:["Empresas"],["R"]', 'uses' => 'CustomersController@index'])->name('customers.index');
+        Route::get('create',['middleware'=>'permissions:["Empresas"],["W"]', 'uses' => 'CustomersController@create'])->name('customers.create');
+        Route::post('save',['middleware'=>'permissions:["Empresas"],["W"]', 'uses' => 'CustomersController@save'])->name('customers.save');
+        Route::get('edit/{id}',['middleware'=>'permissions:["Empresas"],["C"]', 'uses' => 'CustomersController@edit'])->name('customers.edit');
+        Route::post('update',['middleware'=>'permissions:["Empresas"],["C"]', 'uses' => 'CustomersController@update'])->name('ustomers.update');
+        Route::get('delete/{id}',['middleware'=>'permissions:["Empresas"],["D"]', 'uses' => 'CustomersController@delete'])->name('customers.delete');
 });
 

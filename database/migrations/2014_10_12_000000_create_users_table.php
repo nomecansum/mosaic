@@ -17,10 +17,19 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('email_verified_at');
             $table->string('password');
-            $table->rememberToken();
+            $table->rememberToken('remember_token',100);
+            $table->string('img_usuario',200);
+            $table->integer('cod_nivel',11);
+            $table->string('theme',150);
+            $table->integer('collapse',11);
+            $table->dateTime('last_login');
+            $table->integer('nivel_acceso',11)->unique();
             $table->timestamps();
+
+            $table->integer('cod_cliente')->unsigned();
+            $table->foreign('cod_cliente')->references('cod_cliente')->on('clientes');
         });
     }
 

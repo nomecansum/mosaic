@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class users extends Model
 {
 
-
+    public function clientes(){
+        return $this->belongsTo(Cliente::class);
+    }
     /**
      * The database table used by the model.
      *

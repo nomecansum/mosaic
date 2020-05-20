@@ -214,7 +214,7 @@
                 },3000)
             }else{
                 localStorage.setItem('theme',data.theme);
-                window.open('{{url('/')}}','_self');
+                window.open('{{url('/login')}}','_self');
             }
         }).fail(function(r){
             console.log(r.responseJSON.message);

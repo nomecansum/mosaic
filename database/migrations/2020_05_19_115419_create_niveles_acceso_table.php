@@ -18,8 +18,10 @@ class CreateNivelesAccesoTable extends Migration
             $table->id('cod_nivel');
             $table->integer('val_nivel_acceso',11);
             $table->string('des_nivel_acceso',200)->nullable();
-            $table->integer('cod_cliente',11)->nullable();
             $table->timestamps();
+
+            $table->integer('cod_cliente')->unsigned()->nullable();
+            $table->foreign('cod_cliente')->references('cod_cliente')->on('clientes');
 
         });
     }

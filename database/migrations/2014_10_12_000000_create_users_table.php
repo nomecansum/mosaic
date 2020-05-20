@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken('remember_token',100);
             $table->string('img_usuario',200);
-            $table->integer('cod_nivel',11)->default('1');
             $table->string('theme',150);
             $table->integer('collapse',11);
             $table->dateTime('last_login');
@@ -30,6 +29,9 @@ class CreateUsersTable extends Migration
 
             $table->integer('cod_cliente')->unsigned();
             $table->foreign('cod_cliente')->references('cod_cliente')->on('clientes');
+
+            $table->integer('cod_nivel',11)->default('1')->unsigned();
+            $table->foreign('cod_nivel')->references('cod_nivel')->on('niveles_acceso');
         });
     }
 

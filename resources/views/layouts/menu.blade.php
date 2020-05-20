@@ -137,6 +137,7 @@
                             <li><a href="/profiles">Perfiles</a></li>
                             <li><a href="/sections">Secciones</a></li>
                             <li><a href="/profile-permissions">Permisos</a></li>
+                            <li><a href="/clientes">Clientes</a></li>
 
                         </ul>
                     </li>
@@ -194,6 +195,15 @@
 
         @endif
 
+        @if(checkPermissions(['Clientes'],['R']))
+
+        <ul class="collapse">
+            <li><a href="/clientes">Clientes</a></li>
+        </ul>
+
+        @endif
+
+
         @if(checkPermissions(['Bitacora'],['R']))
 
             <ul class="collapse">
@@ -219,6 +229,7 @@
                     <li><a href="/profiles">Perfiles</a></li>
                     <li><a href="/sections">Secciones</a></li>
                     <li><a href="/profile-permissions">Permisos</a></li>
+                    <li><a href="/clientes">Clientes</a></li>
 
                 </ul>
             </li>
@@ -252,7 +263,7 @@
                     <li><a href="/profiles">Perfiles</a></li>
                     <li><a href="/sections">Secciones</a></li>
                     <li><a href="/profile-permissions">Permisos</a></li>
-
+                    <li><a href="/clientes">Clientes</a></li>
                 </ul>
             </li>
 

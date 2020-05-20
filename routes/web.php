@@ -71,14 +71,15 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('removePermissions',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@removePermissions']);
 	Route::post('addPermissions_user',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@addPermissions_user']);
 	Route::post('removePermissions_user',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@removePermissions_user']);
-});
 
-    Route::group(['prefix' => 'clientes'], function() {
-        Route::get('/',['middleware'=>'permissions:["Empresas"],["R"]', 'uses' => 'CustomersController@index'])->name('customers.index');
-        Route::get('create',['middleware'=>'permissions:["Empresas"],["W"]', 'uses' => 'CustomersController@create'])->name('customers.create');
-        Route::post('save',['middleware'=>'permissions:["Empresas"],["W"]', 'uses' => 'CustomersController@save'])->name('customers.save');
-        Route::get('edit/{id}',['middleware'=>'permissions:["Empresas"],["C"]', 'uses' => 'CustomersController@edit'])->name('customers.edit');
-        Route::post('update',['middleware'=>'permissions:["Empresas"],["C"]', 'uses' => 'CustomersController@update'])->name('ustomers.update');
-        Route::get('delete/{id}',['middleware'=>'permissions:["Empresas"],["D"]', 'uses' => 'CustomersController@delete'])->name('customers.delete');
-});
 
+Route::group(['prefix' => 'clientes'], function() {
+    Route::get('/',['middleware'=>'permissions:["Clientes"],["R"]', 'uses' => 'customerscontroller@index'])->name('customers.index');
+    Route::get('create',['middleware'=>'permissions:["Clientes"],["W"]', 'uses' => 'customerscontroller@create'])->name('customers.create');
+    Route::post('save',['middleware'=>'permissions:["Clientes"],["W"]', 'uses' => 'customerscontroller@save'])->name('customers.save');
+    Route::get('edit/{id}',['middleware'=>'permissions:["Clientes"],["C"]', 'uses' => 'customerscontroller@edit'])->name('customers.edit');
+    Route::post('update',['middleware'=>'permissions:["Clientes"],["C"]', 'uses' => 'customerscontroller@update'])->name('ustomers.update');
+    Route::get('delete/{id}',['middleware'=>'permissions:["Clientes"],["D"]', 'uses' => 'customerscontroller@delete'])->name('customers.delete');
+    });
+
+});

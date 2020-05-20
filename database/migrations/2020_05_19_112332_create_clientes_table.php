@@ -35,8 +35,8 @@ class CreateClientesTable extends Migration
             $table->integer('cod_tipo_cliente',11)->nullable();
             $table->timestamps();
 
-            $table->integer('nivel_acceso',11)->unique();
-            $table->foreign('nivel_acceso')->references('nivel_acceso')->on('users');
+            $table->integer('cod_nivel',11)->unsigned();
+            $table->foreign('cod_nivel')->references('cod_nivel')->on('niveles_acceso');
         });
     }
 

@@ -21,11 +21,11 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken('remember_token',100);
             $table->string('img_usuario',200);
-            $table->integer('cod_nivel',11);
+            $table->integer('cod_nivel',11)->default('1');
             $table->string('theme',150);
             $table->integer('collapse',11);
             $table->dateTime('last_login');
-            $table->integer('nivel_acceso',11)->unique();
+            $table->integer('nivel_acceso',11)->default('1');
             $table->timestamps();
 
             $table->integer('cod_cliente')->unsigned();

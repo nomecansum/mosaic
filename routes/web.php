@@ -70,21 +70,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('addPermissions',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@addPermissions']);
 	Route::post('removePermissions',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@removePermissions']);
 	Route::post('addPermissions_user',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@addPermissions_user']);
-<<<<<<< HEAD
-	Route::post('removePermissions_user',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@removePermissions_user']);
 
-
-Route::group(['prefix' => 'clientes'], function() {
-    Route::get('/',['middleware'=>'permissions:["Clientes"],["R"]', 'uses' => 'customerscontroller@index'])->name('customers.index');
-    Route::get('create',['middleware'=>'permissions:["Clientes"],["W"]', 'uses' => 'customerscontroller@create'])->name('customers.create');
-    Route::post('save',['middleware'=>'permissions:["Clientes"],["W"]', 'uses' => 'customerscontroller@save'])->name('customers.save');
-    Route::get('edit/{id}',['middleware'=>'permissions:["Clientes"],["C"]', 'uses' => 'customerscontroller@edit'])->name('customers.edit');
-    Route::post('update',['middleware'=>'permissions:["Clientes"],["C"]', 'uses' => 'customerscontroller@update'])->name('ustomers.update');
-    Route::get('delete/{id}',['middleware'=>'permissions:["Clientes"],["D"]', 'uses' => 'customerscontroller@delete'])->name('customers.delete');
-    });
-
-});
-=======
     Route::post('removePermissions_user',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@removePermissions_user']);
 
     Route::group(['prefix' => 'clientes'], function() {
@@ -96,7 +82,3 @@ Route::group(['prefix' => 'clientes'], function() {
         Route::get('delete/{id}',['middleware'=>'permissions:["Clientes"],["D"]', 'uses' => 'CustomersController@delete'])->name('customers.delete');
     });
 });
-
-
-
->>>>>>> 018b4f506c2ffd746a1eebe3b763546ff4f4a6c8

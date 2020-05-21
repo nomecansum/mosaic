@@ -18,10 +18,10 @@ class CreateClientesTable extends Migration
             $table->string('nom_cliente',500)->nullable();
             $table->string('nom_contacto',500)->nullable();
             $table->string('img_logo',250)->nullable();
-            $table->tinyInteger('locked',1);
+            $table->tinyInteger('locked');
             $table->string('val_apikey',500)->nullable();
-            $table->integer('num_max_empleados',11)->nullable();
-            $table->integer('cod_supracliente',11)->nullable();
+            $table->integer('num_max_empleados')->nullable();
+            $table->integer('cod_supracliente')->nullable();
             $table->string('token_1uso',100)->nullable();
             $table->enum('mca_actualizacion',['A','B','M'])->nullable();
             $table->enum('completado',['S','N'])->nullable();
@@ -32,7 +32,7 @@ class CreateClientesTable extends Migration
             $table->dateTime('fec_borrado')->nullable();
             $table->enum('mca_vip',['S','N'])->nullable();
             $table->string('customer_stripe',100)->nullable();
-            $table->integer('cod_tipo_cliente',11)->nullable();
+            $table->integer('cod_tipo_cliente')->nullable();
             $table->timestamps();
 
         });

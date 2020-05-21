@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNivelesAccesoTable extends Migration
+class CreateNivelesAccesosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateNivelesAccesoTable extends Migration
      */
     public function up()
     {
-        Schema::table('niveles_acceso', function (Blueprint $table) {
+        Schema::create('niveles_accesos', function (Blueprint $table) {
 
             $table->id('cod_nivel');
-            $table->integer('val_nivel_acceso',11);
+            $table->integer('val_nivel_acceso');
             $table->string('des_nivel_acceso',200)->nullable();
             $table->timestamps();
 
-            $table->integer('cod_cliente')->unsigned()->nullable();
-            $table->foreign('cod_cliente')->references('cod_cliente')->on('clientes');
+            $table->bigInteger('cod_cliente')->unsigned()->nullable();
+            //$table->foreign('cod_cliente')->references('cod_cliente')->on('clientes');
 
         });
     }

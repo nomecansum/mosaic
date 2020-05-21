@@ -21,10 +21,10 @@ class CreateCamarasTable extends Migration
                 $table->string('ip',300)->nullable();
                 $table->string('username',50)->nullable();
                 $table->string('password',50)->nullable();
-                $table->integer('status',11)->nullable();
+                $table->integer('status')->nullable();
                 $table->string('etiqueta',100)->nullable();
                 $table->string('thumbnail',300)->nullable();
-                $table->integer('port',11)->nullable();
+                $table->integer('port')->nullable();
                 $table->string('val_color',10)->nullable();
                 $table->timestamps();
             });

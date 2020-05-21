@@ -21,7 +21,7 @@ class CreateNivelesAccesosTable extends Migration
             $table->timestamps();
 
             $table->bigInteger('cod_cliente')->unsigned()->nullable();
-            //$table->foreign('cod_cliente')->references('cod_cliente')->on('clientes');
+            $table->foreign('cod_cliente')->references('cod_cliente')->on('clientes');
 
         });
     }

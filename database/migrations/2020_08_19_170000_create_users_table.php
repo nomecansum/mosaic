@@ -27,10 +27,10 @@ class CreateUsersTable extends Migration
             $table->timestamps();
 
             $table->bigInteger('cod_cliente')->unsigned();
-            //$table->foreign('cod_cliente')->references('cod_cliente')->on('clientes');
+            $table->foreign('cod_cliente')->references('cod_cliente')->on('clientes');
 
             $table->bigInteger('cod_nivel')->unsigned();
-            //$table->foreign('cod_nivel')->references('cod_nivel')->on('niveles_acceso');
+            $table->foreign('cod_nivel')->references('cod_nivel')->on('niveles_accesos');
         });
     }
 

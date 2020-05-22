@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class niveles_acceso extends Model
 {
-    
+
+    public function clientes(){
+        return $this->belongsTo(Cliente::class);
+    }
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -44,14 +48,14 @@ class niveles_acceso extends Model
      * @var array
      */
     protected $dates = [];
-    
+
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [];
-    
+
 
 
 

@@ -20,16 +20,16 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at');
             $table->string('password');
             $table->rememberToken();
-            $table->string('img_usuario',200);
-            $table->string('theme',150);
-            $table->integer('collapse');
-            $table->dateTime('last_login');
+            $table->string('img_usuario')->nullable();
+            $table->string('theme',150)->nullable();
+            $table->integer('collapse')->default('0');
+            $table->dateTime('last_login')->nullable();
             $table->timestamps();
 
-            $table->bigInteger('cod_cliente')->unsigned();
+            $table->bigInteger('cod_cliente')->unsigned()->nullable();
             $table->foreign('cod_cliente')->references('cod_cliente')->on('clientes');
 
-            $table->bigInteger('cod_nivel')->unsigned();
+            $table->bigInteger('cod_nivel')->unsigned()->default('1');
             $table->foreign('cod_nivel')->references('cod_nivel')->on('niveles_accesos');
         });
     }

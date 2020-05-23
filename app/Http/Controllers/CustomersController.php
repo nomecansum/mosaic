@@ -2,186 +2,156 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\Grupo;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Exception;
 use DB;
-use App\User;
-use Auth;
-use App\Helpers;
-use App\Services\ClienteService;
-use App\Services\APPApiService;
-use Illuminate\Support\Str;
-use App\Models\clientes;
-use \Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
 
 class CustomersController extends Controller
 {
     //
     public function index()
     {
-        $clientes = DB::table('clientes')->select('clientes.nom_cliente')->paginate(20);
+        $clientesObjects = DB::table('clientes')->select('clientes.nom_cliente',
+         'clientes.nom_contacto', 'clientes.img_logo','clientes.val_apikey',
+         'clientes.token_1uso','clientes.tel_cliente','clientes.CIF',
+         'clientes.fec_borrado','clientes.id','clientes.mca_appmovil',
+         'clientes.mca_vip','clientes.locked','clientes.cod_tipo_cliente')
+         ->paginate(20);
 
 
-        return view('customers.index',compact('clientes'));
+        return view('customers.index',compact('clientesObjects'));
     }
+
+    /**
+     * Show the form for creating a new users.
+     *
+     * @return Illuminate\View\View
+     */
+    public function create()
+    {
+        //$Grupos = Grupo::pluck('grupo','id_grupo')->all();
+        $clientes = Cliente::all();
+
+        return view('customers.create', compact('clientes'));
+    }
+
+    /**
+     * Show the form for editing the specified users.
+     *
+     * @param int $id
+     *
+     * @return Illuminate\View\View
+     */
 
     public function edit($id)
     {
-        validar_acceso_tabla($id,"clientes");
-        $c = DB::table('clientes')
-        ->whereNull('clientes.fec_borrado')
-        ->where('cod_cliente',$id)->first();
-    	return view('customers.create',compact('c'));
-    }
-    public function create()
-    {
-        /*$cod_sistema = DB::table('sistema')->where('COD_SISTEMA','>=',10000)->orderby('COD_SISTEMA','desc')->first()->COD_SISTEMA;//+1;
-        if(empty($cod_sistema))
-            $cod_sistema = 10000;
-        else $cod_sistema++;
-        return view('customers.create',compact('cod_sistema'));*/
-    }
-    public function save(Request $r)
-    {
-        $clsvc = new ClienteService;
-        //Validarlos datos
-        $clsvc->validar_request($r,'toast');
+        $clientes = Cliente::findOrFail($id);
 
-        DB::beginTransaction();
+    	return view('customers.edit',compact('clientes'));
+    }
+    /**
+     * Update the specified users in the storage.
+     *
+     * @param int $id
+     * @param Illuminate\Http\Request $request
+     *
+     * @return Illuminate\Http\RedirectResponse | Illuminate\Routing\Redirector
+     */
+    public function update($id, Request $request)
+    {
+        $img_logo = "";
+        $data = $this->getData($request);
         try {
-            //Insertar el cliente
-            $c = $clsvc->insertar($r);
-            //Le añadimos el codigo de sistema
-            $sistema = $clsvc->insertar_sistema($r, $c);
-            //Entidades por defecto: colectivo, departamento, centro, ciclo y horario
-            $clsvc->insetar_datos_defecto($c);
-            //damos permisos para este cliente a todos los usuarios del supracliente
-            $clsvc->add_a_supracliente($c,$r);
-            //Añadimos el cliente al usuario en curso
-            if(!fullAccess()){
-                $clsvc->add_a_usuario($c,Auth::user()->cod_usuario);
+            if ($request->hasFile('img_logo')) {
+                $file = $request->file('img_logo');
+                $path = public_path().'/img/customers/';
+                $img_usuario = uniqid().rand(000000,999999).'.'.$file->getClientOriginalExtension();
+                $file->move($path,$img_usuario);
             }
 
-			//Creamos la cuenta en el CRM
-            $res = altaClienteCrm($r, $sistema);
-			if($res["Error"] === false)
-			{
-				$fichacrm = "";
-				$account = $res["body"]->accountid;
-				//altaContactoCrm($r, $account);
-			}
+            $data['img_logo']=$img_logo;
 
-            savebitacora("Creado cliente ".$r->nom_cliente,null);
-
-            DB::commit();
+            $clientes = Cliente::findOrFail($id);
+            $clientes->update($data);
             return [
-                'title' => trans('strings.business'),
-                'message' => 'Creado cliente '.$r->nom_cliente.' Sistema:'.$sistema,
-                //'url' => url('business')
-                'url' => url('business/edit') . "/" . $c
+                'title' => "Clientes",
+                'message' => 'Cliente '.$request->name. ' actualizado con exito',
+                //'url' => url('sections')
+            ];
+            // flash('Usuario '.$request->name. 'actualizado con exito')->success();
+            // return redirect()->route('users.users.index');
+        } catch (Exception $exception) {
+            // flash('ERROR: Ocurrio un error actualizando el usuario '.$request->name.' '.$exception->getMessage())->error();
+            // return back()->withInput();
+            return [
+                'title' => "Clientes",
+                'error' => 'ERROR: Ocurrio un error actualizando el cliente '.$request->nom_cliente.' '.$exception->getMessage(),
+                //'url' => url('sections')
             ];
 
-        } catch (\Exception $e) {
-            DB::rollback();
-            error_log(json_encode($e->getMessage()));
-            savebitacora("Error al crear cliente ".$r->nom_cliente. $e->getMessage(),null);
-
-            return [
-                'error' => trans('strings.business'),
-                'message' => "Error al crear cliente ".mensaje_excepcion($e),
-                //'url' => url('business')
-            ];
         }
     }
 
-    public function update(Request $r)
+    /**
+     * Remove the specified users from the storage.
+     *
+     * @param int $id
+     *
+     * @return Illuminate\Http\RedirectResponse | Illuminate\Routing\Redirector
+     */
+    public function destroy($id)
     {
         try {
-            // Estos son los datos del cliente antes de actualizarlo
-            $cliente_old=clientes::find($r->id);
+            $clientes = Cliente::findOrFail($id);
+            $clientes->delete();
 
-            $clsvc = new ClienteService;
-            //Validarlos datos
-            $clsvc->validar_request($r,'toast');
-            //Actualizar el cliente
-            $c = $clsvc->actualizar($r);
-            //Le añadimos el codigo de sistema
-            $clsvc->insertar_sistema($r,$c);
-            //damos permisos para este cliente a todos los usuarios del supracliente
-            $clsvc->add_a_supracliente($c,$r);
-            //Añadimos el cliente al usuario en curso
-            if(!fullAccess()){
-                $clsvc->add_a_usuario($c,Auth::user()->cod_usuario);
-            }
-            if($cliente_old->mca_appmovil != $r->mca_appmovil){  //Ha activado o desactivado la appmovil
-                $clsvc->provisionar_appmpovil($c, $r, null);
-            } else {
-                $clsvc->provisionar_appmpovil($c, $r, 'U');
-            }
-
-            savebitacora("Actualizados datos de cliente ".$r->nom_cliente,$r->cod_cliente);
-
-            return [
-                'title' => trans('strings.business'),
-                'message' => $r->nom_cliente.': '.trans('strings._configuration.business.updated'),
-                'url' => url('business')
-            ];
-        } catch (\Exception $e) {
-            DB::rollback();
-            savebitacora("Error al actualizar cliente ".$r->nom_cliente. $e->getMessage(),null);
-
-            return [
-                'error' => trans('strings.business'),
-                'message' => "Error al actualizar cliente ".mensaje_excepcion($e),
-                //'url' => url('business')
-            ];
+            flash('Cliente '.$id. ' eliminado con exito')->success();
+            return redirect()->route('customer.index');
+        } catch (Exception $exception) {
+            flash('ERROR: Ocurrio un error al eliminar el cliente '.$id.' '.$exception->getMessage())->error();
+            return back()->withInput();
+                //->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
         }
     }
 
-    public function delete($id)
-	{
-        validar_acceso_tabla($id,"clientes");
 
-        $clsvc = new ClienteService;
-        $cliente = $clsvc->delete($id);
-
-        savebitacora("Borrado de cliente [".$id."] completado con éxito", null);
-		flash("Borrado de cliente " . DB::table('clientes')->where('cod_cliente', $id)->value('nom_cliente') . " con id " . $id . " completado con éxito")->success();
-        return redirect()->back();
-    }
-
-    public function delete_completo($id)
+    /**
+     * Get the request's data from the request.
+     *
+     * @param Illuminate\Http\Request\Request $request
+     * @return array
+     */
+    protected function getData(Request $request)
     {
-        //Baja en la app
-        $clientes = clientes::find($id);
-        if($clientes->mca_appmovil == "S")
-        {
-            $clientes->fec_borrado = Carbon::now();
-            $clientes->mca_appmovil = "N";
-            $clientes->completado = "N";
+        $rules = [
+            'id'=>'required|integer',
+            'nom_cliente' => 'nullable|string|min:1|max:500',
+            'nom_contacto' => 'nullable|string|min:1|max:500',
+            'img_logo' => 'nullable|string|min:1|max:250',
+            'val_apikey' => 'nullable|string|min:1|max:500',
+            'token_1uso' => 'nullable|string|min:1|max:100',
+            'tel_cliente' => 'nullable|string|min:1|max:20',
+            'CIF' => 'nullable|string|min:1|max:20',
+            'fec_borrado' => 'nullable|date_format:j/n/Y g:i A',
+            'mca_appmovil' => 'nullable',
+            'mca_vip' => 'nullable',
+            'locked' => 'required',
+            'cod_tipo_cliente' => 'nullable',
 
-            $clientes->save();
+        ];
 
-            $app_svc = new APPApiService;
-            $resultado_app = $app_svc->update_cliente([$id]);
-            if($resultado_app["result"] == "ERROR"){
-                throw new \Exception("Error en la provision del cliente en la APP: " . $resultado_app["msg"]);
-            }
-        }
 
-        //Borramos en las tablas principales para que se disparen el resto de cascade
-        //DB::table('centros')->where('cod_cliente',$id)->delete();
-        //DB::table('empleados')->where('cod_cliente',$id)->delete();
-        //DB::table('colectivos')->where('cod_cliente',$id)->delete();
-        DB::table('users')->where('cod_cliente',$id)->delete();
-        DB::table('clientes')->where('cod_cliente',$id)->delete();
+        $data = $request->validate($rules);
 
-        savebitacora("Borrado de cliente [".$id."] completado con éxito", null);
-        flash("Borrado completo de cliente " . DB::table('clientes')->where('cod_cliente', $id)->value('nom_cliente') . " con id " . $id . " completado con éxito")->success();
-        return redirect()->back();
+
+
+
+        return $data;
     }
-
-    public function gen_key()
-	{
-		return Str::random(64);
-	}
 }

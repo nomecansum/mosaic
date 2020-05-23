@@ -3,114 +3,116 @@
 @section('css')
 
 @endsection
+@section('breadcrumb')
+<!-- Content Header (Page header) -->
+<ol class="breadcrumb">
+    <li><a href="{{url('/')}}"><i class="demo-pli-home"></i> </a></li>
+    <li class="">Configuracion</li>
+    <li class="active">Clientes</li>
+</ol>
+
+@endsection
 
 @section('content')
-<div class="container-fluid">
-    <div class="row page-titles">
-        <div class="col-md-6 col-8 align-self-center">
-            <h3 class="text-themecolor mb-0 mt-0">{{trans('strings.business')}}</h3>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/') }}">{{trans('strings.home')}}</a></li>
-                <li class="breadcrumb-item active">{{trans('strings.business')}}</li>
-            </ol>
+
+
+    <div class="panel panel-default">
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-7">
+                <br>
+            </div>
+            <div class="col-md-1 text-right ">
+                <div class="btn-group btn-group-sm pull-right v-middle mt-2" role="group" style="margin-right: 20px;">
+                    <a href="{{ route('customers.create') }}" class="btn btn-success" title="Nuevo dashboard">
+                        <i class="fa fa-plus-square" style="font-size: 20px" aria-hidden="true"></i> Nuevo
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 col-4 align-self-center">
-			@if (checkPermissions(['Empresas'],["W"]))<a href="{{url('business/create')}}" class="btn float-right hidden-sm-down btn-success"><i class="mdi mdi-plus-circle"></i> {{trans('strings.create_client')}}</a>@endif
+
+        @if(count($clientesObjects) == 0)
+            <div class="panel-body text-center">
+                <h4>No Clients Available.</h4>
+            </div>
+        @else
+        <div class="panel-body panel-body-with-table">
+            <div class="table-responsive">
+
+                <table class="table table-striped table-hover ">
+                    <thead>
+                        <tr>
+                            <th style="width:auto">Id</th>
+                            <th>Nombre</th>
+                            <th>Contacto</th>
+                            <th>Teléfono</th>
+                            <th>Logo</th>
+                            <th>ApiKey</th>
+                            <th>Token</th>
+                            <th>CIF</th>
+                            <th>Fecha de borrado</th>
+                            <th>mca_appmovil</th>
+                            <th>mca_vip</th>
+                            <th>Locked</th>
+                            <th>Tipo Cliente</th>
+                        </tr>
+                    </thead>
+
+
+
+                    <tbody>
+                        @foreach($clientesObjects as $clientes)
+                            <tr class="hover-this" onclick="javascript: document.location='{{ route('customers.edit', $clientes->id) }}'">
+
+                                <td class="pt-3">{{ $clientes->id}}</td>
+
+                                <td>{{ $clientes->nom_cliente }}</td>
+
+                                <td>{{ $clientes->nom_contacto }}</td>
+
+                                <td>{{ $clientes->tel_cliente }}</td>
+
+                                <td>{{ $clientes->img_logo }}</td>
+
+                                <td>{{ $clientes->val_apikey }}</td>
+
+                                <td>{{ $clientes->token_1uso }}</td>
+
+                                <td>{{ $clientes->CIF }}</td>
+
+                                <td>{{ $clientes->fec_borrado }}</td>
+
+                                <td>{{ $clientes->mca_appmovil }}</td>
+
+                                <td>{{ $clientes->mca_vip }}</td>
+
+                                <td>{{ $clientes->locked }}</td>
+
+                                <td>{{ $clientes->cod_tipo_cliente }}</td>
+
+                            {{-- <td style="vertical-align: middle">
+                                <form method="POST" action="{!! route('customers.destroy', $clientes->id) !!}" accept-charset="UTF-8">
+                                <input Nom_cliente="_method" value="DELETE" type="hidden">
+                                {{ csrf_field() }}
+                                    <div class="btn-group btn-group-xs pull-right floating-like-gmail" role="group">
+                                        <a href="{{ route('clientes.clientes.edit', $clientes->Id ) }}" class="btn btn-info  add-tooltip" title="Editar Usuario"  style="float: left"><span class="fa fa-pencil pt-1" ></span></a>
+                                        <button type="submit" class="btn btn-danger add-tooltip" style="float: left" title="Borrar usuario" onclick="if(confirm(&quot;¿Seguro que quiere borrar el usuario?.&quot;)){document.location='{{ url('clientes/delete/'.$clientes->Id) }}'}"  style="float: right">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </td> --}}
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <div class="panel-footer">
+            {{-- {!! $clientes->render() !!} --}}
+        </div>
+        @endif
     </div>
-    <div class="row">
-        <div class="col-12">
-			<div class="card">
-			    <div class="card-body">
-			        <h2 class="card-title">{{trans('strings.business')}}</h2>
-			        <div class="table-responsive m-t-40">
-			            <table id="myTable" class="table table-bordered table-condensed table-hover">
-			                <thead>
-			                    <tr>
-			                        <!--th>{{trans('strings.id')}}</th-->
-			                        <th>{{trans('strings._configuration.business.logo')}}</th>
-			                        <th>{{trans('strings._configuration.business.name')}}</th>
-			                        <th>{{trans('strings._configuration.business.cod_sistema')}}</th>
-			                        <th>{{trans('strings._configuration.business.suprabusiness')}}</th>
-			                        <th>{{trans('strings._configuration.business.information')}}</th>
-			                        {{-- <th></th> --}}
-			                    </tr>
-			                </thead>
-			                <tbody>
-								@foreach ($clientes as $cus)
-			                		<tr class="hover-this" @if (checkPermissions(['Empresas'],["W"]))data-href="{{url('business/edit',$cus->cod_cliente)}}"@endif>
-			                			<!--td>{{$cus->cod_cliente}}</td-->
-			                			<td>
-			                			    @isset($cus->img_logo)
-			                			      <img src="{{url('uploads/customers/images',$cus->img_logo)}}" width="30px" alt="">
-			                			    @else
-			                			      <img src="{{url('uploads/customers/images',$cus->img_logo)}}" width="30px" alt="">
-			                			    @endif
-			                			</td>
-			                			<td>{{$cus->nom_cliente}}</td>
-			                			<td>{{ $cus->cod_sistema}}</td>
-			                			<td>{{ $cus->emp_matriz}}</td>
-			                			<td style="position: relative;">{{$cus->nom_contacto}}
-			                				<div class="floating-like-gmail">
-												@if (checkPermissions(['Empresas'],["C"]))<a href="{{url('business/edit',$cus->cod_cliente)}}" class="btn btn-xs btn-success">{{trans('strings.edit_client')}}</a>@endif
-			                					@if (checkPermissions(['Empresas'],["D"]))<a href="#eliminar-usuario-{{$cus->cod_cliente}}" data-toggle="modal" class="btn btn-xs btn-danger">{{trans('strings.delete_client')}}</a>@endif
-			                					@if (checkPermissions(['Empresas'],["D"]))<a href="#eliminar-empresa-{{$cus->cod_cliente}}" data-toggle="modal" class="btn btn-xs btn-danger">¡Borrado completo!</a>@endif
-			                				</div>
-			                				@if (checkPermissions(['Empresas'],["D"]))
-    			                				<div class="modal fade" id="eliminar-usuario-{{$cus->cod_cliente}}">
-    			                					<div class="modal-dialog modal-md">
-    			                						<div class="modal-content"><div><img src="/imgs/cucoweb_20.png" class="float-right"></div>
-    			                							<div class="modal-header"><i class="mdi mdi-comment-question-outline text-warning mdi-48px"></i><b>
-    			                								{{trans('strings._configuration.business.delete_business')}}</b>
-    														</div>
-    														<div class="modal-body text-left">
-    															La empresa tiene:<br>
-    															<ul>
-    																<li>{{ $cus->empleados }} Empleados</li>
-    																<li>{{ $cus->centros }} Centros</li>
-    																<li>{{ $cus->departamentos }} Departamentos</li>
-    																<li>{{ $cus->dispositivos }} Dispositivos</li>
-    															</ul>
-    														</div>
-    			                							<div class="modal-footer">
-    			                								<a class="btn btn-info" href="{{url('business/delete',$cus->cod_cliente)}}">{{trans('strings.yes')}}</a>
-    			                								<button type="button" data-dismiss="modal" class="btn btn-warning">{{trans('strings.cancel')}}</button>
-    			                							</div>
-    			                						</div>
-    			                					</div>
-    			                				</div>
-    			                				<div class="modal fade" id="eliminar-empresa-{{$cus->cod_cliente}}">
-                                                    <div class="modal-dialog modal-md">
-                                                        <div class="modal-content"><div><img src="/imgs/cucoweb_20.png" class="float-right"></div>
-                                                            <div class="modal-header"><i class="mdi mdi-comment-question-outline text-warning mdi-48px"></i>
-                                                                <b>Esta opción no se podrá deshacer! Seguro que quiere seguir?</b>
-                                                            </div>
-                                                            <div class="modal-body text-left">
-                                                                La empresa tiene:<br>
-                                                                <ul>
-                                                                    <li>{{ $cus->empleados }} Empleados</li>
-                                                                    <li>{{ $cus->centros }} Centros</li>
-                                                                    <li>{{ $cus->departamentos }} Departamentos</li>
-                                                                    <li>{{ $cus->dispositivos }} Dispositivos</li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <a class="btn btn-info" href="{{url('business/deleteCompleto',$cus->cod_cliente)}}">¡{{trans('strings.yes')}}!</a>
-                                                                <button type="button" data-dismiss="modal" class="btn btn-warning">{{trans('strings.cancel')}}</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-    			                		   @endif
-			                			</td>
-			                		</tr>
-			                	@endforeach
-			                </tbody>
-			            </table>
-			        </div>
-			    </div>
-			</div>
-        </div>
-    </div>
-</div>
-@stop
+@endsection

@@ -13,15 +13,16 @@ class CreateNivelesAccesosTable extends Migration
      */
     public function up()
     {
-        Schema::create('niveles_accesos', function (Blueprint $table) {
+        Schema::create('niveles_acceso', function (Blueprint $table) {
 
             $table->id('cod_nivel');
+
             $table->integer('val_nivel_acceso');
             $table->string('des_nivel_acceso',200)->nullable();
             $table->timestamps();
 
             $table->bigInteger('cod_cliente')->unsigned()->nullable();
-            $table->foreign('cod_cliente')->references('cod_cliente')->on('clientes');
+            //$table->foreign('cod_cliente')->references('id')->on('clientes');
 
         });
     }

@@ -9,12 +9,7 @@ class Cliente extends Model
 {
     public function users(){
 
-        return $this->hasMany(users::class);
-}
-
-    public function niveles_acceso(){
-
-        return $this->hasMany(niveles_acceso::class);
+        return $this->belongsTo(users::class);
 }
 
     /**
@@ -40,9 +35,19 @@ class Cliente extends Model
      * @var array
      */
     protected $fillable = [
+                  'id',
                   'nom_cliente',
                   'nom_contacto',
-                  'tel_cliente'
+                  'img_logo',
+                  'val_apikey',
+                  'token_1uso',
+                  'tel_cliente',
+                  'CIF',
+                  'fec_borrado',
+                  'mca_appmovil',
+                  'mca_vip',
+                  'locked',
+                  'cod_tipo_cliente'
               ];
 
 

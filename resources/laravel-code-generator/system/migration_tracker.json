@@ -1,7 +1,7 @@
 [
     {
         "model-name": "niveles_acceso",
-        "resource-file": "C:\\WWW\\mosaic\\resources\\laravel-code-generator\\sources\\niveles_accesos.json",
+        "resource-file": "C:\\WWW\\mosaic\\resources\\laravel-code-generator\\sources\\niveles_acceso.json",
         "table-name": "niveles_acceso",
         "migrations": [
             {

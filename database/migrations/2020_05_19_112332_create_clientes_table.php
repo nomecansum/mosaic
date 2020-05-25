@@ -35,6 +35,8 @@ class CreateClientesTable extends Migration
             $table->integer('cod_tipo_cliente')->nullable();
             $table->timestamps();
 
+            
+
         });
     }
 

@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class niveles_acceso extends Model
 {
 
-    public function clientes(){
-        return $this->belongsTo(Cliente::class);
+    public function usuarios(){
+        return $this->hasMany(users::class);
     }
 
     /**

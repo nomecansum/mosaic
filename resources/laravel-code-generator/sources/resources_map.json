@@ -1,7 +1,7 @@
 [
     {
         "model-name": "niveles_acceso",
-        "resource-file": "niveles_accesos.json",
+        "resource-file": "niveles_acceso.json",
         "table-name": "niveles_acceso"
     },
     {

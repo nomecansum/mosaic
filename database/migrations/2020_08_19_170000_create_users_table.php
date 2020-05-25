@@ -27,10 +27,11 @@ class CreateUsersTable extends Migration
             $table->timestamps();
 
             $table->bigInteger('cod_cliente')->unsigned()->nullable();
-            $table->foreign('cod_cliente')->references('id')->on('clientes');
+            $table->foreign('cod_cliente')->references('id')->on('clientes')->nullable();
 
-            $table->bigInteger('cod_nivel')->unsigned()->default('1');//No funciona en formulario. seeder con niveles_acceso?
-            $table->foreign('cod_nivel')->references('cod_nivel')->on('niveles_accesos');
+            $table->bigInteger('cod_nivel')->unsigned()->nullable();
+            $table->foreign('cod_nivel')->references('cod_nivel')->on('niveles_acceso')->nullable();
+
         });
     }
 

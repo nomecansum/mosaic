@@ -46,44 +46,45 @@
     }
 </style>
 @endsection
+<input type="hidden" name="id_cliente" value="{{ isset($clientes->id_cliente)?$clientes->id_cliente:0 }}">
 <div class="row">
         <div class="col-md-8">
             <div class="row">
                 <div class="form-group col-md-10 {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="name" class="control-label">Nombre</label>
-                    <input class="form-control" name="name" type="text" id="name" value="{{ old('name', optional($clientes)->name) }}" minlength="1" maxlength="255" required="true" placeholder="Enter name here...">
+                    <input class="form-control" name="nom_cliente" type="text" id="name" value="{{ old('nom_cliente', optional($clientes)->nom_cliente) }}" minlength="1" maxlength="255" required="true" placeholder="Enter name here...">
                     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-10 {{ $errors->has('email') ? 'has-error' : '' }}">
-                    <label for="email" class="control-label">e-mail</label>
-                    <input class="form-control" name="email" type="text" id="email" value="{{ old('email', optional($clientes)->email) }}" minlength="1" maxlength="255" required="true" placeholder="Enter email here...">
+                    <label for="email" class="control-label">Token</label>
+                    <input class="form-control" name="val_apikey" type="text" id="token" value="{{ old('val_apiKey', optional($clientes)->val_apiKey) }}" minlength="1" maxlength="255" required="true" placeholder="Enter token here...">
                     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-10 {{ $errors->has('password') ? 'has-error' : '' }}">
-                    <label for="password" class="control-label">Password</label>
-                    <input class="form-control" name="password" type="password" id="password" value="{{ old('password', optional($clientes)->password) }}" minlength="1" maxlength="255" required="true" placeholder="Enter password here...">
+                    <label for="logo" class="control-label">Logo</label>
+                    <input class="form-control" name="img_logo" type="file" id="logo" value="{{ old('img_logo', optional($clientes)->img_logo) }}" minlength="1" maxlength="255" required="true" placeholder="Enter logo here...">
                     {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-2 text-center">
-            <label for="imagen_usuario" class="col-md-2 control-label">Imagen</label><br>
+            <label for="img_logo" class="col-md-2 control-label">Imagen</label><br>
             <div class="col-12">
-                <div class="form-group  {{ $errors->has('img_usuario') ? 'has-error' : '' }}">
-                    <label for="img_usuario" class="preview preview1" style="background-image: url();">
-                        <img src="{{ isset($clientes) ? url('img/clientes/',$clientes->img_usuario) : ''}}" style="margin: auto; display: block; width: 180px; heigth:180px" alt="" class="img-fluid">
+                <div class="form-group  {{ $errors->has('img_logo') ? 'has-error' : '' }}">
+                    <label for="img_logo" class="preview preview1" style="background-image: url();">
+                        <img src="{{ isset($clientes) ? url('/img/customers/',$clientes->img_logo) : ''}}" style="margin: auto; display: block; width: 180px; heigth:180px" alt="" class="img-fluid">
                     </label>
                     <div class="custom-file">
-                        <input type="file" accept=".jpg,.png,.gif" class="form-control  custom-file-input" name="img_usuario" id="img_usuario" lang="es">
-                        <label class="custom-file-label" for="img_usuario"></label>
+                        <input type="file" accept=".jpg,.png,.gif" class="form-control  custom-file-input" name="img_logo" id="img_logo" lang="es">
+                        <label class="custom-file-label" for="img_logo"></label>
                     </div>
                 </div>
-                    {!! $errors->first('img_usuario', '<p class="help-block">:message</p>') !!}
+                    {!! $errors->first('img_logo', '<p class="help-block">:message</p>') !!}
             </div>
         </div>
 </div>
@@ -93,7 +94,7 @@
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-2">
-            <div class="form-group {{ $errors->has('id_perfil') ? 'has-error' : '' }}">
+            <div class="form-group {{ $errors->has('id') ? 'has-error' : '' }}">
 
                 {!! $errors->first('id', '<p class="help-block">:message</p>') !!}
             </div>

@@ -17,12 +17,19 @@ class CustomersController extends Controller
     //
     public function index()
     {
-        $clientesObjects = DB::table('clientes')->select('clientes.nom_cliente',
+        $clientesObjects = DB::table('clientes')
+        ->select('clientes.nom_cliente',
+        'clientes.token_1uso',
+        'clientes.img_logo',
+        'clientes.id'
+        )->paginate(20);
+
+        /* ->select('clientes.nom_cliente',
          'clientes.nom_contacto', 'clientes.img_logo','clientes.val_apikey',
          'clientes.token_1uso','clientes.tel_cliente','clientes.CIF',
          'clientes.fec_borrado','clientes.id','clientes.mca_appmovil',
-         'clientes.mca_vip','clientes.locked','clientes.cod_tipo_cliente')
-         ->paginate(20);
+         'clientes.mca_vip','clientes.locked','clientes.cod_tipo_cliente') */
+
 
 
         return view('customers.index',compact('clientesObjects'));
@@ -63,40 +70,49 @@ class CustomersController extends Controller
      *
      * @return Illuminate\Http\RedirectResponse | Illuminate\Routing\Redirector
      */
-    public function update($id, Request $request)
-    {
-        $img_logo = "";
-        $data = $this->getData($request);
-        try {
-            if ($request->hasFile('img_logo')) {
-                $file = $request->file('img_logo');
-                $path = public_path().'/img/customers/';
-                $img_usuario = uniqid().rand(000000,999999).'.'.$file->getClientOriginalExtension();
-                $file->move($path,$img_usuario);
-            }
+    
+    public function update(Request $request)
+{
+//dd($request->all());
 
-            $data['img_logo']=$img_logo;
+$img_logo = "";
+$data = $this->getData($request);
 
-            $clientes = Cliente::findOrFail($id);
-            $clientes->update($data);
-            return [
-                'title' => "Clientes",
-                'message' => 'Cliente '.$request->name. ' actualizado con exito',
-                //'url' => url('sections')
-            ];
-            // flash('Usuario '.$request->name. 'actualizado con exito')->success();
-            // return redirect()->route('users.users.index');
-        } catch (Exception $exception) {
-            // flash('ERROR: Ocurrio un error actualizando el usuario '.$request->name.' '.$exception->getMessage())->error();
-            // return back()->withInput();
-            return [
-                'title' => "Clientes",
-                'error' => 'ERROR: Ocurrio un error actualizando el cliente '.$request->nom_cliente.' '.$exception->getMessage(),
-                //'url' => url('sections')
-            ];
+if ($request->hasFile('img_logo')) {
+$file = $request->file('img_logo');
+$path = public_path().'/img/customers/';
+$img_usuario = uniqid().rand(000000,999999).'.'.$file->getClientOriginalExtension();
+$file->move($path,$img_usuario);
+}
 
-        }
-    }
+$data['img_logo']=$img_logo;
+if($request->id_cliente==0){
+//Insert
+$clientes->create($data);
+} else {
+//Update
+$clientes = Cliente::findOrFail($id);
+$clientes->update($data);
+}
+
+return [
+'title' => "Clientes",
+'message' => 'Cliente '.$request->name. ' actualizado con exito',
+//'url' => url('sections')
+];
+// flash('Usuario '.$request->name. 'actualizado con exito')->success();
+// return redirect()->route('users.users.index');
+try {} catch (Exception $exception) {
+// flash('ERROR: Ocurrio un error actualizando el usuario '.$request->name.' '.$exception->getMessage())->error();
+// return back()->withInput();
+return [
+'title' => "Clientes",
+'error' => 'ERROR: Ocurrio un error actualizando el cliente '.$request->nom_cliente.' '.$exception->getMessage(),
+//'url' => url('sections')
+];
+
+}
+}
 
     /**
      * Remove the specified users from the storage.
@@ -112,7 +128,7 @@ class CustomersController extends Controller
             $clientes->delete();
 
             flash('Cliente '.$id. ' eliminado con exito')->success();
-            return redirect()->route('customer.index');
+            return redirect()->back();
         } catch (Exception $exception) {
             flash('ERROR: Ocurrio un error al eliminar el cliente '.$id.' '.$exception->getMessage())->error();
             return back()->withInput();

@@ -22,7 +22,7 @@
             <a href="{{ route('customers.index') }}" class="btn btn-primary" title="Listado">
                 <span class="fa fa-list pt-2" aria-hidden="true"></span>
             </a>
-            <a href="{{ route('customers.create') }}" class="btn btn-success" title="Nuevo usuario">
+            <a href="{{ route('customers.create') }}" class="btn btn-success" title="Nuevo cliente">
                 <span class="fa fa-plus-square pt-1" style="font-size: 20px" aria-hidden="true"></span>
             </a>
         </div>
@@ -40,7 +40,7 @@
                 </ul>
             @endif
 
-            <form method="POST" action="{{ route('customers.update', $clientes->id) }}" id="edit_users_form" name="edit_users_form" accept-charset="UTF-8" class="form-horizontal mt-4 form-ajax" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('customers.update', $clientes->id) }}" id="edit_customers_form" name="edit_customers_form" accept-charset="UTF-8" class="form-horizontal mt-4 form-ajax" enctype="multipart/form-data">
             {{ csrf_field() }}
             {{-- <input name="_method" type="hidden" value="POST"> --}}
             @include ('customers.form', [

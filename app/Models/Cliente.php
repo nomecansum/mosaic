@@ -37,6 +37,12 @@ class Cliente extends Model
     protected $fillable = [
                   'id',
                   'nom_cliente',
+                  'token_1uso',
+                  'img_logo',
+                  'locked',
+
+                  /* 'id',
+                  'nom_cliente',
                   'nom_contacto',
                   'img_logo',
                   'val_apikey',
@@ -47,7 +53,7 @@ class Cliente extends Model
                   'mca_appmovil',
                   'mca_vip',
                   'locked',
-                  'cod_tipo_cliente'
+                  'cod_tipo_cliente' */
               ];
 
 

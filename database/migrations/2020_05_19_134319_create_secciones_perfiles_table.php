@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSecionesPerfilesTable extends Migration
+class CreateSeccionesPerfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSecionesPerfilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('seciones_perfiles', function (Blueprint $table) {
+        Schema::create('secciones_perfiles', function (Blueprint $table) {
             $table->id('cod_seccion_perfil');
             $table->integer('id_seccion')->nullable();
             $table->integer('id_perfil')->nullable();

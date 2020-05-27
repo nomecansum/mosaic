@@ -19,6 +19,7 @@ class CreateBitacorasTable extends Migration
             $table->string('id_modulo',50);
             $table->string('accion',2000);
             $table->string('status',10);
+            $table->timestamp('fecha');
             $table->timestamps();
         });
     }

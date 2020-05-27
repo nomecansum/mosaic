@@ -23,7 +23,7 @@ class BitacorasController extends Controller
 
         return view('bitacoras.index', compact('bitacoras'));
     }
-    
+
     public function search(Request $r)
     {
         try {
@@ -57,7 +57,7 @@ class BitacorasController extends Controller
              } catch (Exception $exception) {
             flash('ERROR: Ocurrio un error al hacer la busqueda '.$exception->getMessage())->error();
             return back()->withInput();
-        }        
+        }
     }
 
     protected function getData(Request $request)
@@ -67,10 +67,10 @@ class BitacorasController extends Controller
             'id_modulo' => 'required|string|min:1|max:50',
             'accion' => 'required|string|min:1|max:200',
             'status' => 'required|string|min:1|max:10',
-            'fecha' => 'required|date_format:j/n/Y g:i A', 
+            'fecha' => 'required|date_format:j/n/Y g:i A',
         ];
 
-        
+
         $data = $request->validate($rules);
 
 

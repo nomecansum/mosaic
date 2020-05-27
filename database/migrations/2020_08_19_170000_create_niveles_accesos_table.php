@@ -18,7 +18,7 @@ class CreateNivelesAccesosTable extends Migration
             $table->id('cod_nivel');
 
             $table->integer('val_nivel_acceso');
-            $table->string('des_nivel_acceso',200)->nullable();
+            $table->string('des_nivel_acceso',200)->nullable()->default('Acceso unitario');
             $table->timestamps();
 
             $table->bigInteger('cod_cliente')->unsigned()->nullable();

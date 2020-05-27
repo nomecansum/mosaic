@@ -11,6 +11,4 @@
 </ol>
 @endsection
 
-@section('content')
-    @include('home.cam_carousel')
-@endsection
+

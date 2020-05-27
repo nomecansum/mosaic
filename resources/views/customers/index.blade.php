@@ -45,7 +45,6 @@
                     <thead>
                         <tr>
                             <th style="width:auto">Nombre</th>
-                            <th>Token</th>
                             <th>Logo</th>
                             {{-- <th style="width:auto">Id</th>
                             <th>Nombre</th>
@@ -70,8 +69,6 @@
                             <tr class="hover-this" onclick="javascript: document.location='{{ route('customers.edit', $clientes->id) }}'">
 
                                 <td class="pt-3">{{ $clientes->nom_cliente}}</td>
-
-                                <td>{{ $clientes->token_1uso }}</td>
 
                                 <td>{{ $clientes->img_logo }}</td>
 

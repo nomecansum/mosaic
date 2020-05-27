@@ -97,7 +97,7 @@
                 <label for="id_perfil" class="control-label">Perfil</label>
                 <select class="form-control" id="cod_nivel" name="cod_nivel">
                     @foreach ($Perfiles as $Perfile)
-                        <option value="{{ $Perfile->cod_nivel }}" {{ old('cod_nivel', optional($users)->cod_nivel) == $Perfile->cod_nivel ? 'selected' : '' }}>
+                        <option value="{{ $Perfile->cod_nivel }}" {{-- {{ old('cod_nivel', optional($users)->cod_nivel) == $Perfile->cod_nivel ? 'selected' : '' }} --}}>
                             {{ $Perfile->des_nivel_acceso }}
                         </option>
                     @endforeach

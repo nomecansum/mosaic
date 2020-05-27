@@ -27,16 +27,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('6camaras/{pag?}','HomeController@mosaico_camaras');
     //
 
-    Route::group(['prefix' => 'camaras'], function() {
-        Route::get('/',['middleware'=>'permissions:["Camaras"],["R"]', 'uses' => 'CamarasController@index']);
-	    Route::get('/edit/{id}',['middleware'=>'permissions:["Camaras"],["C"]', 'uses' => 'CamarasController@edit']);
-	    Route::post('/update',['middleware'=>'permissions:["Camaras"],["C"]', 'uses' => 'CamarasController@update']);
-        Route::get('/delete/{id}',['middleware'=>'permissions:["Camaras"],["D"]', 'uses' => 'CamarasController@delete']);
-        Route::get('/ver_camara/{id}',['middleware'=>'permissions:["Camaras"],["D"]', 'uses' => 'CamarasController@ver_camara']);
-        Route::get('/savesnapshot/{id}',['middleware'=>'permissions:["Camaras"],["R"]', 'uses' => 'CamarasController@savesnapshot']);
-
-    });
-
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', 'UsersController@index')->name('users.users.index');
         Route::get('/create','UsersController@create')->name('users.users.create');

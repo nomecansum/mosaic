@@ -14,11 +14,11 @@ class CreateClientesTable extends Migration
     public function up()
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_cliente');
             $table->string('nom_cliente',500)->nullable();
             $table->string('nom_contacto',500)->nullable();
             $table->string('img_logo',250)->nullable();
-            $table->tinyInteger('locked');
+            $table->tinyInteger('locked')->default(0);
             $table->string('val_apikey',500)->nullable();
             $table->integer('num_max_empleados')->nullable();
             $table->integer('cod_supracliente')->nullable();
@@ -35,7 +35,7 @@ class CreateClientesTable extends Migration
             $table->integer('cod_tipo_cliente')->nullable();
             $table->timestamps();
 
-            
+
 
         });
     }

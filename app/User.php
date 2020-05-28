@@ -19,7 +19,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'img_usuario',
+        'img_user',
         'cod_nivel',
         'theme',
         'collapse',

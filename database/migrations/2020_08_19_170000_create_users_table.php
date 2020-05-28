@@ -26,8 +26,8 @@ class CreateUsersTable extends Migration
             $table->dateTime('last_login')->nullable();
             $table->timestamps();
 
-            $table->bigInteger('cod_cliente')->unsigned()->nullable();
-            $table->foreign('cod_cliente')->references('id')->on('clientes')->nullable();
+            $table->bigInteger('id_cliente')->unsigned()->nullable();
+            $table->foreign('id_cliente')->references('id_cliente')->on('clientes')->nullable();
 
             $table->bigInteger('cod_nivel')->unsigned()->nullable();
             $table->foreign('cod_nivel')->references('cod_nivel')->on('niveles_acceso')->nullable();

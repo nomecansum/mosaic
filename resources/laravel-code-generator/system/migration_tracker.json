@@ -129,7 +129,7 @@
                             "api-description": "The des nivel acceso of the model."
                         },
                         {
-                            "name": "cod_cliente",
+                            "name": "id_cliente",
                             "labels": "Cod Cliente",
                             "html-type": "number",
                             "css-class": "",
@@ -161,7 +161,7 @@
                             "foreign-constraint": null,
                             "on-store": null,
                             "on-update": null,
-                            "api-key": "cod_cliente",
+                            "api-key": "id_cliente",
                             "is-api-visible": true,
                             "api-description": "The cod cliente of the model."
                         }

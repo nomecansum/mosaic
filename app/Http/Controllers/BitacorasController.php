@@ -20,6 +20,7 @@ class BitacorasController extends Controller
     public function index()
     {
         $bitacoras = bitacora::orderby('fecha','desc')->paginate(50);
+        $bitacoras = bitacora::all('users')->paginate(50);
 
         return view('bitacoras.index', compact('bitacoras'));
     }
@@ -42,8 +43,8 @@ class BitacorasController extends Controller
             ->when($r->tipo_log, function($query) use ($r) {
                return  $query->where('status', $r->tipo_log);
               })
-            ->when($r->usuario, function($query) use ($r) {
-                return  $query->where('id_usuario', $r->usuario);
+            ->when($r->users, function($query) use ($r) {
+                return  $query->where('id', $r->users);
                })
             ->when($fechas, function($query) use ($fechas) {
                 return  $query->whereBetween('fecha', [$fechas[0],$fechas[1]]);
@@ -60,7 +61,7 @@ class BitacorasController extends Controller
         }
     }
 
-    protected function getData(Request $request)
+    /* protected function getData(Request $request)
     {
         $rules = [
                 'id_usuario' => 'required|string|min:1|max:100',
@@ -77,6 +78,6 @@ class BitacorasController extends Controller
 
 
         return $data;
-    }
+    } */
 
 }

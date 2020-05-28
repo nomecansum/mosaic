@@ -21,12 +21,12 @@ class CreateNivelesAccesosTable extends Migration
             $table->string('des_nivel_acceso',200)->nullable()->default('Acceso unitario');
             $table->timestamps();
 
-            $table->bigInteger('cod_cliente')->unsigned()->nullable();
-            $table->foreign('cod_cliente')->references('id')->on('clientes');
+            $table->bigInteger('id_cliente')->unsigned()->nullable();
+            $table->foreign('id_cliente')->references('id_cliente')->on('clientes');
 
-            /* $table->dropForeign('niveles_acceso_cliente_id_foreign');
-            $table->foreign('cod_cliente')
-            ->references('id')->on('clientes')
+            /* $table->dropForeign('niveles_acceso_cliente_id_cliente_foreign');
+            $table->foreign('id_cliente')
+            ->references('id_cliente')->on('clientes')
             ->onDelete('cascade'); */
 
         });

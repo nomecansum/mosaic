@@ -85,9 +85,9 @@
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-2">
-            <div class="form-group {{ $errors->has('id') ? 'has-error' : '' }}">
+            <div class="form-group {{ $errors->has('id_cliente') ? 'has-error' : '' }}">
 
-                {!! $errors->first('id', '<p class="help-block">:message</p>') !!}
+                {!! $errors->first('id_cliente', '<p class="help-block">:message</p>') !!}
             </div>
 
         </div>

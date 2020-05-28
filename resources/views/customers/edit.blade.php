@@ -40,7 +40,7 @@
                 </ul>
             @endif
 
-            <form method="POST" action="{{ route('customers.update', $clientes->id) }}" id="edit_customers_form" name="edit_customers_form" accept-charset="UTF-8" class="form-horizontal mt-4 form-ajax" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('customers.update', $clientes->id_cliente) }}" id="edit_customers_form" name="edit_customers_form" accept-charset="UTF-8" class="form-horizontal mt-4 form-ajax" enctype="multipart/form-data">
             {{ csrf_field() }}
             {{-- <input name="_method" type="hidden" value="POST"> --}}
             @include ('customers.form', [

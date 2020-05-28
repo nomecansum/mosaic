@@ -24,14 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $cuenta=camaras::count();
-        $paginas=intdiv($cuenta,6);
-        $resto=fmod($cuenta,6);
-        return view('home',compact('cuenta'));
-    }
-
-    public function mosaico_camaras($pagina=1){
-        //$camaras=camaras::all()->chunk(6);
-        return $camaras->toJson();
+        return view('home');
     }
 }

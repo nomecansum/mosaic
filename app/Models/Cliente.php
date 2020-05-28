@@ -24,7 +24,7 @@ class Cliente extends Model
     *
     * @var string
     */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_cliente';
     protected $keyType = 'string';
     public $incrementing = false;
     public $timestamps =false;
@@ -36,14 +36,14 @@ class Cliente extends Model
      * @var array
      */
     protected $fillable = [
-                  'id',
+                  'id_cliente',
                   'nom_cliente',
                   'token_1uso',
                   'img_logo',
                   'locked'
 
 
-                  /* 'id',
+                  /* 'id_cliennte',
                   'nom_cliente',
                   'nom_contacto',
                   'img_logo',

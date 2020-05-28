@@ -15,7 +15,7 @@ class usersSeeder extends Seeder
         DB::table('users')->insert([
 
             'id' => '100',
-            'cod_cliente' => null,
+            'id_cliente' => null,
             'name' => 'Manolo',
             'email' => 'nomecansum@gmail.com',
             'email_verified_at' => null,
@@ -28,7 +28,7 @@ class usersSeeder extends Seeder
         DB::table('users')->insert([
 
             'id' => '101',
-            'cod_cliente' => null,
+            'id_cliente' => null,
             'name' => 'caca',
             'email' => 'caca@caca.es',
             'email_verified_at' => null,

@@ -21,13 +21,13 @@ class CustomersController extends Controller
         ->select('clientes.nom_cliente',
         'clientes.token_1uso',
         'clientes.img_logo',
-        'clientes.id'
+        'clientes.id_cliente'
         )->paginate(20);
 
         /* ->select('clientes.nom_cliente',
          'clientes.nom_contacto', 'clientes.img_logo','clientes.val_apikey',
          'clientes.token_1uso','clientes.tel_cliente','clientes.CIF',
-         'clientes.fec_borrado','clientes.id','clientes.mca_appmovil',
+         'clientes.fec_borrado','clientes.id_cliente','clientes.mca_appmovil',
          'clientes.mca_vip','clientes.locked','clientes.cod_tipo_cliente') */
 
 

@@ -66,13 +66,13 @@
 
                     <tbody>
                         @foreach($clientesObjects as $clientes)
-                            <tr class="hover-this" onclick="javascript: document.location='{{ route('customers.edit', $clientes->id) }}'">
+                            <tr class="hover-this" onclick="javascript: document.location='{{ route('customers.edit', $clientes->id_cliente) }}'">
 
                                 <td class="pt-3">{{ $clientes->nom_cliente}}</td>
 
                                 <td>{{ $clientes->img_logo }}</td>
 
-                                {{-- <td class="pt-3">{{ $clientes->id}}</td>
+                                {{-- <td class="pt-3">{{ $clientes->id_cliente}}</td>
 
                                 <td>{{ $clientes->nom_cliente }}</td>
 
@@ -99,12 +99,12 @@
                                 <td>{{ $clientes->cod_tipo_cliente }}</td> --}}
 
                             <td style="vertical-align: middle">
-                                <form method="POST" action="{!! route('customers.destroy', $clientes->id) !!}" accept-charset="UTF-8">
+                                <form method="POST" action="{!! route('customers.destroy', $clientes->id_cliente) !!}" accept-charset="UTF-8">
                                 <input name="_method" value="DELETE" type="hidden">
                                 {{ csrf_field() }}
                                     <div class="btn-group btn-group-xs pull-right floating-like-gmail" role="group">
-                                        <a href="{{ route('customers.edit', $clientes->id ) }}" class="btn btn-info  add-tooltip" title="Editar Cliente"  style="float: left"><span class="fa fa-pencil pt-1" ></span></a>
-                                        <button type="submit" class="btn btn-danger add-tooltip" style="float: left" title="Borrar cliente" onclick="if(confirm(&quot;¿Seguro que quiere borrar al cliente?.&quot;)){document.location='{{ url('clientes/delete/'.$clientes->id) }}'}"  style="float: right">
+                                        <a href="{{ route('customers.edit', $clientes->id_cliente) }}" class="btn btn-info  add-tooltip" title="Editar Cliente"  style="float: left"><span class="fa fa-pencil pt-1" ></span></a>
+                                        <button type="submit" class="btn btn-danger add-tooltip" style="float: left" title="Borrar cliente" onclick="if(confirm(&quot;¿Seguro que quiere borrar al cliente?.&quot;)){document.location='{{ url('clientes/delete/'.$clientes->id_cliente) }}'}"  style="float: right">
                                             <span class="fa fa-trash"></span>
                                         </button>
                                     </div>

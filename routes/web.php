@@ -17,14 +17,11 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/logout','Auth\LoginController@logout');
-Route::get('/camaras/status/{id}/{status}','CamarasController@status');
-
 
 Route::group(['middleware' => 'auth'], function() {
     //Pagina pricipal
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
-    Route::get('6camaras/{pag?}','HomeController@mosaico_camaras');
     //
 
     Route::group(['prefix' => 'users'], function () {

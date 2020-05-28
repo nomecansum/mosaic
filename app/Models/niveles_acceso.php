@@ -39,7 +39,7 @@ class niveles_acceso extends Model
     protected $fillable = [
                   'val_nivel_acceso',
                   'des_nivel_acceso',
-                  'cod_cliente'
+                  'id_cliente'
               ];
 
     /**

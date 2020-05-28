@@ -6,7 +6,7 @@
     <ol class="breadcrumb">
         <li><a href="{{url('/')}}"><i class="fa fa-home"></i> </a></li>
         <li class="breadcrumb-item">Configuracion</li>
-        <li class="breadcrumb-item"><a href="{{url('/clientes')}}">Usuarios</a></li>
+        <li class="breadcrumb-item"><a href="{{url('/clientes')}}">Clientes</a></li>
         <li class="breadcrumb-item active">Editar cliente {{ !empty($clientes->nom_cliente) ? $clientes->nom_cliente : '' }}</li>
     </ol>
 @endsection
@@ -24,7 +24,7 @@
                 </ul>
             @endif
 
-            <form method="POST" action="{{ route('customers.create') }}" accept-charset="UTF-8" id="create_customers_form" nom_cliente="create_customers_form" class="form-horizontal form-ajax"  enctype="multipart/form-data">
+            <form method="POST" action="{{ route('customers.update') }}" accept-charset="UTF-8" id="create_customers_form" nom_cliente="create_customers_form" class="form-horizontal form-ajax"  enctype="multipart/form-data">
             {{ csrf_field() }}
             @include ('customers.form', [
                                         'clientes' => null,

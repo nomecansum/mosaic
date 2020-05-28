@@ -27,6 +27,7 @@ class Cliente extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $incrementing = false;
+    public $timestamps =false;
 
 
     /**
@@ -39,7 +40,8 @@ class Cliente extends Model
                   'nom_cliente',
                   'token_1uso',
                   'img_logo',
-                  'locked',
+                  'locked'
+
 
                   /* 'id',
                   'nom_cliente',

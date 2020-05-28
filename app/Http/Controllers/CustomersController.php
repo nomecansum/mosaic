@@ -70,49 +70,52 @@ class CustomersController extends Controller
      *
      * @return Illuminate\Http\RedirectResponse | Illuminate\Routing\Redirector
      */
-    
+
     public function update(Request $request)
-{
-//dd($request->all());
+    {
+        //dd($request->all());
 
-$img_logo = "";
-$data = $this->getData($request);
+        $img_logo = "";
+        $data = $this->getData($request);
 
-if ($request->hasFile('img_logo')) {
-$file = $request->file('img_logo');
-$path = public_path().'/img/customers/';
-$img_usuario = uniqid().rand(000000,999999).'.'.$file->getClientOriginalExtension();
-$file->move($path,$img_usuario);
-}
+        if ($request->hasFile('img_logo')) {
+            $file = $request->file('img_logo');
+            $path = public_path().'/img/customers/';
+            $img_logo = uniqid().rand(000000,999999).'.'.$file->getClientOriginalExtension();
+            $file->move($path,$img_logo);
+        }
 
-$data['img_logo']=$img_logo;
-if($request->id_cliente==0){
-//Insert
-$clientes->create($data);
-} else {
-//Update
-$clientes = Cliente::findOrFail($id);
-$clientes->update($data);
-}
+            $data['img_logo']=$img_logo;
 
-return [
-'title' => "Clientes",
-'message' => 'Cliente '.$request->name. ' actualizado con exito',
-//'url' => url('sections')
-];
-// flash('Usuario '.$request->name. 'actualizado con exito')->success();
-// return redirect()->route('users.users.index');
-try {} catch (Exception $exception) {
-// flash('ERROR: Ocurrio un error actualizando el usuario '.$request->name.' '.$exception->getMessage())->error();
-// return back()->withInput();
-return [
-'title' => "Clientes",
-'error' => 'ERROR: Ocurrio un error actualizando el cliente '.$request->nom_cliente.' '.$exception->getMessage(),
-//'url' => url('sections')
-];
+            if($request->id_cliente==0){
+            //Insert
+            $clientes=Cliente::create($data);
+            } else {
+            //Update
+            $clientes = Cliente::findOrFail($id);
+            $clientes->update($data);
+            }
 
-}
-}
+            return [
+            'title' => "Clientes",
+            'message' => 'Cliente '.$request->nom_cliente. ' actualizado con exito',
+            //'url' => url('sections')
+            ];
+
+            // flash('Usuario '.$request->name. 'actualizado con exito')->success();
+            // return redirect()->route('users.users.index');
+            try {} catch (Exception $exception) {
+            // flash('ERROR: Ocurrio un error actualizando el usuario '.$request->name.' '.$exception->getMessage())->error();
+            // return back()->withInput();
+
+            return [
+            'title' => "Clientes",
+            'error' => 'ERROR: Ocurrio un error actualizando el cliente '.$request->nom_cliente.' '.$exception->getMessage(),
+            //'url' => url('sections')
+            ];
+
+        }
+    }
 
     /**
      * Remove the specified users from the storage.
@@ -146,7 +149,7 @@ return [
     protected function getData(Request $request)
     {
         $rules = [
-            'id'=>'required|integer',
+
             'nom_cliente' => 'nullable|string|min:1|max:500',
             'nom_contacto' => 'nullable|string|min:1|max:500',
             'img_logo' => 'nullable|string|min:1|max:250',
@@ -157,7 +160,6 @@ return [
             'fec_borrado' => 'nullable|date_format:j/n/Y g:i A',
             'mca_appmovil' => 'nullable',
             'mca_vip' => 'nullable',
-            'locked' => 'required',
             'cod_tipo_cliente' => 'nullable',
 
         ];

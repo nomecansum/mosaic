@@ -77,8 +77,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/create','CustomersController@create')->name('customers.create');
         Route::get('/show/{clientes}','CustomersController@show')->name('customers.show');
         Route::get('/{clientes}/edit','CustomersController@edit')->name('customers.edit');
-        Route::post('/', 'CustomersController@store')->name('customers.store');
-        Route::post('clientes/{cientesl}', 'CustomersController@update')->name('customers.update');
+        Route::post('update', 'CustomersController@update')->name('customers.update');
         Route::delete('/clientes/{clientes}','CustomersController@destroy')->name('customers.destroy');
     });
 

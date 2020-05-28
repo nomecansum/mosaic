@@ -13,5 +13,10 @@
         "model-name": "camaras",
         "resource-file": "camaras.json",
         "table-name": "camaras"
+    },
+    {
+        "model-name": "bitacora",
+        "resource-file": "bitacoras.json",
+        "table-name": "bitacora"
     }
 ]

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\bitacora;
 use Illuminate\Http\Request;
 use Exception;
 use DB;
 use Carbon\Carbon;
+use App\Models\bitacora;
 
 class BitacorasController extends Controller
 {

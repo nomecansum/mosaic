@@ -2,7 +2,7 @@
 Use \Carbon\Carbon;
 @endphp
 
-@extends('layouts.web.web')
+@extends('layout')
 
 @section('camino')
 <!-- Content Header (Page header) -->
@@ -77,8 +77,8 @@ Use \Carbon\Carbon;
                     <label>Usuario</label>
                     <select class="form-control select2" style="width: 100%;" tabindex="-1" aria-hidden="true" name="usuario">
                         <option value=""></option>
-                        @foreach(DB::table('usuarios')->get() as $usuario)
-                        <option {{ isset($r) && $r->usuario==$usuario->nombre ? 'selected' : '' }} value="{{ $usuario->nombre }}">{{ $usuario->nombre }}</option>
+                        @foreach($usuarios as $key=>$value)
+                        <option {{ isset($r) && $r->usuario==$value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -87,8 +87,8 @@ Use \Carbon\Carbon;
                 <div class="form-group">  
                     <label>Modulo</label>
                     <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Seleccione modulo" style="width: 100%; color #000;" tabindex="-1" aria-hidden="true" name="modulos[]"> 
-                        @foreach(DB::table('modulos')->get() as $modulo)
-                        <option {{ isset($r) && array_search($modulo,$r->modulos)!=false ? 'selected' : '' }}  value="{{ $modulo->modulo }}">{{ $modulo->modulo }}</option>
+                        @foreach($modulos as $modulo)
+                        <option {{ isset($r) && array_search($modulo,$r->modulos)!=false ? 'selected' : '' }}  value="{{ $modulo }}">{{ $modulo }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -99,7 +99,10 @@ Use \Carbon\Carbon;
             
         </div>
         </form>
-        @if(count($bitacoras) == 0)
+    @php
+        //dd($bitacoras);
+    @endphp
+        @if(!isset($bitacoras))
             <div class="panel-body text-center">
                 <h4>No Bitacoras Available.</h4>
             </div>
@@ -144,9 +147,9 @@ Use \Carbon\Carbon;
             </div>
         </div>
 
-        <div class="panel-footer">
+        {{-- <div class="panel-footer">
             {!! $bitacoras->render() !!}
-        </div>
+        </div> --}}
         
         @endif
     

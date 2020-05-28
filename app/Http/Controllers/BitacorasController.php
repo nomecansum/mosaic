@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\bitacora;
 use Illuminate\Http\Request;
 use Exception;
 use DB;
 use Carbon\Carbon;
-use App\Models\bitacora;
 
 class BitacorasController extends Controller
 {
@@ -19,12 +19,18 @@ class BitacorasController extends Controller
      */
     public function index()
     {
-        $bitacoras = bitacora::orderby('fecha','desc')->paginate(50);
-        $bitacoras = bitacora::all('users')->paginate(50);
+        $bitacoras = DB::table('bitacora')
+            ->join('users','bitacora.id_usuario','users.id')
+            ->join('clientes','clientes.id','users.id_cliente')
+            ->get();
 
-        return view('bitacoras.index', compact('bitacoras'));
+        $usuarios=$bitacoras->pluck('name','id_usuario')->unique();
+
+        $modulos=$bitacoras->pluck('id_modulo')->unique();
+
+        return view('bitacoras.index', compact('bitacoras','usuarios','modulos'));
     }
-
+    
     public function search(Request $r)
     {
         try {
@@ -43,8 +49,8 @@ class BitacorasController extends Controller
             ->when($r->tipo_log, function($query) use ($r) {
                return  $query->where('status', $r->tipo_log);
               })
-            ->when($r->users, function($query) use ($r) {
-                return  $query->where('id', $r->users);
+            ->when($r->usuario, function($query) use ($r) {
+                return  $query->where('id_usuario', $r->usuario);
                })
             ->when($fechas, function($query) use ($fechas) {
                 return  $query->whereBetween('fecha', [$fechas[0],$fechas[1]]);
@@ -58,26 +64,26 @@ class BitacorasController extends Controller
              } catch (Exception $exception) {
             flash('ERROR: Ocurrio un error al hacer la busqueda '.$exception->getMessage())->error();
             return back()->withInput();
-        }
+        }        
     }
 
-    /* protected function getData(Request $request)
+    protected function getData(Request $request)
     {
         $rules = [
                 'id_usuario' => 'required|string|min:1|max:100',
             'id_modulo' => 'required|string|min:1|max:50',
             'accion' => 'required|string|min:1|max:200',
             'status' => 'required|string|min:1|max:10',
-            'fecha' => 'required|date_format:j/n/Y g:i A',
+            'fecha' => 'required|date_format:j/n/Y g:i A', 
         ];
 
-
+        
         $data = $request->validate($rules);
 
 
 
 
         return $data;
-    } */
+    }
 
 }

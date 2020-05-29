@@ -23,12 +23,12 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $usersObjects = DB::table('users')
-        ->join('niveles_acceso','users.cod_nivel', 'niveles_acceso.cod_nivel')
-        ->paginate(25);
+        $usersObjects = DB::table('users')->paginate(2);
+        //->join('niveles_acceso','users.cod_nivel', 'niveles_acceso.cod_nivel')
+        //->paginate(25);
         //$usersObjects = users::with('grupo','perfile')->paginate(25);
 
-        return view('users.index', compact('usersObjects'));
+        return view('users.index', ['users' => $usersObjects],compact('usersObjects'));
     }
 
     /**

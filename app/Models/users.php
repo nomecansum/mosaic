@@ -11,6 +11,10 @@ class users extends Model
         return $this->hasMany(Cliente::class);
     }
 
+    public function bitacoras(){
+        return $this->hasMany(Bitacora::class);
+    }
+
     public function niveles_acceso(){
         return $this->belongsTo(niveles_acceso::class);
 }

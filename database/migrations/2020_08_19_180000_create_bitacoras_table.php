@@ -15,12 +15,15 @@ class CreateBitacorasTable extends Migration
     {
         Schema::create('bitacora', function (Blueprint $table) {
             $table->id('id_bitacora');
-            $table->string('id_usuario', 100);
+
             $table->string('id_modulo',50);
             $table->string('accion',2000);
             $table->string('status',10);
             $table->timestamp('fecha');
             $table->timestamps();
+
+            $table->bigInteger('id_usuario')->unsigned()->nullable();
+            $table->foreign('id_usuario')->references('id')->on('users')->nullable();
         });
     }
 

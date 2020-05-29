@@ -41,13 +41,13 @@ Use \Carbon\Carbon;
     @endif
 
     <div class="panel panel-default">
-        
+
         <div class="row"><br></div>
         <form name="frm_busca_bitacora" method="POST" action="{{ url('bitacoras/search') }}">
         <div class="row">
-            
+
         {{ csrf_field() }}
-            <div class="col-xs-1" style="width: 110px">
+            <div class="col-md-1" style="margin-left:30px">
                 <div class="form-group">
                     <label>Mostrar</label>
                     <select class="form-control" name="tipo_log">
@@ -57,21 +57,21 @@ Use \Carbon\Carbon;
                     </select>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label>Fechas:</label>
-    
+
                     <div class="input-group">
-                        
+
                         <input type="text" class="form-control pull-right" id="fechas" name="fechas">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                         </div>
                     </div>
                     <!-- /.input group -->
-                </div> 
+                </div>
             </div>
-            
+
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Usuario</label>
@@ -84,19 +84,19 @@ Use \Carbon\Carbon;
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="form-group">  
+                <div class="form-group">
                     <label>Modulo</label>
-                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Seleccione modulo" style="width: 100%; color #000;" tabindex="-1" aria-hidden="true" name="modulos[]"> 
+                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Seleccione modulo" style="width: 100%; color #000;" tabindex="-1" aria-hidden="true" name="modulos[]">
                         @foreach($modulos as $modulo)
                         <option {{ isset($r) && array_search($modulo,$r->modulos)!=false ? 'selected' : '' }}  value="{{ $modulo }}">{{ $modulo }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
-            <div class="col-md-1 form-group">
-                <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 34px"><i class="fa fa-search"></i> Buscar</button>
+            <div class="col-md-1 form-group" style="width: auto">
+                <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 28px; margin-right: 30px"><i class="fa fa-search"></i> Buscar</button>
             </div>
-            
+
         </div>
         </form>
     @php
@@ -107,7 +107,7 @@ Use \Carbon\Carbon;
                 <h4>No Bitacoras Available.</h4>
             </div>
         @else
-        
+
         <div class="panel-body panel-body-with-table">
             <div class="table-responsive">
 
@@ -147,12 +147,12 @@ Use \Carbon\Carbon;
             </div>
         </div>
 
-        {{-- <div class="panel-footer">
+        <div class="panel-footer">
             {!! $bitacoras->render() !!}
-        </div> --}}
-        
+        </div>
+
         @endif
-    
+
     </div>
 @endsection
 @php
@@ -163,7 +163,7 @@ Use \Carbon\Carbon;
         $fechas[0]=date('Y-m-d');
         $fechas[1]=date('Y-m-d', strtotime(date('Y-m-d') . " + 30 day"));
     }
-    
+
 @endphp
 @section('scripts')
     <script>

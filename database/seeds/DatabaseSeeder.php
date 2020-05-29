@@ -18,5 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Secciones_perfilesSeeder::class);
 
         $this->call(usersSeeder::class);
+
+        $this->call(BitacoraSeeder::class);
     }
 }

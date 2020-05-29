@@ -19,18 +19,19 @@ class BitacorasController extends Controller
      */
     public function index()
     {
-        $bitacoras = DB::table('bitacora')
-            ->join('users','bitacora.id_usuario','users.id')
-            ->join('clientes','clientes.id','users.id_cliente')
-            ->get();
+        $bitacoras = DB::table('bitacora')->paginate(2);
+            //->join('users','bitacora.id_usuario','users.id')
+            //->join('clientes','clientes.id','users.id_cliente')
+
+            //->get();
 
         $usuarios=$bitacoras->pluck('name','id_usuario')->unique();
 
         $modulos=$bitacoras->pluck('id_modulo')->unique();
 
-        return view('bitacoras.index', compact('bitacoras','usuarios','modulos'));
+        return view('bitacoras.index', ['bitacora' => $bitacoras], compact('bitacoras','usuarios','modulos'));
     }
-    
+
     public function search(Request $r)
     {
         try {
@@ -64,7 +65,7 @@ class BitacorasController extends Controller
              } catch (Exception $exception) {
             flash('ERROR: Ocurrio un error al hacer la busqueda '.$exception->getMessage())->error();
             return back()->withInput();
-        }        
+        }
     }
 
     protected function getData(Request $request)
@@ -74,10 +75,10 @@ class BitacorasController extends Controller
             'id_modulo' => 'required|string|min:1|max:50',
             'accion' => 'required|string|min:1|max:200',
             'status' => 'required|string|min:1|max:10',
-            'fecha' => 'required|date_format:j/n/Y g:i A', 
+            'fecha' => 'required|date_format:j/n/Y g:i A',
         ];
 
-        
+
         $data = $request->validate($rules);
 
 

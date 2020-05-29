@@ -6,8 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class bitacora extends Model
 {
-    
 
+    public function users(){
+
+        return $this->belongsTo(users::class);
+}
     /**
      * The database table used by the model.
      *
@@ -43,14 +46,14 @@ class bitacora extends Model
      * @var array
      */
     protected $dates = [];
-    
+
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [];
-    
+
 
 
     /**

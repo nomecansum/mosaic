@@ -20,11 +20,13 @@ class CreateBitacorasTable extends Migration
             $table->string('accion',2000);
             $table->string('status',10);
             $table->timestamp('fecha');
+            $table->string('id_seccion',50)->nullable();
             $table->timestamps();
 
             $table->bigInteger('id_usuario')->unsigned()->nullable();
             $table->foreign('id_usuario')->references('id')->on('users')->nullable();
         });
+
     }
 
     /**

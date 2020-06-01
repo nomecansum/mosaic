@@ -19,7 +19,7 @@ class BitacorasController extends Controller
      */
     public function index()
     {
-        $bitacoras = DB::table('bitacora')->paginate(2);
+        $bitacoras = DB::table('bitacora')->paginate(20);
             //->join('users','bitacora.id_usuario','users.id')
             //->join('clientes','clientes.id','users.id_cliente')
 

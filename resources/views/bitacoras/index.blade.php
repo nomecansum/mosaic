@@ -4,6 +4,16 @@ Use \Carbon\Carbon;
 
 @extends('layout')
 
+@section('breadcrumb')
+<!-- Content Header (Page header) -->
+<ol class="breadcrumb">
+    <li><a href="{{url('/')}}"><i class="demo-pli-home"></i> </a></li>
+    <li class="">Configuracion</li>
+    <li class="active">bitacora</li>
+</ol>
+
+@endsection
+
 @section('camino')
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -114,16 +124,19 @@ Use \Carbon\Carbon;
                 <table class="table table-striped" >
                     <thead>
                         <tr>
-                            <th>Usuario</th>
-                            <th>Modulo</th>
-                            <th>Accion</th>
-                            <th>Status</th>
-                            <th style="width: 140px">Fecha</th>
+                            <th>id_bitacora</th>
+                            <th>id_usuario</th>
+                            <th>id_modulo</th>
+                            <th>accion</th>
+                            <th>status</th>
+                            <th>fecha</th>
+                            <th style="width: 140px">id_seccion</th>
                         </tr>
                     </thead>
                     <tbody>
                     @foreach($bitacoras as $bitacora)
                         <tr @if($bitacora->status=="error" || strpos($bitacora->accion,"ERROR:")!==false) class="bg-red color-palette" @endif>
+                            <td>{{ $bitacora->id_bitacora }}</td>
                             <td>{{ $bitacora->id_usuario }}</td>
                             <td>{{ $bitacora->id_modulo }}</td>
                             @php
@@ -139,6 +152,7 @@ Use \Carbon\Carbon;
                             <td class="{{ $clase }}" style="word-break: break-all;">{{ $bitacora->accion }}</td>
                             <td ><span @if($bitacora->status=="ok") class="bg-green-active color-palette" @endif style="padding: 0 5px 0 5px">{{ $bitacora->status }}</span></td>
                             <td>{!! beauty_fecha($bitacora->fecha) !!}</td>
+                            <td>{{ $bitacora->id_seccion }}</td>
                         </tr>
                     @endforeach
                     </tbody>

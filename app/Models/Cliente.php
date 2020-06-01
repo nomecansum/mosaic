@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\niveles_acceso;
+use App\secciones;
 use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model

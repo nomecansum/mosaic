@@ -229,8 +229,8 @@
     {{-- Daterangepicker --}}
     <link href="{{ url('/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet">{{-- Datepickers --}}
     <script src="{{ url('/plugins/momentjs/moment.js') }}"></script>
-    <script src="{{ url('/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ url('/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>
+    {{-- <script src="{{ url('/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ url('/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script> --}}
     <script src="{{ url('/plugins/daterangepicker/daterangepicker.js') }}"></script>
 
     @include('layouts.main_scripts')

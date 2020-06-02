@@ -35,6 +35,24 @@ Use \Carbon\Carbon;
       <!-- /.content-header -->
 @endsection
 
+@section('styles')
+<style type="text/css">
+
+    .select2-container{
+        height: 40px;
+    }
+       
+    .select2-selection{
+        height: 40px;
+    }
+
+    .select2-selection__choice{
+        height: 30px;
+        padding-top: 2px;
+        background-color: #25476a;
+    }
+  
+</style>
 
 @section('content')
 
@@ -60,25 +78,23 @@ Use \Carbon\Carbon;
             <div class="col-md-1" style="margin-left:30px">
                 <div class="form-group">
                     <label>Status</label>
-                    <select class="form-control" name="status">
+                    <select class="form-control" name="status"  style="height: 40px;">
                         <option value=""></option>
                         <option>ok</option>
                         <option>error</option>
                     </select>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label>Fechas:</label>
 
-                    <div class="input-group">
-
-                        <input type="text" class="form-control pull-right" id="fechas" name="fechas">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                    <div class="input-group mar-btm">
+                        <input type="text" class="form-control pull-right" id="fechas" autocomplete="off" name="fechas" style="height: 40px;" value="{{ isset($r)?Carbon::parse($fechas[0])->format('d/m/Y').' - '.Carbon::parse($fechas[1])->format('d/m/Y'):'' }}">
+                        <div class="input-group-btn">
+                            <span class="btn input-group-text btn-mint"  style="height: 40px"><i class="fa fa-calendar mt-1"></i></span>
                         </div>
                     </div>
-                    <!-- /.input group -->
                 </div>
             </div>
 
@@ -97,7 +113,7 @@ Use \Carbon\Carbon;
             <div class="col-md-2">
                 <div class="form-group">
                     <label>Modulo</label>
-                    <select class="form-control select2" style="width: 100%;" tabindex="-1" aria-hidden="true" name="modulos">
+                    <select class="form-control select2" multiple=""  style="width: 100%; height: 40px" tabindex="-1" aria-hidden="true" name="modulos[]">
                         <option value=""></option>
                         @foreach($modulos as $key=>$value)
                         <option {{ isset($r) && $r->modulos==$value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
@@ -106,24 +122,15 @@ Use \Carbon\Carbon;
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
-
                     <label>Accion:</label>
-
-                    <div class="input-group" style="width: 100%;">
-
-                        <input type="text" class="form-control" id="fechas" name="accion">
-                        <div class="input-group-append">
-
-                        </div>
-                    </div>
-                    <!-- /.input group -->
+                    <input type="text" class="form-control" id="fechas" name="accion" style="width: 100%; height: 40px">
                 </div>
             </div>
 
-            <div class="col-md-1 form-group" style="width: auto">
-                <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 28px; margin-right: 30px"><i class="fa fa-search"></i> Buscar</button>
+            <div class="col-md-1" style="width: auto">
+                <button type="submit" class="btn btn-primary" style="margin-top: 22px; margin-right: 30px; height: 40px"><i class="fa fa-search"></i> Buscar</button>
             </div>
 
         </div>
@@ -154,7 +161,7 @@ Use \Carbon\Carbon;
                     </thead>
                     <tbody>
                     @foreach($bitacoras as $bitacora)
-                        <tr @if($bitacora->status=="error" || strpos($bitacora->accion,"ERROR:")!==false) class="bg-red color-palette" @endif>
+                        <tr style="font-size: 13px" @if($bitacora->status=="error" || strpos($bitacora->accion,"ERROR:")!==false) class="bg-red color-palette" @endif>
                             <td>{{ $bitacora->id_bitacora }}</td>
                             <td>{{ $bitacora->id_usuario }}</td>
                             <td>{{ $bitacora->id_modulo }}</td>

@@ -59,11 +59,11 @@ Use \Carbon\Carbon;
         {{ csrf_field() }}
             <div class="col-md-1" style="margin-left:30px">
                 <div class="form-group">
-                    <label>Mostrar</label>
-                    <select class="form-control" name="tipo_log">
+                    <label>Status</label>
+                    <select class="form-control" name="status">
                         <option value=""></option>
-                        <option  {{ isset($r) && $r->tipo_log=="ok" ? 'selected' : '' }} value="ok">ok</option>
-                        <option {{ isset($r) && $r->tipo_log=="error" ? 'selected' : '' }} value="error">error</option>
+                        <option>ok</option>
+                        <option>error</option>
                     </select>
                 </div>
             </div>
@@ -82,7 +82,7 @@ Use \Carbon\Carbon;
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label>Usuario</label>
                     <select class="form-control select2" style="width: 100%;" tabindex="-1" aria-hidden="true" name="usuario">
@@ -93,16 +93,35 @@ Use \Carbon\Carbon;
                     </select>
                 </div>
             </div>
-            <div class="col-md-4">
+
+            <div class="col-md-2">
                 <div class="form-group">
                     <label>Modulo</label>
-                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Seleccione modulo" style="width: 100%; color #000;" tabindex="-1" aria-hidden="true" name="modulos[]">
-                        @foreach($modulos as $modulo)
-                        <option {{ isset($r) && array_search($modulo,$r->modulos)!=false ? 'selected' : '' }}  value="{{ $modulo }}">{{ $modulo }}</option>
+                    <select class="form-control select2" style="width: 100%;" tabindex="-1" aria-hidden="true" name="modulos">
+                        <option value=""></option>
+                        @foreach($modulos as $key=>$value)
+                        <option {{ isset($r) && $r->modulos==$value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+
+                    <label>Accion:</label>
+
+                    <div class="input-group" style="width: 100%;">
+
+                        <input type="text" class="form-control" id="fechas" name="accion">
+                        <div class="input-group-append">
+
+                        </div>
+                    </div>
+                    <!-- /.input group -->
+                </div>
+            </div>
+
             <div class="col-md-1 form-group" style="width: auto">
                 <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 28px; margin-right: 30px"><i class="fa fa-search"></i> Buscar</button>
             </div>
@@ -162,7 +181,7 @@ Use \Carbon\Carbon;
         </div>
 
         <div class="panel-footer">
-            {!! $bitacoras->render() !!}
+            {{-- {!! $bitacoras->render() !!} --}}
         </div>
 
         @endif
@@ -174,9 +193,19 @@ Use \Carbon\Carbon;
     if(isset($r)){
         $fechas=explode(" - ",$r->fechas);
     } else {
-        $fechas[0]=date('Y-m-d');
-        $fechas[1]=date('Y-m-d', strtotime(date('Y-m-d') . " + 30 day"));
-    }
+        /* $fechas[0]=date('Y-m-d');
+        $fechas[1]=date('Y-m-d', strtotime(date('Y-m-d') . " + 30 day")); */
+        //$fechas[0]=adaptar_fecha($fechas[0]);
+        
+        if (isset($r->fechas) && $r->fechas[0]!=null && $r->fechas[1]!=null){
+            $fechas=explode(" - ",$r->fechas);
+            $fechas[0]=adaptar_Fecha($fechas[0]);
+            $fechas[1]=adaptar_Fecha($fechas[1]);
+            //dd($fechas);
+            } else {
+            $fechas=null;
+            }
+                }
 
 @endphp
 @section('scripts')
@@ -187,7 +216,7 @@ Use \Carbon\Carbon;
             locale: {
                 cancelLabel: 'Clear'
             },
-            opens: 'left',
+            opens: 'right',
         }, function(start_date, end_date) {
             $('#fechas').val(start_date.format('DD/MM/YYYY')+' - '+end_date.format('DD/MM/YYYY'));
         });

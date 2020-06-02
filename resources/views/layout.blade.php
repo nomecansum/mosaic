@@ -43,7 +43,8 @@
     <link href="{{url('/plugins/jquery-minicolors-master/jquery.minicolors.css')}}" rel="stylesheet" media="all">
     {{--  sweetAlert  --}}
     <link href="{{url('/plugins/sweetalert/dist/sweetalert2.min.css')}}" rel="stylesheet" media="all">
-
+    {{-- Daterangepicker --}}
+    <link href="{{ asset('/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet">
     <!--=================================================
 
     REQUIRED
@@ -225,6 +226,12 @@
     <script type="text/javascript" src="{{url('/plugins/inputmask')}}/dist/bindings/inputmask.binding.js"></script>
     {{--  Colorpicker  --}}
     <script src="{{url('/plugins/sweetalert/dist/sweetalert2.all.min.js')}}"></script>
+    {{-- Daterangepicker --}}
+    <link href="{{ url('/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet">{{-- Datepickers --}}
+    <script src="{{ url('/plugins/momentjs/moment.js') }}"></script>
+    <script src="{{ url('/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ url('/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ url('/plugins/daterangepicker/daterangepicker.js') }}"></script>
 
     @include('layouts.main_scripts')
     @yield('scripts')

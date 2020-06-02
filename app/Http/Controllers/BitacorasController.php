@@ -45,8 +45,8 @@ class BitacorasController extends Controller
                 //$fechas[0]=Carbon::parse(Carbon::createFromFormat('d/m/Y', $fechas[0]))->format('Y-m-d');
                 //$fechas[1]=Carbon:/:parse(Carbon::createFromFormat('d/m/Y', $fechas[1]))->format('Y-m-d');
 
-                $fechas[0]=Carbon::parse($fechas[0]);
-                $fechas[1]=Carbon::parse($fechas[1]);
+                $fechas[0]=adaptar_fecha($fechas[0]);
+                $fechas[1]=adaptar_fecha($fechas[1]);
             } else {
                 $fechas=null;
             }

@@ -79,7 +79,7 @@ class BitacorasController extends Controller
 
             $modulos=$bitacoras->pluck('id_modulo')->unique()->toArray(); 
 
-            return view('bitacoras.index', ['bitacora' => $bitacoras], compact('bitacoras', 'usuarios', 'modulos'));
+            return view('bitacoras.fill_table', ['bitacora' => $bitacoras], compact('bitacoras', 'usuarios', 'modulos'));
             try {} catch (Exception $exception) {
             flash('ERROR: Ocurrio un error al hacer la busqueda '.$exception->getMessage())->error();
             return back()->withInput();
@@ -89,7 +89,7 @@ class BitacorasController extends Controller
     protected function getData(Request $request)
     {
         $rules = [
-                'id_usuario' => 'required|string|min:1|max:100',
+            'id_usuario' => 'required|string|min:1|max:100',
             'id_modulo' => 'required|string|min:1|max:50',
             'accion' => 'required|string|min:1|max:200',
             'status' => 'required|string|min:1|max:10',

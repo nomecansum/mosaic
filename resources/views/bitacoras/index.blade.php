@@ -1,5 +1,6 @@
 @php
 Use \Carbon\Carbon;
+
 @endphp
 
 @extends('layout')
@@ -13,6 +14,8 @@ Use \Carbon\Carbon;
 </ol>
 
 @endsection
+
+
 
 @section('camino')
 <!-- Content Header (Page header) -->
@@ -41,7 +44,7 @@ Use \Carbon\Carbon;
     .select2-container{
         height: 40px;
     }
-       
+
     .select2-selection{
         height: 40px;
     }
@@ -51,8 +54,9 @@ Use \Carbon\Carbon;
         padding-top: 2px;
         background-color: #25476a;
     }
-  
+
 </style>
+
 
 @section('content')
 
@@ -71,7 +75,7 @@ Use \Carbon\Carbon;
     <div class="panel panel-default">
 
         <div class="row"><br></div>
-        <form name="frm_busca_bitacora" method="POST" action="{{ url('bitacoras/search') }}">
+        <form id="formbuscador" name="frm_busca_bitacora" method="POST" action="{{ url('bitacoras/search') }}">
         <div class="row">
 
         {{ csrf_field() }}
@@ -80,8 +84,8 @@ Use \Carbon\Carbon;
                     <label>Status</label>
                     <select class="form-control" name="status"  style="height: 40px;">
                         <option value=""></option>
-                        <option>ok</option>
-                        <option>error</option>
+                        <option value="ok">ok</option>
+                        <option value="error">error</option>
                     </select>
                 </div>
             </div>
@@ -104,7 +108,7 @@ Use \Carbon\Carbon;
                     <select class="form-control select2" style="width: 100%;" tabindex="-1" aria-hidden="true" name="usuario">
                         <option value=""></option>
                         @foreach($usuarios as $key=>$value)
-                        <option {{ isset($r) && $r->usuario==$value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
+                            <option {{ isset($r) && $r->usuario==$value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -147,7 +151,8 @@ Use \Carbon\Carbon;
         <div class="panel-body panel-body-with-table">
             <div class="table-responsive">
 
-                <table class="table table-striped" >
+                {{-- <table class="table table-striped"> --}}
+                <div id="myFilter">
                     <thead>
                         <tr>
                             <th>id_bitacora</th>
@@ -182,7 +187,9 @@ Use \Carbon\Carbon;
                         </tr>
                     @endforeach
                     </tbody>
-                </table>
+
+                </div>
+                {{-- </table> --}}
 
             </div>
         </div>
@@ -203,7 +210,7 @@ Use \Carbon\Carbon;
         /* $fechas[0]=date('Y-m-d');
         $fechas[1]=date('Y-m-d', strtotime(date('Y-m-d') . " + 30 day")); */
         //$fechas[0]=adaptar_fecha($fechas[0]);
-        
+
         if (isset($r->fechas) && $r->fechas[0]!=null && $r->fechas[1]!=null){
             $fechas=explode(" - ",$r->fechas);
             $fechas[0]=adaptar_Fecha($fechas[0]);
@@ -216,6 +223,7 @@ Use \Carbon\Carbon;
 
 @endphp
 @section('scripts')
+
     <script>
      //Date range picker
      $('#fechas').daterangepicker({
@@ -232,4 +240,11 @@ Use \Carbon\Carbon;
         $('#fechas').val('{{ $fechas[0] }} - {{ $fechas[1] }}');
     @endif;
     </script>
+
+    <script>
+
+        $('#formbuscador').submit(ajax_filter);
+
+    </script>
+
 @endsection

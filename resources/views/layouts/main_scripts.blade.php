@@ -224,4 +224,31 @@
             $('#spin_login').hide();
         });
     });
+    //Para el formulario del index.blade bitacoras
+    function ajax_filter(event) {
+        block_espere("Obteniendo datos...");
+        let form = $(this);
+        event.preventDefault();
+
+        $('#action_orig').val($(this).attr('action'));
+
+        $.post($(this).attr('action'), $(this).serializeArray(), function(data, textStatus, xhr) {
+        block_espere("Renderizando datos...");
+
+        $('#myFilter').html(data);
+        fin_espere();
+
+        })
+        .fail(function(err) {
+        let error = JSON.parse(err.responseText);
+        console.log(error);
+
+        toast_error("ERROR",error.message);
+        })
+        .always(function() {
+        fin_espere();
+        //console.log("complete");
+        form.find('[type="submit"]').attr('disabled',false);
+        });
+        }
 </script>

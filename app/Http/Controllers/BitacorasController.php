@@ -21,7 +21,7 @@ class BitacorasController extends Controller
      */
     public function index()
     {
-        $bitacoras = DB::table('bitacora')->paginate(20);
+        $bitacoras = Bitacora::paginate(20);
 
             //->join('users','bitacora.id_usuario','users.id')
             //->join('clientes','clientes.id','users.id_cliente')
@@ -33,6 +33,7 @@ class BitacorasController extends Controller
         $modulos=$bitacoras->pluck('id_modulo')->unique();
 
         return view('bitacoras.index', ['bitacora' => $bitacoras], compact('bitacoras','usuarios','modulos'));
+
     }
 
     public function search(Request $r)
@@ -45,8 +46,8 @@ class BitacorasController extends Controller
                 //$fechas[0]=Carbon::parse(Carbon::createFromFormat('d/m/Y', $fechas[0]))->format('Y-m-d');
                 //$fechas[1]=Carbon:/:parse(Carbon::createFromFormat('d/m/Y', $fechas[1]))->format('Y-m-d');
 
-                $fechas[0]=adaptar_fecha($fechas[0]);
-                $fechas[1]=adaptar_fecha($fechas[1]);
+                $fechas[0]=Carbon::parse($fechas[0]);
+                $fechas[1]=Carbon::parse($fechas[1]);
             } else {
                 $fechas=null;
             }
@@ -54,9 +55,9 @@ class BitacorasController extends Controller
             //dd($fechas);//
             //dd($fechas[0].' '.$fechas[1]);//
 
-            $bitacoras=DB::table('bitacora')
+            $bitacoras=Bitacora::
 
-            ->when($r->tipo_log, function($query) use ($r) {
+            when($r->tipo_log, function($query) use ($r) {
                return  $query->where('status', $r->tipo_log);
               })
             ->when($r->usuario, function($query) use ($r) {
@@ -76,9 +77,9 @@ class BitacorasController extends Controller
 
             $usuarios=$bitacoras->pluck('id_usuario')->unique()->toArray();
 
-            $modulos=$bitacoras->pluck('id_modulo')->unique()->toArray();
+            $modulos=$bitacoras->pluck('id_modulo')->unique()->toArray(); 
 
-            return view('bitacoras.index', compact('bitacoras','usuarios', 'modulos'));
+            return view('bitacoras.index', ['bitacora' => $bitacoras], compact('bitacoras', 'usuarios', 'modulos'));
             try {} catch (Exception $exception) {
             flash('ERROR: Ocurrio un error al hacer la busqueda '.$exception->getMessage())->error();
             return back()->withInput();

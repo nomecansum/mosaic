@@ -4,10 +4,10 @@
             <th>id_bitacora</th>
             <th>usuario</th>
             <th>id_modulo</th>
+            <th>id_seccion</th>
             <th>accion</th>
             <th>status</th>
-            <th>fecha</th>
-            <th style="width: 140px">id_seccion</th>
+            <th style="width: 140px">fecha</th>
         </tr>
     </thead>
     <tbody>
@@ -16,6 +16,7 @@
             <td>{{ $bitacora->id_bitacora }}</td>
             <td>{{ $bitacora->name }}</td>
             <td>{{ $bitacora->id_modulo }}</td>
+            <td>{{ $bitacora->id_seccion }}</td>
             @php
                 $clase="";
                 if(strpos($bitacora->id_modulo,"ATIS Maniobras")!==false && $bitacora->status!=="error"){
@@ -29,7 +30,6 @@
             <td class="{{ $clase }}" style="word-break: break-all;">{{ $bitacora->accion }}</td>
             <td ><span @if($bitacora->status=="ok") class="bg-green-active color-palette" @endif style="padding: 0 5px 0 5px">{{ $bitacora->status }}</span></td>
             <td>{!! beauty_fecha($bitacora->fecha) !!}</td>
-            <td>{{ $bitacora->id_seccion }}</td>
         </tr>
     @endforeach
     </tbody>

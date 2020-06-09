@@ -22,7 +22,7 @@ class BitacorasController extends Controller
     public function index()
     {
 
-        $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')->get();
+        $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')->paginate(20);
         //dd($bitacoras);
             //->join('users','bitacora.id_usuario','users.id')
             //->join('clientes','clientes.id','users.id_cliente')

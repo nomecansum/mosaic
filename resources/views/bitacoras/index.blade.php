@@ -158,7 +158,7 @@ Use \Carbon\Carbon;
         </div>
 
         <div class="panel-footer">
-            {{-- {!! $bitacoras->render() !!} --}}
+            {!! $bitacoras->render() !!}
         </div>
 
         @endif

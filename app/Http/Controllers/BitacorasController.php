@@ -21,6 +21,12 @@ class BitacorasController extends Controller
      */
     public function index()
     {
+        $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')->get();
+
+        $usuarios=$bitacoras->pluck('name','id_usuario')->unique();
+
+        $modulos=$bitacoras->pluck('id_modulo')->unique();
+
 
         $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')->paginate(20);
         //dd($bitacoras);
@@ -29,9 +35,6 @@ class BitacorasController extends Controller
 
             //->get();
 
-        $usuarios=$bitacoras->pluck('name','id_usuario')->unique();
-
-        $modulos=$bitacoras->pluck('id_modulo')->unique();
 
         return view('bitacoras.index', ['bitacora' => $bitacoras], compact('bitacoras','usuarios','modulos'));
 

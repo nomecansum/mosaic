@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>id_bitacora</th>
-            <th>id_usuario</th>
+            <th>usuario</th>
             <th>id_modulo</th>
             <th>accion</th>
             <th>status</th>
@@ -14,7 +14,7 @@
     @foreach($bitacoras as $bitacora)
         <tr style="font-size: 13px" @if($bitacora->status=="error" || strpos($bitacora->accion,"ERROR:")!==false) class="bg-red color-palette" @endif>
             <td>{{ $bitacora->id_bitacora }}</td>
-            <td>{{ $bitacora->id_usuario }}</td>
+            <td>{{ $bitacora->name }}</td>
             <td>{{ $bitacora->id_modulo }}</td>
             @php
                 $clase="";

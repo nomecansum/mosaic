@@ -56,9 +56,9 @@ class BitacorasController extends Controller
             //dd($fechas);//
             //dd($fechas[0].' '.$fechas[1]);//
 
-            $bitacoras=Bitacora::
+            $bitacoras=Bitacora::join('users','bitacora.id_usuario','users.id')
 
-            when($r->tipo_log, function($query) use ($r) {
+            ->when($r->tipo_log, function($query) use ($r) {
                return  $query->where('status', $r->tipo_log);
               })
             ->when($r->usuario, function($query) use ($r) {

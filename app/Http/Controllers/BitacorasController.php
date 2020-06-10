@@ -28,6 +28,8 @@ class BitacorasController extends Controller
 
         $modulos=$bitacoras->pluck('id_modulo')->unique();
 
+        $statuses=$bitacoras->pluck('status')->unique();
+
 
         $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')->paginate(20);
         //dd($bitacoras);
@@ -37,7 +39,7 @@ class BitacorasController extends Controller
             //->get();
 
 
-        return view('bitacoras.index', ['bitacora' => $bitacoras], compact('bitacoras','usuarios','modulos'));
+        return view('bitacoras.index', ['bitacora' => $bitacoras], compact('bitacoras','usuarios','modulos','statuses'));
 
     }
 
@@ -84,7 +86,9 @@ class BitacorasController extends Controller
 
             $modulos=$bitacoras->pluck('id_modulo')->unique()->toArray();
 
-            return view('bitacoras.fill_table', ['bitacora' => $bitacoras], compact('bitacoras', 'usuarios', 'modulos'));
+            $statuses=$bitacoras->pluck('status')->unique()->toArray();
+
+            return view('bitacoras.fill_table', ['bitacora' => $bitacoras], compact('bitacoras', 'usuarios', 'modulos','statuses'));
             try {} catch (Exception $exception) {
             flash('ERROR: Ocurrio un error al hacer la busqueda '.$exception->getMessage())->error();
             return back()->withInput();

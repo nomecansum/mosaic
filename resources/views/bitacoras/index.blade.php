@@ -80,7 +80,7 @@ Use \Carbon\Carbon;
 
         {{ csrf_field() }}
 
-            <div class="col-md-1" style="margin-left:30px">
+            {{-- <div class="col-md-1" style="margin-left:30px">
                 <div class="form-group">
                     <label>Status</label>
                     <select class="form-control" name="status"  style="height: 40px;">
@@ -89,7 +89,20 @@ Use \Carbon\Carbon;
                         <option value="error">error</option>
                     </select>
                 </div>
+            </div> --}}
+
+            <div class="col-md-1" style="margin-left:20px">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control select2" style="width: 100%;" tabindex="-1" aria-hidden="true" name="status">
+                        <option value=""></option>
+                        @foreach($statuses as $key=>$value)
+                            <option {{ isset($r) && $r->status==$value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
+
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Fechas:</label>

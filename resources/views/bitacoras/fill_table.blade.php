@@ -47,6 +47,8 @@ data-toolbar="#all_toolbar"
 
 </table>
 <script>
-    $('#tablapuestos').bootstrapTable();
+    @isset($search)
+        $('#tablapuestos').bootstrapTable(); 
+    @endisset
 </script>
 {{-- {!! $bitacoras->render() !!} --}}

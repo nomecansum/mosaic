@@ -22,7 +22,9 @@ class BitacorasController extends Controller
      */
     public function index()
     {
-        $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')->get();
+        $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')
+        ->wherebetween('fecha',[Carbon::now(),Carbon::now()->subDay(30)])
+        ->get();
 
         $usuarios=$bitacoras->pluck('name','id_usuario')->unique();
 
@@ -88,7 +90,8 @@ class BitacorasController extends Controller
 
             $statuses=$bitacoras->pluck('status')->unique()->toArray();
 
-            return view('bitacoras.fill_table', ['bitacora' => $bitacoras], compact('bitacoras', 'usuarios', 'modulos','statuses'));
+            $search=1;
+            return view('bitacoras.fill_table', ['bitacora' => $bitacoras], compact('bitacoras', 'usuarios', 'modulos','statuses','search'));
             try {} catch (Exception $exception) {
             flash('ERROR: Ocurrio un error al hacer la busqueda '.$exception->getMessage())->error();
             return back()->withInput();

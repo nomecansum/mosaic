@@ -1,4 +1,15 @@
-<table class="table table-striped">
+<table id="tablapuestos" data-toggle="table"
+data-locale="es-ES"
+data-search="true"
+data-show-columns="true"
+data-show-columns-toggle-all="true"
+data-page-list="[5, 10, 20, 30, 40, 50]"
+data-page-size="50"
+data-pagination="true"
+data-show-pagination-switch="true"
+data-show-button-icons="true"
+data-toolbar="#all_toolbar"
+>
     <thead>
         <tr>
             <th>id_bitacora</th>
@@ -36,4 +47,4 @@
 
 </table>
 
-{!! $bitacoras->render() !!}
+{{-- {!! $bitacoras->render() !!} --}}

@@ -31,7 +31,7 @@ class BitacorasController extends Controller
         $statuses=$bitacoras->pluck('status')->unique();
 
 
-        $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')->paginate(20);
+        $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')->get();
         //dd($bitacoras);
             //->join('users','bitacora.id_usuario','users.id')
             //->join('clientes','clientes.id','users.id_cliente')
@@ -80,7 +80,7 @@ class BitacorasController extends Controller
                 return  $query->where('accion', 'LIKE', '%' . $r->accion . '%');
                 })
             ->orderby('fecha','desc')
-            ->paginate(20);
+            ->get();
 
             $usuarios=$bitacoras->pluck('id_usuario')->unique()->toArray();
 

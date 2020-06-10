@@ -233,6 +233,13 @@
     <script src="{{ url('/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script> --}}
     <script src="{{ url('/plugins/daterangepicker/daterangepicker.js') }}"></script>
 
+    {{-- Bootstrap table --}}
+
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+    <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+
+    
+
     @include('layouts.main_scripts')
     @yield('scripts')
     @yield('scripts2')

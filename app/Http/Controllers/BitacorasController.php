@@ -66,7 +66,7 @@ class BitacorasController extends Controller
                return  $query->where('status', $r->tipo_log);
               })
             ->when($r->usuario, function($query) use ($r) {
-                return  $query->where('id_usuario', $r->usuario);
+                return  $query->where('name', $r->usuario);
                })
             ->when($fechas, function($query) use ($fechas) {
                 return  $query->whereBetween('fecha', [$fechas[0],$fechas[1]]);

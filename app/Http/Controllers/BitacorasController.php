@@ -10,6 +10,7 @@ use DB;
 use Carbon\Carbon;
 
 use App\users;
+use Symfony\Component\Console\Input\Input;
 
 class BitacorasController extends Controller
 {
@@ -77,7 +78,7 @@ class BitacorasController extends Controller
                 return  $query->where('accion', 'LIKE', '%' . $r->accion . '%');
                 })
             ->orderby('fecha','desc')
-            ->get();
+            ->paginate(20);
 
             $usuarios=$bitacoras->pluck('id_usuario')->unique()->toArray();
 

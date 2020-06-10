@@ -33,4 +33,7 @@
         </tr>
     @endforeach
     </tbody>
+
 </table>
+
+{!! $bitacoras->render() !!}

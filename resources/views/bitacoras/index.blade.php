@@ -79,6 +79,7 @@ Use \Carbon\Carbon;
         <div class="row">
 
         {{ csrf_field() }}
+
             <div class="col-md-1" style="margin-left:30px">
                 <div class="form-group">
                     <label>Status</label>
@@ -152,14 +153,16 @@ Use \Carbon\Carbon;
             <div class="table-responsive">
                 <div id="myFilter">
                     @include('bitacoras.fill_table')
+                    <div class="panel-footer">
+
+                    </div>
                 </div>
 
             </div>
+
         </div>
 
-        <div class="panel-footer">
-            {!! $bitacoras->render() !!}
-        </div>
+
 
         @endif
 

@@ -162,17 +162,10 @@ Use \Carbon\Carbon;
             </div>
         @else
 
-        <div class="panel-body panel-body-with-table">
-            <div class="table-responsive">
-                <div id="myFilter">
-                    @include('bitacoras.fill_table')
-                    <div class="panel-footer">
-
-                    </div>
-                </div>
-
+        <div class="panel-body">
+            <div id="myFilter">
+                @include('bitacoras.fill_table')
             </div>
-
         </div>
 
 

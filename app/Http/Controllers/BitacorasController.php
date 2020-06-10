@@ -64,8 +64,8 @@ class BitacorasController extends Controller
 
             $bitacoras=Bitacora::join('users','bitacora.id_usuario','users.id')
 
-            ->when($r->tipo_log, function($query) use ($r) {
-               return  $query->where('status', $r->tipo_log);
+            ->when($r->status, function($query) use ($r) {
+               return  $query->where('status', $r->status);
               })
             ->when($r->usuario, function($query) use ($r) {
                 return  $query->where('name', $r->usuario);

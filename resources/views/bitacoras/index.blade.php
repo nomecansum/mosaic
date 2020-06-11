@@ -76,6 +76,9 @@ Use \Carbon\Carbon;
 
         <div class="row"><br></div>
         <form id="formbuscador" name="frm_busca_bitacora" method="POST" action="{{ url('bitacoras/search') }}">
+
+            @csrf
+
         <div class="row">
 
         {{ csrf_field() }}

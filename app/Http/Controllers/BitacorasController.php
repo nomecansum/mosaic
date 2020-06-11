@@ -23,31 +23,22 @@ class BitacorasController extends Controller
     public function index()
     {
         $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')
-        ->wherebetween('fecha',[Carbon::now(),Carbon::now()->subDay(30)])
+        ->wherebetween('fecha',[Carbon::now()->subDay(30),Carbon::now()])
         ->get();
 
-        $usuarios=$bitacoras->pluck('name','id_usuario')->unique();
+        $bit_combos = Bitacora::join('users','bitacora.id_usuario','users.id')->get();
 
-        $modulos=$bitacoras->pluck('id_modulo')->unique();
+        $usuarios=$bit_combos->pluck('name','id_usuario')->unique();
 
-        $statuses=$bitacoras->pluck('status')->unique();
+        $modulos=$bit_combos->pluck('id_modulo')->unique();
 
-
-        $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')->get();
-        //dd($bitacoras);
-            //->join('users','bitacora.id_usuario','users.id')
-            //->join('clientes','clientes.id','users.id_cliente')
-
-            //->get();
-
+        $statuses=$bit_combos->pluck('status')->unique();
 
         return view('bitacoras.index', ['bitacora' => $bitacoras], compact('bitacoras','usuarios','modulos','statuses'));
-
     }
 
     public function search(Request $r)
     {
-
             //D($r->modulos);//
 
             if (isset($r->fechas) && $r->fechas[0]!=null && $r->fechas[1]!=null){
@@ -57,6 +48,7 @@ class BitacorasController extends Controller
 
                 $fechas[0]=Carbon::parse($fechas[0]);
                 $fechas[1]=Carbon::parse($fechas[1]);
+
             } else {
                 $fechas=null;
             }
@@ -91,6 +83,7 @@ class BitacorasController extends Controller
             $statuses=$bitacoras->pluck('status')->unique()->toArray();
 
             $search=1;
+
             return view('bitacoras.fill_table', ['bitacora' => $bitacoras], compact('bitacoras', 'usuarios', 'modulos','statuses','search'));
             try {} catch (Exception $exception) {
             flash('ERROR: Ocurrio un error al hacer la busqueda '.$exception->getMessage())->error();

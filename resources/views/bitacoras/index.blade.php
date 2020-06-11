@@ -108,7 +108,7 @@ Use \Carbon\Carbon;
                     <label>Fechas:</label>
 
                     <div class="input-group mar-btm">
-                        <input type="text" class="form-control pull-right" id="fechas" autocomplete="off" name="fechas" style="height: 40px;" value="{{ isset($r)?Carbon::parse($fechas[0])->format('d/m/Y').' - '.Carbon::parse($fechas[1])->format('d/m/Y'):'' }}">
+                        <input type="text" class="form-control pull-right" id="fechas" autocomplete="off" name="fechas" style="height: 40px;" value="{{ isset($r)?Carbon::now()->subDay(30)->format('d/m/Y').' - '.Carbon::now()->format('d/m/Y'):'' }}">
                         <div class="input-group-btn">
                             <span class="btn input-group-text btn-mint"  style="height: 40px"><i class="fa fa-calendar mt-1"></i></span>
                         </div>
@@ -176,6 +176,7 @@ Use \Carbon\Carbon;
 @endsection
 @php
     //dd($r->modulos);
+
     if(isset($r)){
         $fechas=explode(" - ",$r->fechas);
     } else {

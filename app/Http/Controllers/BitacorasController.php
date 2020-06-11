@@ -23,7 +23,7 @@ class BitacorasController extends Controller
     public function index()
     {
         $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')
-        ->wherebetween('fecha',[Carbon::now()->subDay(30),Carbon::now()])
+        ->wherebetween('fecha',[Carbon::now()->subDay(15),Carbon::now()])
         ->get();
 
         $bit_combos = Bitacora::join('users','bitacora.id_usuario','users.id')->get();
@@ -34,12 +34,15 @@ class BitacorasController extends Controller
 
         $statuses=$bit_combos->pluck('status')->unique();
 
-        return view('bitacoras.index', ['bitacora' => $bitacoras], compact('bitacoras','usuarios','modulos','statuses'));
+        return view('bitacoras.index', compact('bitacoras','usuarios','modulos','statuses'));
+
     }
 
     public function search(Request $r)
     {
+
             //D($r->modulos);//
+
 
             if (isset($r->fechas) && $r->fechas[0]!=null && $r->fechas[1]!=null){
                 $fechas=explode(" - ",$r->fechas);
@@ -48,7 +51,6 @@ class BitacorasController extends Controller
 
                 $fechas[0]=Carbon::parse($fechas[0]);
                 $fechas[1]=Carbon::parse($fechas[1]);
-
             } else {
                 $fechas=null;
             }
@@ -83,7 +85,6 @@ class BitacorasController extends Controller
             $statuses=$bitacoras->pluck('status')->unique()->toArray();
 
             $search=1;
-
             return view('bitacoras.fill_table', ['bitacora' => $bitacoras], compact('bitacoras', 'usuarios', 'modulos','statuses','search'));
             try {} catch (Exception $exception) {
             flash('ERROR: Ocurrio un error al hacer la busqueda '.$exception->getMessage())->error();

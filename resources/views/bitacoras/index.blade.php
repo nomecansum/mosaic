@@ -108,7 +108,7 @@ Use \Carbon\Carbon;
                     <label>Fechas:</label>
 
                     <div class="input-group mar-btm">
-                        <input type="text" class="form-control pull-right" id="fechas" autocomplete="off" name="fechas" style="height: 40px;" value="{{ isset($r)?Carbon::now()->subDay(30)->format('d/m/Y').' - '.Carbon::now()->format('d/m/Y'):'' }}">
+                        <input type="text" class="form-control pull-right" id="fechas" autocomplete="off" name="fechas" style="height: 40px;" value="{{ Carbon::now()->subDay(30)->format('d/m/Y').' - '.Carbon::now()->format('d/m/Y') }}">
                         <div class="input-group-btn">
                             <span class="btn input-group-text btn-mint"  style="height: 40px"><i class="fa fa-calendar mt-1"></i></span>
                         </div>
@@ -202,7 +202,12 @@ Use \Carbon\Carbon;
      $('#fechas').daterangepicker({
             autoUpdateInput: false,
             locale: {
-                cancelLabel: 'Clear'
+                format: 'DD/MM/YYYY',
+                applyLabel: "OK",
+                cancelLabel: "Cancelar",
+                daysOfWeek:["Do","Lu","Ma","Mi","Ju","Vi","Sa"],
+                monthNames: ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
+                firstDay: 1
             },
             opens: 'right',
         }, function(start_date, end_date) {

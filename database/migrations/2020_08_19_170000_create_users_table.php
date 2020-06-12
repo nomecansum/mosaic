@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->integer('collapse')->default('0');
             $table->dateTime('last_login')->nullable();
             $table->timestamps();
+            $table->string('val_timezone',200)->nullable();
 
             $table->bigInteger('id_cliente')->unsigned()->nullable();
             $table->foreign('id_cliente')->references('id_cliente')->on('clientes')->nullable();

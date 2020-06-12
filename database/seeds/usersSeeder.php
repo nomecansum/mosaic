@@ -22,7 +22,8 @@ class usersSeeder extends Seeder
             'password' => '12345678',
             'remember_token' => null,
             'img_usuario' => null,
-            'cod_nivel' => '5'
+            'cod_nivel' => '5',
+            'val_timezone'=>null
         ]);
 
         DB::table('users')->insert([
@@ -35,7 +36,8 @@ class usersSeeder extends Seeder
             'password' => '12345678',
             'remember_token' => null,
             'img_usuario' => null,
-            'cod_nivel' => '1'
+            'cod_nivel' => '1',
+            'val_timezone'=>null
         ]);
     }
 }

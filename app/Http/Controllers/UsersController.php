@@ -126,7 +126,10 @@ class UsersController extends Controller
 
         $clientescombo = Cliente::all();
 
-        return view('users.edit', compact('users','Perfiles','clientescombo'));
+        $timezone = users::get('val_timezone');
+
+
+        return view('users.edit', compact('users','Perfiles','clientescombo', 'timezone'));
     }
 
     /**

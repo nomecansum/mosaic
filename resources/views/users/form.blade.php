@@ -88,7 +88,7 @@
         </div>
 </div>
 <div class="row">
-       
+
 
 
         <div class="col-md-3" style="margin-left:20px">
@@ -96,8 +96,8 @@
                 <label>Cliente</label>
                 <select class="form-control select2" style="width: 100%;" tabindex="-1" aria-hidden="true" name="clientes">
                     <option value=""></option>
-                    @foreach($clientes as $key=>$value)
-                        <option {{ isset($r) && $r->clientes==$value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
+                    @foreach($clientescombo as $key=>$value)
+                        <option {{ isset($r) && $r->clientescombo==$value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
                     @endforeach
                 </select>
             </div>

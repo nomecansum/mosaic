@@ -129,9 +129,9 @@ class UsersController extends Controller
             return  $query->where('nom_cliente', $r->clientes);
            });
 
-        $clientes=$cli_combo->pluck('nom_cliente')->unique();
+        $clientescombo=$cli_combo->pluck('nom_cliente')->unique();
 
-        return view('users.edit', compact('users','Perfiles','clientes'));
+        return view('users.edit', compact('users','Perfiles','clientescombo'));
     }
 
     /**

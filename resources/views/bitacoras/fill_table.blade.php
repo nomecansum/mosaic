@@ -30,13 +30,7 @@ data-toolbar="#all_toolbar"
             <td>{{ $bitacora->id_seccion }}</td>
             @php
                 $clase="";
-                if(strpos($bitacora->id_modulo,"ATIS Maniobras")!==false && $bitacora->status!=="error"){
-                    if(strpos($bitacora->accion,"Cambiada Maniobra S")!==false){
-                        $clase="linea_titulo_pistas bg_amarillo titulo_orientacion_maniobras";
-                    } else{
-                        $clase="linea_titulo_pistas bg_azul_claro txt_blanco titulo_orientacion_maniobras";
-                    }
-                }
+            
             @endphp
             <td class="{{ $clase }}" style="word-break: break-all;">{{ $bitacora->accion }}</td>
             <td ><span @if($bitacora->status=="ok") class="bg-green-active color-palette" @endif style="padding: 0 5px 0 5px">{{ $bitacora->status }}</span></td>

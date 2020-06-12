@@ -63,6 +63,7 @@ class UsersController extends Controller
 
         $data = $this->getData($request);
 
+
         $img_usuario = "";
         try {
              if ($request->hasFile('img_usuario')) {
@@ -123,13 +124,7 @@ class UsersController extends Controller
 
         $Perfiles = niveles_acceso::all();
 
-        $cli_combo = Cliente::all()
-
-        ->when($r->clientes, function($query) use ($r) {
-            return  $query->where('nom_cliente', $r->clientes);
-           });
-
-        $clientescombo=$cli_combo->pluck('nom_cliente')->unique();
+        $clientescombo = Cliente::all();
 
         return view('users.edit', compact('users','Perfiles','clientescombo'));
     }
@@ -222,14 +217,9 @@ class UsersController extends Controller
             'remember_token' => 'nullable|string|min:0|max:100',
             'theme' => 'nullable|string|min:0|max:150',
             'val_timezone' => 'nullable|string|min:0|max:100',
+            'id_cliente' => 'nullable|numeric|min:0|max:2147483647',
         ];
-
-
         $data = $request->validate($rules);
-
-
-
-
         return $data;
     }
 

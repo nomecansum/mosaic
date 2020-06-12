@@ -55,7 +55,8 @@ class users extends Model
                   'last_login',
                   'nivel_acceso',
                   'cod_nivel',
-                  'id_cliente'
+                  'id_cliente',
+                  'val_timezone'
               ];
 
     /**

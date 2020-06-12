@@ -94,10 +94,10 @@
         <div class="col-md-3" style="margin-left:20px">
             <div class="form-group">
                 <label>Cliente</label>
-                <select class="form-control select2" style="width: 100%;" tabindex="-1" aria-hidden="true" name="clientes">
+                <select class="form-control select2" style="width: 100%;" tabindex="-1" aria-hidden="true" name="id_cliente">
                     <option value=""></option>
-                    @foreach($clientescombo as $key=>$value)
-                        <option {{ isset($r) && $r->clientescombo==$value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
+                    @foreach($clientescombo as $cl)
+                        <option {{ isset($r) && $r->clientescombo==$cl->id_cliente ? 'selected' : '' }} value="{{ $cl->id_cliente }}">{{ $cl->nom_cliente }}</option>
                     @endforeach
                 </select>
             </div>
@@ -151,7 +151,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label>Zona horaria</label>
-                <select name="timezone" class="select2" style="width: 100%; margin-top: 25px; height: 38px">
+                <select name="val_timezone" class="select2" style="width: 100%; margin-top: 25px; height: 38px">
                     <option value="" selected></option>
                     @foreach($regions as $region => $list)
                     <optgroup label="{{ $region }}">

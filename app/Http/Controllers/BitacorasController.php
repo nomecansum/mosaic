@@ -22,11 +22,14 @@ class BitacorasController extends Controller
      */
     public function index()
     {
-        $bitacoras = Bitacora::join('users','bitacora.id_usuario','users.id')
+        $bitacoras = DB::table('bitacora')
+        ->join('users','bitacora.id_usuario','users.id')
         ->wherebetween('fecha',[Carbon::now()->subDay(15),Carbon::now()])
         ->get();
 
-        $bit_combos = Bitacora::join('users','bitacora.id_usuario','users.id')->get();
+        $bit_combos = DB::table('bitacora')
+        ->join('users','bitacora.id_usuario','users.id')
+        ->get();
 
         $usuarios=$bit_combos->pluck('name','id_usuario')->unique();
 

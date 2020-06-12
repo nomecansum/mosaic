@@ -88,12 +88,10 @@
         </div>
 </div>
 <div class="row">
-        <div class="col-md-2">
-
-        </div>
+       
 
 
-        <div class="col-md-1" style="margin-left:20px">
+        <div class="col-md-3" style="margin-left:20px">
             <div class="form-group">
                 <label>Cliente</label>
                 <select class="form-control select2" style="width: 100%;" tabindex="-1" aria-hidden="true" name="clientes">

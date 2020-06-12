@@ -83,17 +83,6 @@ Use \Carbon\Carbon;
 
         {{ csrf_field() }}
 
-            {{-- <div class="col-md-1" style="margin-left:30px">
-                <div class="form-group">
-                    <label>Status</label>
-                    <select class="form-control" name="status"  style="height: 40px;">
-                        <option value=""></option>
-                        <option value="ok">ok</option>
-                        <option value="error">error</option>
-                    </select>
-                </div>
-            </div> --}}
-
             <div class="col-md-1" style="margin-left:20px">
                 <div class="form-group">
                     <label>Status</label>

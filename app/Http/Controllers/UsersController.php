@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use App\Models\Cliente;
+
 class UsersController extends Controller
 {
 
@@ -115,12 +117,21 @@ class UsersController extends Controller
      *
      * @return Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id,Request $r)
     {
         $users = users::findOrFail($id);
+
         $Perfiles = niveles_acceso::all();
 
-        return view('users.edit', compact('users','Perfiles'));
+        $cli_combo = Cliente::all()
+
+        ->when($r->clientes, function($query) use ($r) {
+            return  $query->where('nom_cliente', $r->clientes);
+           });
+
+        $clientes=$cli_combo->pluck('nom_cliente')->unique();
+
+        return view('users.edit', compact('users','Perfiles','clientes'));
     }
 
     /**

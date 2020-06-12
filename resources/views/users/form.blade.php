@@ -91,6 +91,22 @@
         <div class="col-md-2">
 
         </div>
+
+
+        <div class="col-md-1" style="margin-left:20px">
+            <div class="form-group">
+                <label>Cliente</label>
+                <select class="form-control select2" style="width: 100%;" tabindex="-1" aria-hidden="true" name="clientes">
+                    <option value=""></option>
+                    @foreach($clientes as $key=>$value)
+                        <option {{ isset($r) && $r->clientes==$value ? 'selected' : '' }} value="{{ $value }}">{{ $value }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+
+
         <div class="col-md-1"></div>
         <div class="col-md-2">
             <div class="form-group {{ $errors->has('id_perfil') ? 'has-error' : '' }}">

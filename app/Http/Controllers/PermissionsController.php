@@ -115,7 +115,7 @@ class PermissionsController extends Controller
 		$tipos = $secciones->pluck('val_tipo', 'val_tipo')->toArray();
 		$grupos = DB::table('secciones')->select('des_grupo','icono')->distinct()->get();
 
-		return view('permisos.sections',compact('secciones','grupos','tipos'));
+		return view('sections.index',compact('secciones','grupos','tipos'));
 	}
 	public function sectionsEdit($id)
 	{
@@ -129,7 +129,7 @@ class PermissionsController extends Controller
         $tipos = $secciones->pluck('val_tipo', 'val_tipo')->toArray();
         $grupos = DB::table('secciones')->select('des_grupo','icono')->distinct()->get();
 		$s = DB::table('secciones')->where('cod_seccion',$id)->first();
-		return view('permisos.sections',compact('s','grupos','tipos','secciones'));
+		return view('sections.index',compact('s','grupos','tipos','secciones'));
 	}
 	public function sectionsSave(Request $r)
 	{

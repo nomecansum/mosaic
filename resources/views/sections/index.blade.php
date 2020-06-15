@@ -21,7 +21,7 @@
 					<h3 class="panel-title">@isset ($s)Editar seccion @else Crear seccion @endisset</h3>
 				</div>
 				<div class="panel-body">
-						<form action="{{url('sections/save')}}" method="POST" class="form-ajax"  id="formseccion">
+						<form action="{{url('/save')}}" method="POST" class="form-ajax"  id="formseccion">
 							<input type="hidden" name="id" value="0" id="id">
 						{{csrf_field()}}
 						<div class="row">

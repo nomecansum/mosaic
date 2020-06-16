@@ -251,4 +251,47 @@
         form.find('[type="submit"]').attr('disabled',false);
         });
         }
+
+        function get_ajax(url,spin){
+        console.log(url+" "+spin);
+            if(spin!=null){
+                $('#'+spin).show();
+            }
+        $.ajax({
+        url: url
+        })
+        .done(function(data) {
+        if(data.error){
+        toast_error(data.title,data.error);
+        } else if(data.warning){
+        toast_warning(data.title,data.alert);
+        } else{
+        toast_ok(data.title,data.message);
+        }
+        $('.modal').modal('hide');
+        setTimeout(()=>{
+        if(data.url)
+        window.open(data.url,'_self');
+        if(data.reload)
+        window.location.reload();
+        },3000)
+        })
+        .fail(function(err) {
+        let error = JSON.parse(err.responseText);
+        let html = "";
+        console.log(error);
+        $.each(error.errors, function(index, val) {
+        html += "- "+$(this)[0]+"<br>";
+        });
+        toast_error("Error",html);
+        })
+        .always(function() {
+        fin_espere();
+        console.log("complete");
+        if(spin!=null){
+        $('#'+spin).hide();
+        }
+        });
+}
+
 </script>

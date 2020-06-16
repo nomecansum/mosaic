@@ -18,7 +18,7 @@
     <div class="row">
 			<div class="panel panel-default col-md-12" id="editor" style="display:none">
 				<div class="panel-header with-border">
-					<h3 class="panel-title">@isset ($s)Editar seccion @else Crear seccion @endisset</h3>
+					<h3 class="panel-title" id="titulo_editor"></h3>
 				</div>
 				<div class="panel-body">
 						<form action="{{url('/save')}}" method="POST" class="form-ajax"  id="formseccion">
@@ -27,7 +27,7 @@
 						<div class="row">
 							<div class="form-group col-md-4">
 								<label for="">Nombre</label>
-								<input type="text" name="des_seccion" id="des_seccion" class="form-control" required value="{{isset($s) ? $s->des_seccion : ''}}">
+								<input type="text" name="des_seccion" id="des_seccion" class="form-control" required>
 							</div>
 							<div class="form-grou col-md-2">
 								<label for="">Tipo</label>
@@ -88,7 +88,7 @@
 			                </thead>
 			                <tbody>
 			                	@foreach ($secciones as $secc)
-			                		<tr class="hover-this" data-href="{{url('sections/edit',$secc->cod_seccion)}}">
+			                		<tr class="hover-this">
 										<td>{{$secc->cod_seccion}}</td>
 										<td>{{$secc->des_seccion}}</td>
 										<td class="text-{{ $secc->val_tipo=='Seccion' ? 'info' : 'success' }}">{{ $secc->val_tipo}}</td>
@@ -108,8 +108,9 @@
 															<h4 class="modal-title">¿Borrar seccion {{$secc->des_seccion}}?</h4>
 														  </div>
 			                							<div class="modal-footer">
-			                								<a class="btn btn-info" href="{{url('sections/delete',$secc->cod_seccion)}}">{{trans('strings.yes')}}</a>
-			                								<button type="button" data-dismiss="modal" class="btn btn-warning">{{trans('strings.cancel')}}</button>
+			                								<a class="btn btn-info boton_borrar" data-dismiss="modal" data-id="{{$secc->cod_seccion}}" href="#">Si</a>
+                                                            <button type="button" data-dismiss="modal" class="btn btn-warning">{{trans('strings.cancel')}}</button>
+
 			                							</div>
 			                						</div>
 			                					</div>
@@ -129,26 +130,7 @@
         </div>
 	</div>
 </div>
-<div class="modal fade" id="modal-default" style="display: none;">
-		<div class="modal-dialog">
-		  <div class="modal-content">
-			<div class="modal-header">
-			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">×</span></button>
-			  <h4 class="modal-title">Default Modal</h4>
-			</div>
-			<div class="modal-body">
-			  <p>One fine body…</p>
-			</div>
-			<div class="modal-footer">
-			  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-			  <button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		  </div>
-		  <!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	  </div>
+
 @stop
 @section('scripts')
 <script>
@@ -165,6 +147,7 @@
 
 	$('#btn_nueva_seccion').click(function(){
 		$('#editor').show();
+        $('#titulo_editor').html('Nueva seccion');
 		animateCSS('#editor','bounceInRight');
 		$('#id').val(0);
 		$('#des_seccion').val("");
@@ -175,6 +158,7 @@
 
 	$('.btn_editar').click(function(){
 		$('#editor').show();
+        $('#titulo_editor').html('Editar seccion');
 		animateCSS('#editor','bounceInRight');
 		//console.log($(this).data('seccion'));
 		$('#id').val($(this).data('seccion'));
@@ -185,5 +169,12 @@
 		$('#formseccion').attr("action","{{url('sections/update')}}")
 		$("#des_grupo").select2("val", $(this).data('grupo'));
 	});
+</script>
+<script>
+
+    $('#boton_borrar').click(function(){
+        get_ajax("{{ url('sections/delete') }}/"+$(this).data('id'));
+    });
+
 </script>
 @endsection

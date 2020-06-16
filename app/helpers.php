@@ -36,7 +36,7 @@ function fullAccess(){
 
 function isAdmin(){
     try{
-        return Auth::User()->val_nivel_acceso == 200 ? true : false;
+        return Auth::User()->cod_nivel == 5 ? true : false;
     } catch(\Exception $e){
         return false;
     }

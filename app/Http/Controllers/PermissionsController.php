@@ -107,11 +107,12 @@ class PermissionsController extends Controller
 	{
 		$secciones = DB::table('secciones')
 		->where(function($q){
-			if (!isAdmin()) {
+			if (!fullAccess()) {
 				$q->wherein('des_seccion',array_column(session('P'), 'des_seccion'));
 			}
 		})
-		->get();
+        ->get();
+
 		$tipos = $secciones->pluck('val_tipo', 'val_tipo')->toArray();
 		$grupos = DB::table('secciones')->select('des_grupo','icono')->distinct()->get();
 
@@ -121,7 +122,7 @@ class PermissionsController extends Controller
 	{
 	    $secciones = DB::table('secciones')
         ->where(function($q){
-            if (!isAdmin()) {
+            if (!fullAccess()) {
                 $q->wherein('des_seccion',array_column(session('P'), 'des_seccion'));
             }
         })
@@ -162,14 +163,11 @@ class PermissionsController extends Controller
 	}
 	public function sectionsDelete($id)
 	{
-		savebitacora("Eliminado seccion ".$id." ".DB::table('secciones')->where('cod_seccion',$id)->value('des_seccion'),Auth::user()->id,"Secciones","OK");
-		$s = DB::table('secciones')->where('cod_seccion',$id);
-		$s->delete();
-		return [
+        return [
             'title' => "Secciones",
-            'message' => "Seccion ".$id." borrada",
+            'message' => "Seccion ".$id." eliminada",
             'url' => url('sections')
-        ];
+            ];
 	}
 	public function profilePermissions()
 	{

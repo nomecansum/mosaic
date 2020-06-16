@@ -172,7 +172,7 @@
 </script>
 <script>
 
-    $('#boton_borrar').click(function(){
+    $('.boton_borrar').click(function(){
         get_ajax("{{ url('sections/delete') }}/"+$(this).data('id'));
     });
 

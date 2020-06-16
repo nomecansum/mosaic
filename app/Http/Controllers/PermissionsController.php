@@ -163,11 +163,14 @@ class PermissionsController extends Controller
 	}
 	public function sectionsDelete($id)
 	{
-        return [
+        savebitacora("Eliminado seccion ".$id." ".DB::table('secciones')->where('cod_seccion',$id)->value('des_seccion'),Auth::user()->id,"Secciones","OK");
+		$s = DB::table('secciones')->where('cod_seccion',$id);
+		$s->delete();
+		return [
             'title' => "Secciones",
-            'message' => "Seccion ".$id." eliminada",
+            'message' => "Seccion ".$id." borrada",
             'url' => url('sections')
-            ];
+        ];
 	}
 	public function profilePermissions()
 	{

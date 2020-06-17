@@ -38,11 +38,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/bitacoras/search', 'BitacorasController@search')->name('bitacoras.bitacora.search');
 
 
-    Route::get('profiles',['middleware'=>'permissions:["Perfiles"],["R"]','uses'=>'PermissionsController@profiles']);
-	Route::get('profiles/edit/{id}',['middleware'=>'permissions:["Perfiles"],["C"]','uses'=>'PermissionsController@profilesEdit']);
-	Route::post('profiles/save',['middleware'=>'permissions:["Perfiles"],["W"]','uses'=>'PermissionsController@profilesSave']);
-	Route::post('profiles/update',['middleware'=>'permissions:["Perfiles"],["C"]','uses'=>'PermissionsController@profilesSave']);
-    Route::get('profiles/delete/{id}',['middleware'=>'permissions:["Perfiles"],["D"]','uses'=>'PermissionsController@profilesDelete']);
+
 
     Route::group(['prefix' => 'sections'], function () {
         Route::get('/',['middleware'=>'permissions:["Secciones"],["R"]','uses'=>'PermissionsController@sections'])->name('sections.index');
@@ -53,14 +49,19 @@ Route::group(['middleware' => 'auth'], function() {
 
     });
 
-	Route::get('profile-permissions',['middleware'=>'permissions:["Permisos"],["R"]','uses'=>'PermissionsController@profilePermissions']);
-    Route::get('permissions/getProfiles',['middleware'=>'permissions:["Usuarios"],["W"]','uses'=>'PermissionsController@getProfiles']);
+    Route::get('permissions/getProfiles',['middleware'=>'permissions:["Usuarios"],["W"]','uses'=>'ProfilesController@getProfiles']);
+    Route::get('profiles',['middleware'=>'permissions:["Perfiles"],["R"]','uses'=>'ProfilesController@profiles']);
+	Route::get('profiles/edit/{id}',['middleware'=>'permissions:["Perfiles"],["C"]','uses'=>'ProfilesController@profilesEdit']);
+	Route::post('profiles/save',['middleware'=>'permissions:["Perfiles"],["W"]','uses'=>'ProfilesController@profilesSave']);
+	Route::post('profiles/update',['middleware'=>'permissions:["Perfiles"],["C"]','uses'=>'ProfilesController@profilesSave']);
+    Route::get('profiles/delete/{id}',['middleware'=>'permissions:["Perfiles"],["D"]','uses'=>'ProfilesController@profilesDelete']);
 
-	/**/
+
+    /**/
+    Route::get('profile-permissions',['middleware'=>'permissions:["Permisos"],["R"]','uses'=>'PermissionsController@profilePermissions']);
 	Route::post('addPermissions',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@addPermissions']);
 	Route::post('removePermissions',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@removePermissions']);
 	Route::post('addPermissions_user',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@addPermissions_user']);
-
     Route::post('removePermissions_user',['middleware'=>'permissions:["Permisos"],["W"]','uses'=>'PermissionsController@removePermissions_user']);
 
     Route::group(['prefix' => 'clientes'], function () {

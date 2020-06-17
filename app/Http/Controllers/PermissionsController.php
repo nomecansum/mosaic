@@ -107,12 +107,11 @@ class PermissionsController extends Controller
 	{
 		$secciones = DB::table('secciones')
 		->where(function($q){
-			if (!fullAccess()) {
+			if (!isAdmin()) {
 				$q->wherein('des_seccion',array_column(session('P'), 'des_seccion'));
 			}
 		})
-        ->get();
-
+		->get();
 		$tipos = $secciones->pluck('val_tipo', 'val_tipo')->toArray();
 		$grupos = DB::table('secciones')->select('des_grupo','icono')->distinct()->get();
 
@@ -122,7 +121,7 @@ class PermissionsController extends Controller
 	{
 	    $secciones = DB::table('secciones')
         ->where(function($q){
-            if (!fullAccess()) {
+            if (!isAdmin()) {
                 $q->wherein('des_seccion',array_column(session('P'), 'des_seccion'));
             }
         })
@@ -163,12 +162,12 @@ class PermissionsController extends Controller
 	}
 	public function sectionsDelete($id)
 	{
-        savebitacora("Eliminado seccion ".$id." ".DB::table('secciones')->where('cod_seccion',$id)->value('des_seccion'),Auth::user()->id,"Secciones","OK");
+		savebitacora("Eliminado seccion ".$id." ".DB::table('secciones')->where('cod_seccion',$id)->value('des_seccion'),Auth::user()->id,"Secciones","OK");
 		$s = DB::table('secciones')->where('cod_seccion',$id);
 		$s->delete();
 		return [
             'title' => "Secciones",
-            'message' => "Seccion ".$id." borrada",
+            'message' => "Seccion ".$id." eliminada",
             'url' => url('sections')
         ];
 	}
@@ -192,6 +191,7 @@ class PermissionsController extends Controller
 
 		$nivel_acceso = \DB::table('niveles_acceso')->where('cod_nivel',Auth::user()->cod_nivel)->first()->val_nivel_acceso;
 		$niveles = DB::table('niveles_acceso')
+				->join('clientes','niveles_acceso.id_cliente','clientes.id_cliente')
 				->where('val_nivel_acceso','<=',$nivel_acceso)
 				->get();
 
@@ -207,7 +207,8 @@ class PermissionsController extends Controller
     public function getProfiles(Request $r)
     {
         $nivel_acceso = \DB::table('niveles_acceso')->where('cod_nivel',Auth::user()->cod_nivel)->first()->val_nivel_acceso;
-        $niveles = DB::table('niveles_acceso')
+		$niveles = DB::table('niveles_acceso')
+				->join('clientes','niveles_acceso.id_cliente','clientes.id_cliente')
                 ->where('val_nivel_acceso', '<=', $nivel_acceso)
                 ->where('id_cliente', $r->cli)
                 ->get();

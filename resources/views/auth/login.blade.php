@@ -22,7 +22,7 @@
                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"  placeholder="Password">
                 </div>
                 <div class="checkbox pad-btm text-left">
-                    <input class="form-check-input magic-checkbox" type="checkbox" name="remember" id="demo-form-checkbox" {{ old('remember') ? 'checked' : '' }}>
+                    <input class="form-check-input magic-checkbox" type="checkbox" name="remember_me" id="demo-form-checkbox" {{ old('remember') ? 'checked' : '' }}>
                     <label for="demo-form-checkbox">Remember me</label>
                 </div>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>

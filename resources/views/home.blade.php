@@ -1,14 +1,23 @@
-@extends('layout')
+@extends('layouts.app')
 
-@section('title')
-{{--  <h1 class="page-header text-overflow pad-no">Helper Classes</h1>  --}}
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Dashboard</div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    You are logged in!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
-
-@section('breadcrumb')
-<ol class="breadcrumb">
-    <li><a href="{{url('/')}}"><i class="demo-pli-home"></i> Home</a></li>
-    {{--  <li class="active">Helper Classes</li>  --}}
-</ol>
-@endsection
-
-

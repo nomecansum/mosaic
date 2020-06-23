@@ -8,7 +8,7 @@
                 <img src="{{url('/img/Mosaic_brand_300.png')}}" style="width:300px">
                 <p>Sign In to your account</p>
             </div>
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" id="loginform" action="{{ route('login') }}">
                         @csrf
 
                         <div class="form-group">
@@ -42,9 +42,7 @@
                                         {{ __('Remember Me') }}
                                     </label>
                         </div>
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                    {{ __('Login') }}
-                                </button>
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
                     </form>
                 </div>
                         <div class="pad-all">

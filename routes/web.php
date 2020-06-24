@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
+
+Route::get('profile', function(){
+    //Only verified users may enter...
+})->middleware('verified');
 
 Route::get('/logout','Auth\LoginController@logout');
 

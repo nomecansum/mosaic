@@ -15,8 +15,23 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 
 use App\Models\Cliente;
 
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class UsersController extends Controller
 {
+    public function index_import(){
+
+        return view('users.import');
+
+    }
+
+    public function import()
+    {
+        Excel::import(new UsersImport, 'users.xlsx');
+
+        return redirect('/')->with('success', 'All good!');
+    }
 
     /**
      * Display a listing of the users.

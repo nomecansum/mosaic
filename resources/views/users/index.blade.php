@@ -37,8 +37,8 @@
             </div>
             <div class="col-md-1 text-right ">
                 <div class="btn-group btn-group-sm pull-right v-middle mt-2" role="group" style="margin-right: 20px;">
-                    <a href="{{ route('users.users.create') }}" class="btn btn-success" title="Nuevo dashboard">
-                        <i class="fa fa-plus-square" style="font-size: 20px" aria-hidden="true"></i> Nuevo
+                    <a href="{{ route('users.users.index.import') }}" class="btn btn-success" title="Nuevo dashboard">
+                        <i class="fa fa-plus-square" style="font-size: 20px" aria-hidden="true"></i> Importar
                     </a>
                 </div>
             </div>

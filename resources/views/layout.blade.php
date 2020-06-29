@@ -11,43 +11,43 @@
     <!--Open Sans Font [ OPTIONAL ]-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
      <!--JQueryUI [OPTIONAL]-->
-     <link href="{{ url('plugins/jquery-ui/jquery-ui.css') }}" rel="stylesheet">
+     <link href="{{ url('/plugins/jquery-ui/jquery-ui.css') }}" rel="stylesheet">
     <!--Bootstrap Stylesheet [ REQUIRED ]-->
-    <link href="{{ url('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url('/css/bootstrap.min.css') }}" rel="stylesheet">
     <!--Nifty Stylesheet [ REQUIRED ]-->
-    <link href="{{ url('css/nifty.min.css') }}" rel="stylesheet">
+    <link href="{{ url('/css/nifty.min.css') }}" rel="stylesheet">
     <!--Nifty Premium Icon [ DEMONSTRATION ]-->
-    <link href="{{ url('css/demo/nifty-demo-icons.min.css/') }}" rel="stylesheet">
+    <link href="{{ url('/css/demo/nifty-demo-icons.min.css/') }}" rel="stylesheet">
     <!--=================================================-->
     <!--Pace - Page Load Progress Par [OPTIONAL]-->
-    <link href="{{ url('plugins/pace/pace.min.css') }}" rel="stylesheet">
-    <script src="{{ url('plugins/pace/pace.min.js') }}"></script>
+    <link href="{{ url('/plugins/pace/pace.min.css') }}" rel="stylesheet">
+    <script src="{{ url('/plugins/pace/pace.min.js') }}"></script>
     <!--Demo [ DEMONSTRATION ]-->
-    <link href="{{ url('css/demo/nifty-demo.min.css') }}" rel="stylesheet">
+    <link href="{{ url('/css/demo/nifty-demo.min.css') }}" rel="stylesheet">
     <!--Bootstrap Validator [ OPTIONAL ]-->
-    <link href="plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+    <link href="/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
     {{-- MAterial design fonts --}}
     <link rel="stylesheet" href="{{ URL('/css/materialdesignicons.min.css') }}">
     {{--  FontAwesome  --}}
-    <link href="{{ url('plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ url('/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 
     <!--Mosaic custom CSS [ REQUIRED ]-->
-    <link href="{{ url('css/mosaic.css') }}" rel="stylesheet">
+    <link href="{{ url('/css/mosaic.css') }}" rel="stylesheet">
     {{--  Animate CSS  --}}
-    <link rel="stylesheet" href="{{ URL('plugins/animate-css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ URL('/plugins/animate-css/animate.min.css') }}">
 
     {{-- Custom file --}}
-    <link href="{{ URL('plugins/custom_file.css') }}" rel="stylesheet">
+    <link href="{{ URL('/plugins/custom_file.css') }}" rel="stylesheet">
     <!-- Select2 -->
-    <link rel="stylesheet" href="{{ URL('plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ URL('/plugins/select2/css/select2.min.css') }}">
     {{--  Toast  --}}
-    <link href="{{url('plugins/toast-master/css/jquery.toast.css')}}" rel="stylesheet" media="all">
+    <link href="{{url('/plugins/toast-master/css/jquery.toast.css')}}" rel="stylesheet" media="all">
     {{--  Colorpicker  --}}
     <link href="{{url('plugins/jquery-minicolors-master/jquery.minicolors.css')}}" rel="stylesheet" media="all">
     {{--  sweetAlert  --}}
-    <link href="{{url('plugins/sweetalert/dist/sweetalert2.min.css')}}" rel="stylesheet" media="all">
+    <link href="{{url('/plugins/sweetalert/dist/sweetalert2.min.css')}}" rel="stylesheet" media="all">
     {{-- Daterangepicker --}}
-    <link href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+    <link href="{{ asset('/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet">
     <!--=================================================
 
     REQUIRED
@@ -205,39 +205,39 @@
     <!--JAVASCRIPT-->
     <!--=================================================-->
     <!--jQuery [ REQUIRED ]-->
-    <script src="{{ url('js/jquery.min.js') }}"></script>
+    <script src="{{ url('/js/jquery.min.js') }}"></script>
     <!--jQueryUI [ REQUIRED ]-->
     <script src="{{ url('/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!--BootstrapJS [ RECOMMENDED ]-->
-    <script src="{{ url('js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('/js/bootstrap.min.js') }}"></script>
     <!--NiftyJS [ RECOMMENDED ]-->
-    <script src="{{ url('js/nifty.min.js') }}"></script>
+    <script src="{{ url('/js/nifty.min.js') }}"></script>
     <!--=================================================-->
 
     <!--Demo script [ DEMONSTRATION ]-->
-    <script src="js/demo/nifty-demo.min.js"></script>
+    <script src="/js/demo/nifty-demo.min.js"></script>
 
     <!--Bootstrap Wizard [ OPTIONAL ]-->
-    <script src="plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
 
     <!--Bootstrap Validator [ OPTIONAL ]-->
-    <script src="plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
 
     <!--Form Wizard [ SAMPLE ]-->
-    <script src="js/demo/form-wizard.js"></script>
+    <script src="/js/demo/form-wizard.js"></script>
 
     <!--Demo script [ DEMONSTRATION ]-->
-    <script src="{{ url('js/demo/nifty-demo.js') }}"></script>
+    <script src="{{ url('/js/demo/nifty-demo.js') }}"></script>
         <!--Sparkline [ OPTIONAL ]-->
-    <script src="{{ url('plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ url('/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
     <!--Specify page [ SAMPLE ]-->
     {{-- <script src="{{ url('js/demo/dashboard.js') }}"></script> --}}
     <!-- Select2 -->
-    <script src="{{ url('plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ url('/plugins/select2/js/select2.full.min.js') }}"></script>
     {{--  Toast  --}}
     <script src="{{url('plugins/toast-master/js/jquery.toast.js')}}"></script>
     {{--  Colorpicker  --}}
-    <script src="{{url('plugins/jquery-minicolors-master/jquery.minicolors.min.js')}}"></script>
+    <script src="{{url('/plugins/jquery-minicolors-master/jquery.minicolors.min.js')}}"></script>
     {{--  Inputmask  --}}
     <script type="text/javascript" src="{{url('/plugins/inputmask')}}/dist/inputmask.js"></script>
     <script type="text/javascript" src="{{url('/plugins/inputmask')}}/dist/jquery.inputmask.js"></script>

@@ -83,7 +83,10 @@
 					                    <div class="progress-bar progress-bar-primary"></div>
 					                </div>
 
-
+                                    <div class="alert" style="display: none"  id="msg_result">
+                                        <button type="button" class="close" onclick="$('#msg_result').hide();" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                                        <h3 id="h_titulo" class=""><i id="icono_msg" class=""></i> <span id="tit_msg"></span></h3> <span id="msg"></span>
+                                    </div>
                                     <!--form-->
                                     <form name="form_fichero" id="form_fichero"  enctype="multipart/form-data"  action="{{ url('users/import/process_import') }}" class="tab-wizard wizard-circle form-horizontal" method="POST">
 
@@ -228,6 +231,101 @@
 @section('scripts')
 
 <script type="text/javascript" src="{{url('/plugins/dropzone/dropzone.js')}}" ></script>
+
+
+<script>
+
+    $(function(){
+        var nom_fichero="plantilla_cucoweb_";
+        var fecha=moment().format('YYYYMMDD');
+        $("#id_cliente").change(function(){
+            if($( "#id_cliente option:selected" ).text()==''){
+                $('#link_descarga').hide();
+            }   else{
+                var fichero = nom_fichero+$( "#id_cliente option:selected" ).text()+'_'+fecha+'.xlsx';
+                $('#nombre_fichero').html(fichero);
+                $('#fic').val(fichero);
+                $('#link_descarga').show();
+                Dropzone.forElement("#dZUpload").removeAllFiles(true);
+            }
+        });
+
+        $('.link_excel').click(function(){
+            document.location="{{ url('employees/import/template/') }}"+"/"+$('#id_cliente').val();
+        })
+
+    });
+    window.Laravel = {!! json_encode([
+        'csrfToken' => csrf_token(),
+    ]) !!};
+
+    Dropzone.options.dZUpload= {
+        url: '{{ url('users/import/process_import/') }}',
+        autoProcessQueue: true,
+        uploadMultiple: true,
+        parallelUploads: 5,
+        //maxFiles: 5,
+        addRemoveLinks: true,
+        maxFilesize: 5,
+        autoProcessQueue: true,
+        acceptedFiles: 'image/*,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
+        dictDefaultMessage: '<span class="text-center"><span class="font-lg visible-xs-block visible-sm-block visible-lg-block"><span class="font-lg"><i class="fa fa-caret-right text-danger"></i> Arrastre archivos <span class="font-xs">para subirlos</span></span><span>&nbsp&nbsp<h4 class="display-inline"> (O haga Click)</h4></span>',
+        dictResponseError: 'Error subiendo fichero!',
+        headers: {
+            'X-CSRF-TOKEN': Laravel.csrfToken
+        },
+        init: function() {
+            dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
+            this.on("sending", function(file, xhr, formData) {
+                formData.append("id_cliente", $("#id_cliente").val());
+                formData.append("enviar_email", $("#enviar_email").is(':checked'));
+                console.log(formData)
+            });
+            //send all the form data along with the files:
+            this.on("sendingmultiple", function(data, xhr, formData) {
+                formData.append("id_cliente", $("#id_cliente").val());
+                formData.append("enviar_email", $("#enviar_email").is(':checked'));
+                console.log("multiple")
+            });
+
+            this.on("drop", function(event) {
+                if($("#id_cliente").val()==""){
+                    Swal.fire("Debe indicar un cliente para poder subir ficheros (paso 1)<br>Los ficheros subidos se descartarán");
+                }
+            });
+
+            this.on("success", function(file, responseText) {
+                if (responseText.tipo=='ok'){
+                    $("#msg_result").removeClass('alert-danger');
+                    $("#h_titulo").removeClass('text-danger');
+                    $("#icono_msg").removeClass('fa fa-exclamation-triangle');
+                    $('#msg_result').hide();
+                    $('#msg_result').show();
+                    $('#msg_result').addClass('animated bounceInRight');
+                    $('#msg_result').addClass('alert-success');
+                    $('#h_titulo').addClass('text-success');
+                    $('#icono_msg').addClass('fa fa-check-circle');
+                    $('#tit_msg').html(responseText.title);
+                    $('#msg').html(responseText.message);
+                } else if (responseText.tipo=='error'){
+                    $("#msg_result").removeClass('alert-success');
+                    $("#h_titulo").removeClass('text-success');
+                    $("#icono_msg").removeClass('fa fa-check-circle');
+                    $('#msg_result').hide();
+                    $('#msg_result').show();
+                    $('#msg_result').addClass('animated bounceInRight');
+                    $('#msg_result').addClass('alert-danger');
+                    $('#h_titulo').addClass('text-danger');
+                    $('#icono_msg').addClass('fa fa-exclamation-triangle');
+                    $('#tit_msg').html(responseText.title);
+                    $('#msg').html(responseText.message);
+                }
+            });
+        }
+    }
+    </script>
+
+
 
 @endsection
 

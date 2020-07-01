@@ -3,15 +3,20 @@
 
 @extends('layout')
 
-@section('css')
+@section('styles')
+
+<link href="{{url('/plugins/dropzone/dropzone.css')}}" rel="stylesheet">
+
+<script type="text/javascript" src="{{url('/plugins/dropzone/dropzone.js')}}" ></script>
 
 @endsection
+
 @section('breadcrumb')
 <!-- Content Header (Page header) -->
 <ol class="breadcrumb">
     <li><a href="{{url('/')}}"><i class="demo-pli-home"></i> </a></li>
     <li class="">Configuracion</li>
-    <li class="active">Importación</li>
+    <li class="active">Importación usuarios</li>
 </ol>
 
 @endsection
@@ -50,25 +55,25 @@
 					                    <li class="col-xs-3">
 					                        <a data-toggle="tab" href="#demo-main-tab1">
 					                            <span class="text-danger"><i class="demo-pli-information icon-2x"></i></span>
-					                            <h5 class="mar-no">Account</h5>
+					                            <h5 class="mar-no">Descargar plantilla</h5>
 					                        </a>
 					                    </li>
 					                    <li class="col-xs-3">
 					                        <a data-toggle="tab" href="#demo-main-tab2">
 					                            <span class="text-warning"><i class="demo-pli-male icon-2x"></i></span>
-					                            <h5 class="mar-no">Profile</h5>
+					                            <h5 class="mar-no">Rellenar plantilla</h5>
 					                        </a>
 					                    </li>
 					                    <li class="col-xs-3">
 					                        <a data-toggle="tab" href="#demo-main-tab3">
 					                            <span class="text-info"><i class="demo-pli-home icon-2x"></i></span>
-					                            <h5 class="mar-no">Address</h5>
+					                            <h5 class="mar-no">Procesar plantilla</h5>
 					                        </a>
 					                    </li>
 					                    <li class="col-xs-3">
 					                        <a data-toggle="tab" href="#demo-main-tab4">
 					                            <span class="text-success"><i class="demo-pli-medal-2 icon-2x"></i></span>
-					                            <h5 class="mar-no">Finish</h5>
+					                            <h5 class="mar-no">Resultado</h5>
 					                        </a>
 					                    </li>
 					                </ul>
@@ -79,102 +84,98 @@
 					                </div>
 
 
-					                <!--form-->
-					                <form class="form-horizontal">
+                                    <!--form-->
+                                    <form name="form_fichero" id="form_fichero"  enctype="multipart/form-data"  action="{{ url('users/import/process_import') }}" class="tab-wizard wizard-circle form-horizontal" method="POST">
+
+
 					                    <div class="panel-body">
 					                        <div class="tab-content">
 
 					                            <!--First tab-->
 					                            <div id="demo-main-tab1" class="tab-pane">
-					                                <div class="form-group">
-					                                    <label class="col-lg-2 control-label">Username</label>
-					                                    <div class="col-lg-9">
-					                                        <input type="text" class="form-control" name="username" placeholder="Username">
-					                                    </div>
-					                                </div>
-					                                <div class="form-group">
-					                                    <label class="col-lg-2 control-label">Email address</label>
-					                                    <div class="col-lg-9">
-					                                        <input type="email" class="form-control" name="email" placeholder="Email">
-					                                    </div>
-					                                </div>
-					                                <div class="form-group">
-					                                    <label class="col-lg-2 control-label">Password</label>
-					                                    <div class="col-lg-9 pad-no">
-					                                        <div class="clearfix">
-					                                            <div class="col-lg-4">
-					                                                <input type="password" class="form-control mar-btm" name="password" placeholder="Password">
-					                                            </div>
-					                                            <div class="col-lg-4 text-lg-right"><label class="control-label">Retype password</label></div>
-					                                            <div class="col-lg-4"><input type="password" class="form-control" name="password2" placeholder="Retype password"></div>
-					                                        </div>
-					                                    </div>
-					                                </div>
+                                                    <h4>Descarge la plantilla EXCEL con los datos especificos de su empresa.</h4>
+                                                    <div class="text-center">
+                                                        <a class="link_excel hover-this" href="javascript:void(0)" id="link_descarga" @if(isAdmin() || count(clientes())>1)style="display: none"@endif>
+                                                            <img src="{{ url('imgs/logo_excel.png') }}">
+                                                            <span><h2 id="nombre_fichero" style="color: #007233">
+                                                                @if(!isAdmin() && count(clientes()) == 1)
+                                                                plantilla_cucoweb_{{ \DB::table('cug_clientes')->where('cod_cliente',Auth::user()->cod_cliente)->first()->nom_cliente }}_{{ Carbon\Carbon::today()->format('Ymd')}}.xlsx
+                                                                @endif
+                                                            </h2></span>
+                                                        </a>
+                                                    </div>
+                                                    <br><br>
+                                                    <h4>Recuerde que si altera la parametrización de su empresa (Departamentos/Centros/Horarios/Ciclos) deberá volver a descargarla para asegurar que tiene los datos actualizados</h4>
+                                                    <br>
+
 					                            </div>
 
 					                            <!--Second tab-->
 					                            <div id="demo-main-tab2" class="tab-pane fade">
-					                                <div class="form-group">
-					                                    <label class="col-lg-2 control-label">First name</label>
-					                                    <div class="col-lg-9 pad-no">
-					                                        <div class="clearfix">
-					                                            <div class="col-lg-4">
-					                                                <input type="text" placeholder="First name" name="firstName" class="form-control">
-					                                            </div>
-					                                            <div class="col-lg-4 text-lg-right"><label class="control-label">Last name</label></div>
-					                                            <div class="col-lg-4"><input type="text" placeholder="Last name" name="lastName" class="form-control"></div>
-					                                        </div>
-					                                    </div>
-					                                </div>
-					                                <div class="form-group">
-					                                    <label class="col-lg-2 control-label">Company</label>
-					                                    <div class="col-lg-9">
-					                                        <input type="text" placeholder="Company" name="company" class="form-control">
-					                                    </div>
-					                                </div>
-					                                <div class="form-group">
-					                                    <label class="col-lg-2 control-label">Member Type</label>
-					                                    <div class="col-lg-9">
-					                                        <div class="radio">
-					                                            <input id="demo-radio-1" class="magic-radio" type="radio" name="memberType" value="free">
-					                                            <label for="demo-radio-1">Free</label>
 
-					                                            <input id="demo-radio-2" class="magic-radio" type="radio" name="memberType" value="personal">
-					                                            <label for="demo-radio-2">Personal</label>
 
-					                                            <input id="demo-radio-3" class="magic-radio" type="radio" name="memberType" value="bussines">
-					                                            <label for="demo-radio-3">Bussiness</label>
-					                                        </div>
-					                                    </div>
-					                                </div>
+                        <section>
+                                <h4>Rellene la plantilla EXCEL con los datos de sus empleados.</h4>
+
+                                <h4>Hay ciertos campos que son obligatorios, debe tener en cuenta de que si alguno de dichos campos no estan rellenos, se rechazará el la plantilla durante el procesado.</h4>
+                                <h4 class="font-bold">Campos obligatorios</h4>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <ul>
+                                            <li>Nombre</li>
+                                            <li>Apeliidos</li>
+                                            <li>Situacion</li>
+                                            <li>e-mail</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <ul>
+                                            <li>Estado civil</li>
+                                            <li>Sexo</li>
+                                            <li>Fecha de nacimiento</li>
+                                            <li>Nivel de estudios</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <img src="{{ url('imgs/ejemplo_excel.png') }}">
+                                    </div>
+                                </div>
+                                <h4>Para estos dos campos, si no indica valor, se asignará el primero disponible por defecto</h4>
+                                <ul>
+                                    <li>Centro</li>
+                                    <li>Departamento</li>
+                                </ul>
+                                <h4>Una vez rellenada la plantilla pulse "Siguiente"</h4>
+                        </section>
+
+
+
 					                            </div>
 
 					                            <!--Third tab-->
 					                            <div id="demo-main-tab3" class="tab-pane">
-					                                <div class="form-group">
-					                                    <label class="col-lg-2 control-label">Phone Number</label>
-					                                    <div class="col-lg-9">
-					                                        <input type="text" placeholder="Phone number" name="phoneNumber" class="form-control">
-					                                    </div>
-					                                </div>
-					                                <div class="form-group">
-					                                    <label class="col-lg-2 control-label">Address</label>
-					                                    <div class="col-lg-9">
-					                                        <input type="text" placeholder="Address" name="address" class="form-control">
-					                                    </div>
-					                                </div>
-					                                <div class="form-group">
-					                                    <label class="col-lg-2 control-label">City</label>
-					                                    <div class="col-lg-9 pad-no">
-					                                        <div class="clearfix">
-					                                            <div class="col-lg-5">
-					                                                <input type="text" placeholder="City" name="city" class="form-control">
-					                                            </div>
-					                                            <div class="col-lg-3 text-lg-right"><label class="control-label">Poscode</label></div>
-					                                            <div class="col-lg-4"><input type="text" placeholder="Poscode" name="poscode" class="form-control"></div>
-					                                        </div>
-					                                    </div>
-					                                </div>
+
+                                                    <section>
+                                                        <h4>Ahora arrastre los ficheros que desea subir: imagenes de empleados y la plantilla de excel rellenada.<br><br></h4>
+                                                        <i class="fa fas fa-info-circle"></i>NOTA: Las fotos de empleados deben tener el mismo nombre que haya puesto en la plantilla, si no, se descartarán.<br><br>
+                                                        <h4>Es importante que <b>suba la plantilla en ultimo lugar</b>, pues al subir la plantilla se iniciará el procesado de la informacion y una vez subida ya no se podrán subir más ficheros con fotos.</h4>
+                                                        <br><br>
+                                                        <div class="btn-group" data-toggle="buttons">
+                                                            <label class="btn btn-warning">
+                                                                <div class="custom-control custom-checkbox mr-sm-2">
+                                                                    <input type="checkbox" class="custom-control-input" id="enviar_email" name="enviar_email" checked>
+                                                                    <label class="custom-control-label" for="checkbox0">Marque si desea enviar email de bienvenida a los empleados que se añadan</label>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+
+                                                        <div id="dZUpload" class="dropzone">
+                                                            <div class="dz-default dz-message">
+                                                                <h2><i class="mdi mdi-cloud-upload"></i> Arrastre archivos <span class="text-blue">para subirlos</span></h2>&nbsp&nbsp<h6 class="display-inline text-muted"> (o Click aqui)</h6>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+
 					                            </div>
 
 					                            <!--Fourth tab-->
@@ -213,6 +214,10 @@
                 </div>
 </div>
 @endsection
+
+
+
+
 
 
 

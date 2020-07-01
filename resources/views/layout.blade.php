@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Mosaic - onthespot</title>
+
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
+        @yield('css')
+
     <!--STYLESHEET-->
     <!--=================================================-->
     <!--Open Sans Font [ OPTIONAL ]-->

@@ -54,25 +54,25 @@
 					                <ul class="row wz-step wz-icon-bw wz-nav-off mar-top">
 					                    <li class="col-xs-3">
 					                        <a data-toggle="tab" href="#demo-main-tab1">
-					                            <span class="text-danger"><i class="demo-pli-information icon-2x"></i></span>
+					                            <span class="text-danger"><i class="demo-pli-number icon-1x"></i></span>
 					                            <h5 class="mar-no">Descargar plantilla</h5>
 					                        </a>
 					                    </li>
 					                    <li class="col-xs-3">
 					                        <a data-toggle="tab" href="#demo-main-tab2">
-					                            <span class="text-warning"><i class="demo-pli-male icon-2x"></i></span>
+					                            <span class="text-warning"><i class="demo-pli-number icon-2x"></i></span>
 					                            <h5 class="mar-no">Rellenar plantilla</h5>
 					                        </a>
 					                    </li>
 					                    <li class="col-xs-3">
 					                        <a data-toggle="tab" href="#demo-main-tab3">
-					                            <span class="text-info"><i class="demo-pli-home icon-2x"></i></span>
+					                            <span class="text-info"><i class="demo-pli-number icon-3x"></i></span>
 					                            <h5 class="mar-no">Procesar plantilla</h5>
 					                        </a>
 					                    </li>
 					                    <li class="col-xs-3">
 					                        <a data-toggle="tab" href="#demo-main-tab4">
-					                            <span class="text-success"><i class="demo-pli-medal-2 icon-2x"></i></span>
+					                            <span class="text-success"><i class="demo-pli-number icon-4x"></i></span>
 					                            <h5 class="mar-no">Resultado</h5>
 					                        </a>
 					                    </li>

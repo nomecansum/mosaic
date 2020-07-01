@@ -43,8 +43,8 @@ class UsersController extends Controller
     public function subir_adjuntos(Request $r){
 		//dd($r);
 		try{
-			if(isset($r->cod_cliente)){
-				$directorio=public_path().'/uploads/incidents/justificantes_validar/'.$r->cod_cliente.'/';
+			if(isset($r->id_cliente)){
+				$directorio=public_path().'/uploads/incidents/justificantes_validar/'.$r->id_cliente.'/';
 				if(!File::exists($directorio)) {
 					File::makeDirectory($directorio);
 				}
@@ -53,7 +53,7 @@ class UsersController extends Controller
 				$file->move($directorio,$file->getClientOriginalName());
 				$original=$file->getClientOriginalName();
 				$extension=File::extension($file->getClientOriginalName());
-				$newfile=$r->cod_cliente.'_'.Str::random(24).'.'.$extension;
+				$newfile=$r->id_cliente.'_'.Str::random(24).'.'.$extension;
 				rename($directorio.$original, $directorio.$newfile);
 				//Ahora a guardar el adjunto
 				/* DB::table('cur_adjuntos_incidencia')

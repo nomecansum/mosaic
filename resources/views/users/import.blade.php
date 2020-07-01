@@ -134,7 +134,7 @@
 					                            <!--Second tab-->
 					                            <div id="demo-main-tab2" class="tab-pane fade">
 
-                                                    <h4>Rellene la plantilla EXCEL con los datos de sus empleados.</h4>
+                                                    <h4>Rellene la plantilla EXCEL con los datos de sus usuarios.</h4>
 
                                                     <h4>Hay ciertos campos que son obligatorios, debe tener en cuenta de que si alguno de dichos campos no estan rellenos, se rechazará el la plantilla durante el procesado.</h4>
                                                     <h4 class="font-bold">Campos obligatorios</h4>
@@ -171,15 +171,15 @@
 					                            <!--Third tab-->
 					                            <div id="demo-main-tab3" class="tab-pane">
 
-                                                        <h4>Ahora arrastre los ficheros que desea subir: imagenes de empleados y la plantilla de excel rellenada.<br><br></h4>
-                                                        <i class="fa fas fa-info-circle"></i>NOTA: Las fotos de empleados deben tener el mismo nombre que haya puesto en la plantilla, si no, se descartarán.<br><br>
+                                                        <h4>Ahora arrastre los ficheros que desea subir: imagenes de usuarios y la plantilla de excel rellenada.<br><br></h4>
+                                                        <i class="fa fas fa-info-circle"></i>NOTA: Las fotos de usuarios deben tener el mismo nombre que haya puesto en la plantilla, si no, se descartarán.<br><br>
                                                         <h4>Es importante que <b>suba la plantilla en ultimo lugar</b>, pues al subir la plantilla se iniciará el procesado de la informacion y una vez subida ya no se podrán subir más ficheros con fotos.</h4>
                                                         <br><br>
                                                         <div class="btn-group" data-toggle="buttons">
                                                             <label class="btn btn-warning">
                                                                 <div class="custom-control custom-checkbox mr-sm-2">
                                                                     <input type="checkbox" class="custom-control-input" id="enviar_email" name="enviar_email" checked>
-                                                                    <label class="custom-control-label" for="checkbox0">Marque si desea enviar email de bienvenida a los empleados que se añadan</label>
+                                                                    <label class="custom-control-label" for="checkbox0">Marque si desea enviar email de bienvenida a los usuarios que se añadan</label>
                                                                 </div>
                                                             </label>
                                                         </div>

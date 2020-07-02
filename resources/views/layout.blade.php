@@ -53,6 +53,7 @@
     <link href="{{url('/plugins/sweetalert/dist/sweetalert2.min.css')}}" rel="stylesheet" media="all">
     {{-- Daterangepicker --}}
     <link href="{{ asset('/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+
     <!--=================================================
 
     REQUIRED
@@ -261,6 +262,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
     <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+
 
 
 

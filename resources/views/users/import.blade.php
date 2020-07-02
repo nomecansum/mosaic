@@ -7,7 +7,6 @@
 
 <link href="{{url('/plugins/dropzone/dropzone.css')}}" rel="stylesheet">
 
-<script type="text/javascript" src="{{url('/plugins/dropzone/dropzone.js')}}" ></script>
 
 @endsection
 

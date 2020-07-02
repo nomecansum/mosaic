@@ -36,11 +36,14 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/', 'UsersController@store')->name('users.users.store');
         Route::post('users/{users}', 'UsersController@update')->name('users.users.update');
         Route::delete('/users/{users}','UsersController@destroy')->name('users.users.destroy');
-        
+
         Route::get('users/import/index', 'UsersController@index_import')->name('users.users.index.import');
         Route::post('users/import', 'UsersController@import')->name('users.users.import');
-        Route::post('users/import/process_import', 'UsersController@subir_adjuntos')->name('users.users.import.subir_adjuntos');
+
+        Route::post('users/upload', 'UsersController@upload');
     });
+
+
 
     Route::get('/bitacoras', 'BitacorasController@index')->name('bitacoras.bitacora.index');
     Route::post('/bitacoras/search', 'BitacorasController@search')->name('bitacoras.bitacora.search');

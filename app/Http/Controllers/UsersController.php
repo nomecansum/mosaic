@@ -40,43 +40,21 @@ class UsersController extends Controller
         return redirect('/')->with('success', 'All good!');
     }
 
-    public function subir_adjuntos(Request $r){
-		//dd($r);
-		try{
-			if(isset($r->id_cliente)){
-				$directorio=public_path().'/uploads/incidents/justificantes_validar/'.$r->id_cliente.'/';
-				if(!File::exists($directorio)) {
-					File::makeDirectory($directorio);
-				}
+    public function upload($id, Request $request){
 
-				$file = $r->file('file');
-				$file->move($directorio,$file->getClientOriginalName());
-				$original=$file->getClientOriginalName();
-				$extension=File::extension($file->getClientOriginalName());
-				$newfile=$r->id_cliente.'_'.Str::random(24).'.'.$extension;
-				rename($directorio.$original, $directorio.$newfile);
-				//Ahora a guardar el adjunto
-				/* DB::table('cur_adjuntos_incidencia')
-				->insert([
-					"fic_adjunto"=>basename($newfile),
-					"fic_original"=>basename($original),
-					"cod_incidencia"=>$r->cod_incidencia,
-					"cod_empleado"=>$r->cod_empleado,
-					"fec_incidencia"=>Carbon::parse($r->fec_dia),
-					"fecha"=>Carbon::now()
-				]); */
+        $file = $request->file('file');
+        $path = public_path() . '/upload/import';
+        $fileName = uniqid() . $file->getClientOriginalName();
 
-				return response()->json(array('success' => true, 'filename'=>$original,'newfilename'=>$newfile));
-			}
-		} catch(\Exception $e){
-		response()->json([
-			"error" => "Error subiendo adjunto ".mensaje_excepcion($e),
-			"TS" => Carbon::now()->format('Y-m-d h:i:s')
-			],400)->throwResponse();
-		return response()->json(array('error' => false));
-		}
+        $file->move($path, $fileName);
 
-	}
+        $projectImage = new Cliente();
+        $projectImage->project_id = $id;
+        $projectImage->user_id = auth()->user()->id;
+        $projectImage->file_name = $fileName;
+        $projectImage->save();
+
+    }
 
     /**
      * Display a listing of the users.

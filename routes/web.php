@@ -37,11 +37,16 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('users/{users}', 'UsersController@update')->name('users.users.update');
         Route::delete('/users/{users}','UsersController@destroy')->name('users.users.destroy');
 
-        Route::get('users/import/index', 'UsersController@index_import')->name('users.users.index.import');
+        Route::get('users/import/index', 'ImageUploadController@fileCreate')->name('users.users.index.import');
         Route::post('users/import', 'UsersController@import')->name('users.users.import');
 
         Route::post('users/upload', 'UsersController@upload');
+
     });
+
+    Route::get('image/upload','ImageUploadController@fileCreate');
+    Route::post('image/upload/store','ImageUploadController@fileStore');
+    Route::post('image/delete','ImageUploadController@fileDestroy');
 
 
 

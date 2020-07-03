@@ -5,7 +5,12 @@
 
 @section('styles')
 
-<link href="{{url('/plugins/dropzone/dropzone.css')}}" rel="stylesheet">
+
+<meta name="_token" content="{{csrf_token()}}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.js"></script>
 
 
 @endsection
@@ -87,11 +92,6 @@
                                         <h3 id="h_titulo" class=""><i id="icono_msg" class=""></i> <span id="tit_msg"></span></h3> <span id="msg"></span>
                                     </div>
                                     <!--form-->
-                                    <form name="form_fichero" id="form_fichero"  enctype="multipart/form-data"  action="{{ url('users/import/process_import') }}" class="tab-wizard wizard-circle form-horizontal" method="POST">
-
-                                        <input type="hidden" name="fichero" id="fic">
-
-                                        @csrf
 
 					                    <div class="panel-body">
 					                        <div class="tab-content">
@@ -183,11 +183,10 @@
                                                             </label>
                                                         </div>
 
-                                                        <div id="dZUpload" class="dropzone">
-                                                            <div class="dz-default dz-message">
-                                                                <h2><i class="mdi mdi-cloud-upload"></i> Arrastre archivos <span class="text-blue">para subirlos</span></h2>&nbsp&nbsp<h6 class="display-inline text-muted"> (o Click aqui)</h6>
-                                                            </div>
-                                                        </div>
+                                                        <form method="post" action="{{url('image/upload/store')}}" enctype="multipart/form-data"
+                                                            class="dropzone" id="dropzone">
+                                                            @csrf
+                                                        </form>
 					                            </div>
 
 					                            <!--Fourth tab-->
@@ -218,7 +217,7 @@
 					                        <button type="button" class="finish btn btn-success" disabled>Finish</button>
 					                    </div>
 
-					                </form>
+
                                 </div>
                             </div>
                         </div>
@@ -229,100 +228,52 @@
 
 @section('scripts')
 
-<script type="text/javascript" src="{{url('/plugins/dropzone/dropzone.js')}}" ></script>
 
 
-<script>
 
-    $(function(){
-        var nom_fichero="plantilla_cucoweb_";
-        var fecha=moment().format('YYYYMMDD');
-        $("#id_cliente").change(function(){
-            if($( "#id_cliente option:selected" ).text()==''){
-                $('#link_descarga').hide();
-            }   else{
-                var fichero = nom_fichero+$( "#id_cliente option:selected" ).text()+'_'+fecha+'.xlsx';
-                $('#nombre_fichero').html(fichero);
-                $('#fic').val(fichero);
-                $('#link_descarga').show();
-                Dropzone.forElement("#dZUpload").removeAllFiles(true);
-            }
-        });
-
-        $('.link_excel').click(function(){
-            document.location="{{ url('employees/import/template/') }}"+"/"+$('#id_cliente').val();
-        })
-
-    });
-    window.Laravel = {!! json_encode([
-        'csrfToken' => csrf_token(),
-    ]) !!};
-
-    Dropzone.options.dZUpload= {
-        url: '{{ url('users/import/process_import/') }}',
-        autoProcessQueue: true,
-        uploadMultiple: true,
-        parallelUploads: 5,
-        //maxFiles: 5,
-        addRemoveLinks: true,
-        maxFilesize: 5,
-        autoProcessQueue: true,
-        acceptedFiles: 'image/*,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
-        dictDefaultMessage: '<span class="text-center"><span class="font-lg visible-xs-block visible-sm-block visible-lg-block"><span class="font-lg"><i class="fa fa-caret-right text-danger"></i> Arrastre archivos <span class="font-xs">para subirlos</span></span><span>&nbsp&nbsp<h4 class="display-inline"> (O haga Click)</h4></span>',
-        dictResponseError: 'Error subiendo fichero!',
-        headers: {
-            'X-CSRF-TOKEN': Laravel.csrfToken
+<script type="text/javascript">
+    Dropzone.options.dropzone =
+     {
+        maxFilesize: 12,
+        renameFile: function(file) {
+            var dt = new Date();
+            var time = dt.getTime();
+           return time+file.name;
         },
-        init: function() {
-            dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
-            this.on("sending", function(file, xhr, formData) {
-                formData.append("id_cliente", $("#id_cliente").val());
-                formData.append("enviar_email", $("#enviar_email").is(':checked'));
-                console.log(formData)
-            });
-            //send all the form data along with the files:
-            this.on("sendingmultiple", function(data, xhr, formData) {
-                formData.append("id_cliente", $("#id_cliente").val());
-                formData.append("enviar_email", $("#enviar_email").is(':checked'));
-                console.log("multiple")
-            });
+        acceptedFiles: ".jpeg,.jpg,.png,.gif",
+        addRemoveLinks: true,
+        timeout: 50000,
+        removedfile: function(file)
+        {
+            var name = file.upload.filename;
+            $.ajax({
+                headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                type: 'POST',
+                url: '{{ url("image/delete") }}',
+                data: {filename: name},
+                success: function (data){
+                    console.log("File has been successfully removed!!");
+                },
+                error: function(e) {
+                    console.log(e);
+                }});
+                var fileRef;
+                return (fileRef = file.previewElement) != null ?
+                fileRef.parentNode.removeChild(file.previewElement) : void 0;
+        },
 
-            this.on("drop", function(event) {
-                if($("#id_cliente").val()==""){
-                    Swal.fire("Debe indicar un cliente para poder subir ficheros (paso 1)<br>Los ficheros subidos se descartarán");
-                }
-            });
-
-            this.on("success", function(file, responseText) {
-                if (responseText.tipo=='ok'){
-                    $("#msg_result").removeClass('alert-danger');
-                    $("#h_titulo").removeClass('text-danger');
-                    $("#icono_msg").removeClass('fa fa-exclamation-triangle');
-                    $('#msg_result').hide();
-                    $('#msg_result').show();
-                    $('#msg_result').addClass('animated bounceInRight');
-                    $('#msg_result').addClass('alert-success');
-                    $('#h_titulo').addClass('text-success');
-                    $('#icono_msg').addClass('fa fa-check-circle');
-                    $('#tit_msg').html(responseText.title);
-                    $('#msg').html(responseText.message);
-                } else if (responseText.tipo=='error'){
-                    $("#msg_result").removeClass('alert-success');
-                    $("#h_titulo").removeClass('text-success');
-                    $("#icono_msg").removeClass('fa fa-check-circle');
-                    $('#msg_result').hide();
-                    $('#msg_result').show();
-                    $('#msg_result').addClass('animated bounceInRight');
-                    $('#msg_result').addClass('alert-danger');
-                    $('#h_titulo').addClass('text-danger');
-                    $('#icono_msg').addClass('fa fa-exclamation-triangle');
-                    $('#tit_msg').html(responseText.title);
-                    $('#msg').html(responseText.message);
-                }
-            });
+        success: function(file, response)
+        {
+            console.log(response);
+        },
+        error: function(file, response)
+        {
+           return false;
         }
-    }
-    </script>
+};
+</script>
 
 
 

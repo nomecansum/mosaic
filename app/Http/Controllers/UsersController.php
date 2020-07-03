@@ -22,16 +22,18 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Storage;
+
 
 
 
 class UsersController extends Controller
 {
-    public function index_import(){
+    /* public function index_import(){
 
         return view('users.import');
 
-    }
+    } */
 
     public function import()
     {
@@ -40,7 +42,7 @@ class UsersController extends Controller
         return redirect('/')->with('success', 'All good!');
     }
 
-    public function upload($id, Request $request){
+    /* public function upload($id, Request $request){
 
         $file = $request->file('file');
         $path = public_path() . '/upload/import';
@@ -48,14 +50,14 @@ class UsersController extends Controller
 
         $file->move($path, $fileName);
 
-        $projectImage = new Cliente();
+        $projectImage = new users();
         $projectImage->project_id = $id;
         $projectImage->user_id = auth()->user()->id;
         $projectImage->file_name = $fileName;
         $projectImage->save();
 
     }
-
+ */
     /**
      * Display a listing of the users.
      *

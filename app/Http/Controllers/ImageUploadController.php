@@ -17,15 +17,12 @@ class ImageUploadController extends Controller
         $imageName = $image->getClientOriginalName();
         $image->move(public_path('uploads/import'),$imageName);
 
-        $imageUpload = new ImageUpload();
-        $imageUpload->filename = $imageName;
-        $imageUpload->save();
-        return response()->json(['success'=>$imageName]);
+
     }
     public function fileDestroy(Request $request)
     {
         $filename =  $request->get('filename');
-        ImageUpload::where('filename',$filename)->delete();
+        
         $path=public_path().'/uploads/import'.$filename;
         if (file_exists($path)) {
             unlink($path);

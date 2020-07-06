@@ -96,7 +96,8 @@
 					                    <div class="panel-body">
 					                        <div class="tab-content">
 
-					                            <!--First tab-->
+                                                <!--First tab-->
+
 					                            <div id="demo-main-tab1" class="tab-pane">
 
                                                     <h4>Descarge la plantilla EXCEL con los datos especificos de su empresa.</h4>
@@ -232,6 +233,35 @@
 
 
 <script type="text/javascript">
+
+
+
+$(function(){
+    var nom_fichero="plantilla_cucoweb_";
+    var fecha=moment().format('YYYYMMDD');
+    $("#id_cliente").change(function(){
+        if($( "#id_cliente option:selected" ).text()==''){
+            $('#link_descarga').hide();
+        }   else{
+            var fichero = nom_fichero+$( "#id_cliente option:selected" ).text()+'_'+fecha+'.xlsx';
+            $('#nombre_fichero').html(fichero);
+            $('#fic').val(fichero);
+            $('#link_descarga').show();
+            Dropzone.forElement("#dropzone").removeAllFiles(true);
+        }
+    });
+
+    $('.link_excel').click(function(){
+        document.location="{{ url('employees/import/template/') }}"+"/"+$('#id_cliente').val();
+    })
+
+});
+window.Laravel = {!! json_encode([
+    'csrfToken' => csrf_token(),
+]) !!};
+
+
+
     Dropzone.options.dropzone =
      {
         maxFilesize: 12,
@@ -240,7 +270,8 @@
             var time = dt.getTime();
            return time+file.name;
         },
-        acceptedFiles: ".jpeg,.jpg,.png,.gif",
+        acceptedFiles: 'image/*,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
+        
         addRemoveLinks: true,
         timeout: 50000,
         removedfile: function(file)

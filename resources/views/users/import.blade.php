@@ -117,11 +117,9 @@
                                                         <br>
                                                         <div class="text-center">
                                                             <a class="link_excel hover-this" href="javascript:void(0)" id="link_descarga" @if(isAdmin() || count(clientes())>1)style="display: none"@endif>
-                                                                <img src="{{ url('imgs/logo_excel.png') }}">
-                                                                <span><h2 id="nombre_fichero" style="color: #007233">
-                                                                    @if(!isAdmin() && count(clientes()) == 1)
-                                                                    plantilla_cucoweb_{{ \DB::table('clientes')->where('id_cliente',Auth::user()->id_cliente)->first()->nom_cliente }}_{{ Carbon\Carbon::today()->format('Ymd')}}.xlsx
-                                                                    @endif
+                                                                <img src="{{ url('plantillas/logo_excel.png') }}">
+                                                                <span><h2>
+                                                                    <a href="{{url('/plantillas/fichero_plantilla.xlsx')}}">Descargar plantilla</a>
                                                                 </h2></span>
                                                             </a>
                                                         </div>
@@ -237,7 +235,7 @@
 
 
 $(function(){
-    var nom_fichero="plantilla_cucoweb_";
+    var nom_fichero="plantilla";
     var fecha=moment().format('YYYYMMDD');
     $("#id_cliente").change(function(){
         if($( "#id_cliente option:selected" ).text()==''){
@@ -271,7 +269,7 @@ window.Laravel = {!! json_encode([
            return time+file.name;
         },
         acceptedFiles: 'image/*,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
-        
+
         addRemoveLinks: true,
         timeout: 50000,
         removedfile: function(file)

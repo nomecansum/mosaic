@@ -10,67 +10,11 @@ use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use DB;
+use Exception;
+use Illuminate\Support\Facades\Hash;
 
 class ImageUploadController extends Controller
 {
-
-    public function procesar_import(Request $r){
-
-        //dd($r->all());
-            if(isset($r->id_cliente)){
-                $directorio=public_path().'plantillas'.$r->id_cliente.'/';
-
-                if(!File::exists($directorio)) {
-                    File::makeDirectory($directorio);
-                }
-
-                $files = $r->file('file');
-                foreach($files as $file){
-                    $file->move($directorio,$file->getClientOriginalName());
-                    if(File::extension($file->getClientOriginalName())=='xls' || File::extension($file->getClientOriginalName())=='xlsx'){
-                        $fichero_plantilla=$directorio.$file->getClientOriginalName();
-                    }
-                }
-            }
-            if (isset($fichero_plantilla)){ //A jugar
-                if(File::extension($fichero_plantilla)=='xls'){
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-                }else{
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-                }if (isset($fichero_plantilla)){ //A jugar
-                if(File::extension($fichero_plantilla)=='xls'){
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-                }else{
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-                }
-
-                $spreadsheet = $reader->load($fichero_plantilla);
-                        $highestRow = $spreadsheet->getActiveSheet()->getHighestRow();$spreadsheet = $reader->load($fichero_plantilla);
-                        $highestRow = $spreadsheet->getActiveSheet()->getHighestRow();
-
-
-                        for ($i = 2; $i <= $highestRow; $i++) {
-                            $emp = $this->fila_to_object($spreadsheet,$i,$r->id_cliente);
-                            if($emp==false){//sacabo
-                            break;
-                            } else{
-                            //A insertar el usuario
-                            $user_svc = new users;
-
-                            }
-
-                            //Validamos el form
-                            $validator=$user_svc->validar_request_empleado($emp,'texto');
-                            if ($validator!==true){
-                            $errores.=$validator;
-                            }
-                            $cuenta_usuarios++;
-                            }
-
-
-                }
-            }
-        }
         function fila_to_object($spreadsheet,$i,$cliente){
 
             $emp_svc = new users;
@@ -101,9 +45,10 @@ class ImageUploadController extends Controller
     {
         return view('users.import');
     }
+
     function fileStore(Request $request)
-    {      
-        
+    {
+
         $directorio = public_path().'/uploads/import/'.Auth::user()->id_cliente.'/';
         if(!File::exists($directorio)) {
             File::makeDirectory($directorio);
@@ -115,12 +60,12 @@ class ImageUploadController extends Controller
             //Es un excel, a procesarlo
             $fichero_plantilla=$directorio.$file->getClientOriginalName();
         }
-       
+
         if (isset($fichero_plantilla)){
             if(File::extension($fichero_plantilla)=='xls')
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
                 else $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-                
+
                 $spreadsheet = $reader->load($fichero_plantilla);
                 $highestRow = $spreadsheet->getActiveSheet()->getHighestRow();
                 //Validar los datos
@@ -128,44 +73,63 @@ class ImageUploadController extends Controller
                 $errores = "";
                 $cuenta_usuarios = 0;
                 $mensajes_adicionales = "";
-				
-                for ($i = 2; $i <= $highestRow; $i++) 
+
+                for ($i = 2; $i <= $highestRow; $i++)
                 {
                     $emp = $this->fila_to_object($spreadsheet, $i, $request->cod_cliente);
                     if($emp == false)
                     {
                     	//fin del fichero
                         break;
-                    } 
+                    }
                     else
                     {
                         $validator=$this->getData($emp);
                         if ($validator !== true)
                             $errores .= $validator;
                         $cuenta_usuarios++;
+
                     }
+
                 }
                 //Vuelta buena
                 try{
                     DB::beginTransaction();
                     $nombres_usuarios = "";
                     $mensajes_adicionales="";
-                    for ($i = 2; $i < ($cuenta_usuarios+2); $i++) 
+                    for ($i = 2; $i < ($cuenta_usuarios+2); $i++)
                     {
                         $emp = $this->fila_to_object($spreadsheet,$i,$request->cod_cliente);
                         //Aqui hay que procesar los usuarios para insertarlos en la bdd, primero comprobando la imagen si existe o no
-                        
+
 
                         //Al fina, una vez insertado el usuario se saca el ID que le ha tocado para ponerlo en el mensaje ed salida
                         $id=0;  //Esto solo es para que no falle ahora, luego se quita
-                   
+
                         //savebitacora("Creado usuario en importacion " . $id . " " . $emp->name);
                         $nombres_usuarios .= "[".$id."] " . $emp->name . "<br>";
+
+                        try {
+
+                            if (File::exists('img_usuario')) {
+                               $path = public_path().'/uploads/import/'.Auth::user()->id_cliente.'/';
+                               $img_usuario = uniqid().rand(000000,999999).'.'.$file->getClientOriginalExtension();
+                               $file->move($path,$img_usuario);
+                           }
+
+                       } catch (Exception $exception) {
+
+                           // flash('ERROR: Ocurrio un error creando el usuario '.$request->name.' '.$exception->getMessage())->error();
+                           // return back()->withInput();
+                       }
+
+                        users::create($validator);
                     }
+
                     DB::commit();
                     //Borramos el excel y la carpeta de importacion
                     File::deleteDirectory($directorio);
-					
+
                     return [
                         'title' => 'Importación de usuarios finalizada con exito',
                         'message' => $cuenta_usuarios . " empleados importados correctamente:<br>" . $nombres_usuarios . "<br>" . $mensajes_adicionales,
@@ -180,13 +144,10 @@ class ImageUploadController extends Controller
                         'tipo' => 'error'
                     ];
                 }
-            
+
         }
 
         return;
-
-
-
 
     }
     function fileDestroy(Request $request)
@@ -200,8 +161,8 @@ class ImageUploadController extends Controller
         return $filename;
     }
 
-    function getData(Request $request)
-    {
+    function getData(Request $request){
+
         $rules = [
             'email' => ['required','email', Rule::unique('users','email')],
             'cod_nivel' => 'required|numeric|min:0|max:1000',
@@ -209,12 +170,14 @@ class ImageUploadController extends Controller
             'password' => 'required|string|min:1|max:255',
             'img_usuario' => 'nullable|string|max:255',
         ];
-        $validator = Validator::make($request->all(), $rules,[]); 
+        $validator = Validator::make($request->all(), $rules,[]);
         if($validator->fails()) {
             $mensaje_error = implode("<br>",$validator->messages()->all());
             return $mensaje_error;
         }else return true;
 
-        return $data;
+        return $request;
     }
+
+
 }

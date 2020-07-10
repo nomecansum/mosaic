@@ -15,9 +15,8 @@ use Illuminate\Support\Facades\Hash;
 
 class ImageUploadController extends Controller
 {
-        function fila_to_object($spreadsheet,$i,$cliente){
+        function fila_to_object($spreadsheet,$i){
 
-            $emp_svc = new users;
             $fila = $spreadsheet->setActiveSheetIndex(0)->rangeToArray('A'.$i.':E'.$i)[0];
             //error_log(json_encode($fila));
             $vacio=true;
@@ -36,6 +35,7 @@ class ImageUploadController extends Controller
                 'password' => $fila[2],
                 'img_usuario' => $fila[3],
                 'cod_nivel' => intval($fila[4]),
+                'id_cliente'=>Auth::user()->id_cliente,
             ]);
 
             return $emp;
@@ -76,7 +76,7 @@ class ImageUploadController extends Controller
 
                 for ($i = 2; $i <= $highestRow; $i++)
                 {
-                    $emp = $this->fila_to_object($spreadsheet, $i, $request->cod_cliente);
+                    $emp = $this->fila_to_object($spreadsheet, $i);
                     if($emp == false)
                     {
                     	//fin del fichero
@@ -99,7 +99,7 @@ class ImageUploadController extends Controller
                     $mensajes_adicionales="";
                     for ($i = 2; $i < ($cuenta_usuarios+2); $i++)
                     {
-                        $emp = $this->fila_to_object($spreadsheet,$i,$request->cod_cliente);
+                        $emp = $this->fila_to_object($spreadsheet,$i);
                         //Aqui hay que procesar los usuarios para insertarlos en la bdd, primero comprobando la imagen si existe o no
 
 
@@ -111,7 +111,8 @@ class ImageUploadController extends Controller
 
                         try {
 
-                            if (File::exists('img_usuario')) {
+                            $path = public_path().'/uploads/import/'.Auth::user()->id_cliente.'/'.$emp->img_usuario;
+                            if (File::exists($path)) {
                                $path = public_path().'/uploads/import/'.Auth::user()->id_cliente.'/';
                                $img_usuario = uniqid().rand(000000,999999).'.'.$file->getClientOriginalExtension();
                                $file->move($path,$img_usuario);
@@ -123,7 +124,7 @@ class ImageUploadController extends Controller
                            // return back()->withInput();
                        }
 
-                        users::create($validator);
+                        users::create($emp->all());
                     }
 
                     DB::commit();
@@ -137,7 +138,7 @@ class ImageUploadController extends Controller
                     ];
                 } catch (Exception $e){
                     DB::rollback();
-                    savebitacora("Error usuario en importación ".$emp->name." " . $e->getMessage(), null);
+                    savebitacora("Error usuario en importación ".$emp->name." " . $e->getMessage(), 'import_usuarios','OK');
                     return [
                         'title' => 'Error comprobando los datos de usuarios',
                         'message' => "Error usuario en importación " . $emp->name . " " . $e->getMessage(),

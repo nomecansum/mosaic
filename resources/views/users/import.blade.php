@@ -264,7 +264,7 @@ window.Laravel = {!! json_encode([
     Dropzone.options.dropzone =
      {
         maxFilesize: 12,
-        
+
         acceptedFiles: 'image/*,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
 
         addRemoveLinks: true,

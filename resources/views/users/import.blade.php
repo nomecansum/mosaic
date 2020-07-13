@@ -260,6 +260,7 @@ window.Laravel = {!! json_encode([
 
 
 
+
     Dropzone.options.dropzone =
      {
         maxFilesize: 12,

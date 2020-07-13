@@ -66,86 +66,79 @@ class ImageUploadController extends Controller
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
                 else $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 
-                $spreadsheet = $reader->load($fichero_plantilla);
-                $highestRow = $spreadsheet->getActiveSheet()->getHighestRow();
-                //Validar los datos
-                //Vuelta de comprobacion
-                $errores = "";
-                $cuenta_usuarios = 0;
-                $mensajes_adicionales = "";
+            $spreadsheet = $reader->load($fichero_plantilla);
+            $highestRow = $spreadsheet->getActiveSheet()->getHighestRow();
+            //Validar los datos
+            //Vuelta de comprobacion
+            $errores = "";
+            $cuenta_usuarios = 0;
+            $mensajes_adicionales = "";
 
-                for ($i = 2; $i <= $highestRow; $i++)
+            for ($i = 2; $i <= $highestRow; $i++)
+            {
+                $emp = $this->fila_to_object($spreadsheet, $i);
+                if($emp == false)
                 {
-                    $emp = $this->fila_to_object($spreadsheet, $i);
-                    if($emp == false)
-                    {
-                    	//fin del fichero
-                        break;
-                    }
-                    else
-                    {
-                        $validator=$this->getData($emp);
-                        if ($validator !== true)
-                            $errores .= $validator;
-                        $cuenta_usuarios++;
-
-                    }
+                    //fin del fichero
+                    break;
+                }
+                else
+                {
+                    $validator=$this->getData($emp);
+                    if ($validator !== true)
+                        $errores .= $validator;
+                    $cuenta_usuarios++;
 
                 }
-                //Vuelta buena
-                try{
-                    DB::beginTransaction();
-                    $nombres_usuarios = "";
-                    $mensajes_adicionales="";
-                    for ($i = 2; $i < ($cuenta_usuarios+2); $i++)
-                    {
-                        $emp = $this->fila_to_object($spreadsheet,$i);
-                        //Aqui hay que procesar los usuarios para insertarlos en la bdd, primero comprobando la imagen si existe o no
 
+            }
+            //Vuelta buena
+            try{
+                DB::beginTransaction();
+                $nombres_usuarios = "";
+                $mensajes_adicionales="";
+                for ($i = 2; $i < ($cuenta_usuarios+2); $i++)
+                {
+                    $emp = $this->fila_to_object($spreadsheet,$i);
+                    $nombres_usuarios .= "[".$id."] " . $emp->name . "<br>";
+                    //Mover la imagen a img/users si existe
+                    try {
+                        $path = public_path().'/uploads/import/'.Auth::user()->id_cliente.'/'.$emp->img_usuario;
+                        if (File::exists($path)) {
+                            $path_destino = public_path().'/img/users/';
+                            //Se renombra la imagen para que no pise ninguna existente en la carpeta
+                            $img_usuario = uniqid().rand(000000,999999).'.'.pathinfo($path, PATHINFO_EXTENSION);;
+                            $path_destino=$path_destino.$img_usuario;
+                            $f=File::move($path, $path_destino);
+                            $emp['img_usuario']=$img_usuario;
+                        } else {
+                        $emp['img_usuario']=null;
+                        }
+                    } catch (Exception $exception) {
 
-                        //Al fina, una vez insertado el usuario se saca el ID que le ha tocado para ponerlo en el mensaje ed salida
-                        $id=0;  //Esto solo es para que no falle ahora, luego se quita
-
-                        //savebitacora("Creado usuario en importacion " . $id . " " . $emp->name);
-                        $nombres_usuarios .= "[".$id."] " . $emp->name . "<br>";
-
-                        try {
-
-                            $path = public_path().'/uploads/import/'.Auth::user()->id_cliente.'/'.$emp->img_usuario;
-                            if (File::exists($path)) {
-                               $path = public_path().'/uploads/import/'.Auth::user()->id_cliente.'/';
-                               $img_usuario = uniqid().rand(000000,999999).'.'.$file->getClientOriginalExtension();
-                               $file->move($path,$img_usuario);
-                           }
-
-                       } catch (Exception $exception) {
-
-                           // flash('ERROR: Ocurrio un error creando el usuario '.$request->name.' '.$exception->getMessage())->error();
-                           // return back()->withInput();
-                       }
-
-                        users::create($emp->all());
                     }
-
-                    DB::commit();
-                    //Borramos el excel y la carpeta de importacion
-                    File::deleteDirectory($directorio);
-
-                    return [
-                        'title' => 'Importación de usuarios finalizada con exito',
-                        'message' => $cuenta_usuarios . " empleados importados correctamente:<br>" . $nombres_usuarios . "<br>" . $mensajes_adicionales,
-                        'tipo' => 'ok'
-                    ];
-                } catch (Exception $e){
-                    DB::rollback();
-                    savebitacora("Error usuario en importación ".$emp->name." " . $e->getMessage(), 'import_usuarios','OK');
-                    return [
-                        'title' => 'Error comprobando los datos de usuarios',
-                        'message' => "Error usuario en importación " . $emp->name . " " . $e->getMessage(),
-                        'tipo' => 'error'
-                    ];
+                    //Insertamos el usuario
+                    users::create($emp->all());
                 }
 
+                DB::commit();
+                //Borramos el excel y la carpeta de importacion
+                File::deleteDirectory($directorio);
+                savebitacora($cuenta_usuarios . " empleados importados correctamente:<br>" . $nombres_usuarios . "<br>" . $mensajes_adicionales, 'import_usuarios','OK');
+                return [
+                    'title' => 'Importación de usuarios finalizada con exito',
+                    'message' => $cuenta_usuarios . " empleados importados correctamente:<br>" . $nombres_usuarios . "<br>" . $mensajes_adicionales,
+                    'tipo' => 'ok'
+                ];
+            } catch (Exception $e){
+                DB::rollback();
+                savebitacora("Error usuario en importación ".$emp->name." " . $e->getMessage(), 'import_usuarios','OK');
+                return [
+                    'title' => 'Error comprobando los datos de usuarios',
+                    'message' => "Error usuario en importación " . $emp->name . " " . $e->getMessage(),
+                    'tipo' => 'error'
+                ];
+            }
         }
 
         return;

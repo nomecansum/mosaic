@@ -13,3 +13,4 @@ yarn-error.log
 public/uploads/import/1594046381982unnamed.jpg
 public/uploads/
 .vscode/settings.json
+*.jpg

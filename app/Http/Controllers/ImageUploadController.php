@@ -100,7 +100,7 @@ class ImageUploadController extends Controller
                 for ($i = 2; $i < ($cuenta_usuarios+2); $i++)
                 {
                     $emp = $this->fila_to_object($spreadsheet,$i);
-                    $nombres_usuarios .= "[".$id."] " . $emp->name . "<br>";
+                    
                     //Mover la imagen a img/users si existe
                     try {
                         $path = public_path().'/uploads/import/'.Auth::user()->id_cliente.'/'.$emp->img_usuario;
@@ -119,6 +119,7 @@ class ImageUploadController extends Controller
                     }
                     //Insertamos el usuario
                     users::create($emp->all());
+                    $nombres_usuarios .= $emp->name . "<br>";
                 }
 
                 DB::commit();

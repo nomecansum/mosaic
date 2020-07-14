@@ -15,7 +15,7 @@ function getProfilePic()
     return url('default.png');
 }
 
-function savebitacora($des_bitacora,$seccion,$tipo)
+function savebitacora($des_bitacora,$user,$seccion,$tipo)
 {
    if(isset(Auth::user()->name)){
        $user=Auth::user()->name;

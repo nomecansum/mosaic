@@ -200,7 +200,13 @@
 					                                    <div class="col-lg-9 col-lg-offset-2">
 					                                        <div class="checkbox">
 					                                            <input id="demo-checkbox-1" class="magic-checkbox" type="checkbox" name="acceptTerms">
-					                                            <label for="demo-checkbox-1"> Accept the terms and policies</label>
+                                                                <label for="demo-checkbox-1"> Accept the terms and policies</label>
+
+                                                                <form method="post" action="{{url('image/upload/store')}}" enctype="multipart/form-data"
+                                                                class="dropzone" id="dropzone">
+                                                                @csrf
+                                                        </form>
+
 					                                        </div>
 					                                    </div>
 					                                </div>
@@ -299,6 +305,44 @@ window.Laravel = {!! json_encode([
            return false;
         }
 };
+</script>
+
+<script>
+
+$(function(){
+
+    $.ajaxSetup({
+         headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+});
+
+	$('#btn-form').click(function(event) {
+		event.preventDefault();
+
+		var formId = '#myForm';
+
+		$.ajax({
+			url: $(formId).attr('action'),
+			type: $(formId).attr('method'),
+			data: $(formId).serialize(),
+			dataType: 'html',
+			success: function(result){
+				if ($(formId).find("input:first-child").attr('value') == 'PUT') {
+					var $jsonObject = jQuery.parseJSON(result);
+	                                $(location).attr('href',$jsonObject.url);
+				}
+				else{
+					$(formId)[0].reset();
+					console.log('Ok');
+				}
+			},
+			error: function(){
+				console.log('Error');
+			}
+		});
+	});
+
+});
+
 </script>
 
 

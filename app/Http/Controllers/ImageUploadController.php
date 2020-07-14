@@ -167,7 +167,7 @@ class ImageUploadController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules,[]);
         if($validator->fails()) {
-            $mensaje_error = implode("<br>",$validator->messages()->all());
+            $mensaje_error = implode("<br>",$validator->errors()->all());
             return $mensaje_error;
         }else return true;
 

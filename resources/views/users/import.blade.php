@@ -200,13 +200,7 @@
 					                                    <div class="col-lg-9 col-lg-offset-2">
 					                                        <div class="checkbox">
 					                                            <input id="demo-checkbox-1" class="magic-checkbox" type="checkbox" name="acceptTerms">
-                                                                <label for="demo-checkbox-1"> Accept the terms and policies</label>
-
-                                                                <form method="post" action="{{url('image/upload/store')}}" enctype="multipart/form-data"
-                                                                class="dropzone" id="dropzone">
-                                                                @csrf
-                                                        </form>
-
+					                                            <label for="demo-checkbox-1"> Accept the terms and policies</label>
 					                                        </div>
 					                                    </div>
 					                                </div>
@@ -297,55 +291,23 @@ window.Laravel = {!! json_encode([
         },
 
         success: function(file, response)
-        {
+            {
             console.log(response);
-        },
-        error: function(file, response)
-        {
-           return false;
-        }
+            if(response.tipo=='ok'){
+            $('#demo-main-tab4').html(response.message);
+            $('.next').click();
+            } else {
+            toast_error(response.title,response.message);
+            }
+            },
+            error: function(file, response)
+            {
+            toast_error(response.title,response.message)
+            return false;
+            }
 };
-</script>
-
-<script>
-
-$(function(){
-
-    $.ajaxSetup({
-         headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-});
-
-	$('#btn-form').click(function(event) {
-		event.preventDefault();
-
-		var formId = '#myForm';
-
-		$.ajax({
-			url: $(formId).attr('action'),
-			type: $(formId).attr('method'),
-			data: $(formId).serialize(),
-			dataType: 'html',
-			success: function(result){
-				if ($(formId).find("input:first-child").attr('value') == 'PUT') {
-					var $jsonObject = jQuery.parseJSON(result);
-	                                $(location).attr('href',$jsonObject.url);
-				}
-				else{
-					$(formId)[0].reset();
-					console.log('Ok');
-				}
-			},
-			error: function(){
-				console.log('Error');
-			}
-		});
-	});
-
-});
 
 </script>
-
-
 
 @endsection
 

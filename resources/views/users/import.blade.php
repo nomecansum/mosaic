@@ -5,6 +5,7 @@
 
 @section('styles')
 
+<style>#demo-main-tab4{font-size: x-large}</style>
 
 <meta name="_token" content="{{csrf_token()}}" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -32,7 +33,7 @@
 
 					<div class="panel">
 					    <div class="eq-height clearfix">
-					        <div class="col-md-4 eq-box-md text-center box-vmiddle-wrap bord-hor">
+					        {{-- <div class="col-md-4 eq-box-md text-center box-vmiddle-wrap bord-hor">
 
 					            <!-- Simple Promotion Widget -->
 					            <!--===================================================-->
@@ -47,7 +48,7 @@
 					            </div>
 					            <!--===================================================-->
 
-					        </div>
+					        </div> --}}
 					        <div class="col-md-8 eq-box-md eq-no-panel">
 
 					            <!-- Main Form Wizard -->
@@ -101,22 +102,9 @@
 					                            <div id="demo-main-tab1" class="tab-pane">
 
                                                     <h4>Descarge la plantilla EXCEL con los datos especificos de su empresa.</h4>
-                                                        @if(isAdmin() || count(clientes())>1)
-                                                            Seleccione la empresa<br><br>
-                                                            <select required class="" id="id_cliente" name="id_cliente" palceholder="Seleccione la empresa">
-                                                                <option selected value=""></option>
-                                                                @foreach (@\DB::table('clientes')->orderby('nom_cliente')->get() as $c_)
-                                                                    <option value="{{$c_->id_cliente}}">{{$c_->nom_cliente}}</option>
-                                                                @endforeach
-                                                            </select>
 
-                                                        @else
-                                                            <input type="hidden" id="id_cliente" name="id_cliente" value="{{ Auth::user()->id_cliente }}"
-                                                        @endif
-
-                                                        <br>
                                                         <div class="text-center">
-                                                            <a class="link_excel hover-this" href="javascript:void(0)" id="link_descarga" @if(isAdmin() || count(clientes())>1)style="display: none"@endif>
+                                                            <a class="link_excel hover-this" href="javascript:void(0)" id="link_descarga">
                                                                 <img src="{{ url('plantillas/logo_excel.png') }}">
                                                                 <span><h2>
                                                                     <a href="{{url('/plantillas/fichero_plantilla.xlsx')}}">Descargar plantilla</a>
@@ -134,34 +122,30 @@
 
                                                     <h4>Rellene la plantilla EXCEL con los datos de sus usuarios.</h4>
 
-                                                    <h4>Hay ciertos campos que son obligatorios, debe tener en cuenta de que si alguno de dichos campos no estan rellenos, se rechazará el la plantilla durante el procesado.</h4>
-                                                    <h4 class="font-bold">Campos obligatorios</h4>
+                                                    <h4>Hay ciertos campos que son obligatorios, debe tener en cuenta de que si alguno de dichos campos no estan rellenos, se rechazará la plantilla durante el procesado.</h4>
+                                                    {{-- <h4 class="font-bold">Campos obligatorios</h4> --}}
                                                     <div class="row">
-                                                        <div class="col-md-3">
+                                                        {{-- <div class="col-md-3">
                                                             <ul>
                                                                 <li>Nombre</li>
                                                                 <li>Apeliidos</li>
                                                                 <li>Situacion</li>
                                                                 <li>e-mail</li>
                                                             </ul>
-                                                        </div>
-                                                        <div class="col-md-3">
+                                                        </div> --}}
+                                                        {{-- <div class="col-md-3">
                                                             <ul>
                                                                 <li>Estado civil</li>
                                                                 <li>Sexo</li>
                                                                 <li>Fecha de nacimiento</li>
                                                                 <li>Nivel de estudios</li>
                                                             </ul>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="col-md-6">
-                                                            <img src="{{ url('imgs/ejemplo_excel.png') }}">
+                                                            <img src="{{ url('images/ejemplo_excel.png') }}">
                                                         </div>
                                                     </div>
-                                                    <h4>Para estos dos campos, si no indica valor, se asignará el primero disponible por defecto</h4>
-                                                    <ul>
-                                                        <li>Centro</li>
-                                                        <li>Departamento</li>
-                                                    </ul>
+
                                                     <h4>Una vez rellenada la plantilla pulse "Siguiente"</h4>
 
 					                            </div>
@@ -170,17 +154,17 @@
 					                            <div id="demo-main-tab3" class="tab-pane">
 
                                                         <h4>Ahora arrastre los ficheros que desea subir: imagenes de usuarios y la plantilla de excel rellenada.<br><br></h4>
-                                                        <i class="fa fas fa-info-circle"></i>NOTA: Las fotos de usuarios deben tener el mismo nombre que haya puesto en la plantilla, si no, se descartarán.<br><br>
-                                                        <h4>Es importante que <b>suba la plantilla en ultimo lugar</b>, pues al subir la plantilla se iniciará el procesado de la informacion y una vez subida ya no se podrán subir más ficheros con fotos.</h4>
+                                                        <i class="fa fas fa-info-circle fa-3x"></i><h4><b>NOTA: Las fotos de usuarios deben tener el mismo nombre que haya puesto en la plantilla, si no, se descartarán.</b></h4><br><br>
+                                                        <h4><b>Es importante que suba primero la foto y en ultimo lugar la plantilla,</b> pues al subir la plantilla se iniciará el procesado de la informacion y una vez subida ya no se podrán subir más ficheros con fotos.</h4>
                                                         <br><br>
-                                                        <div class="btn-group" data-toggle="buttons">
+                                                        {{-- <div class="btn-group" data-toggle="buttons">
                                                             <label class="btn btn-warning">
                                                                 <div class="custom-control custom-checkbox mr-sm-2">
                                                                     <input type="checkbox" class="custom-control-input" id="enviar_email" name="enviar_email" checked>
                                                                     <label class="custom-control-label" for="checkbox0">Marque si desea enviar email de bienvenida a los usuarios que se añadan</label>
                                                                 </div>
                                                             </label>
-                                                        </div>
+                                                        </div> --}}
 
                                                         <form method="post" action="{{url('image/upload/store')}}" enctype="multipart/form-data"
                                                             class="dropzone" id="dropzone">
@@ -190,20 +174,7 @@
 
 					                            <!--Fourth tab-->
 					                            <div id="demo-main-tab4" class="tab-pane">
-					                                <div class="form-group">
-					                                    <label class="col-lg-2 control-label">Bio</label>
-					                                    <div class="col-lg-9">
-					                                        <textarea placeholder="Tell us your story..." rows="4" name="bio" class="form-control"></textarea>
-					                                    </div>
-					                                </div>
-					                                <div class="form-group">
-					                                    <div class="col-lg-9 col-lg-offset-2">
-					                                        <div class="checkbox">
-					                                            <input id="demo-checkbox-1" class="magic-checkbox" type="checkbox" name="acceptTerms">
-					                                            <label for="demo-checkbox-1"> Accept the terms and policies</label>
-					                                        </div>
-					                                    </div>
-					                                </div>
+
 					                            </div>
 					                        </div>
 					                    </div>
@@ -211,8 +182,8 @@
 
 					                    <!--Footer buttons-->
 					                    <div class="pull-right pad-rgt mar-btm">
-					                        <button type="button" class="previous btn btn-primary">Previous</button>
-					                        <button type="button" class="next btn btn-primary">Next</button>
+					                        <button type="button" class="previous btn btn-primary">Anterior</button>
+					                        <button type="button" class="next btn btn-primary">Siguiente</button>
 					                        <button type="button" class="finish btn btn-success" disabled>Finish</button>
 					                    </div>
 

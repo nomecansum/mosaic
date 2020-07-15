@@ -5,7 +5,11 @@
 
 @section('styles')
 
-<style>#demo-main-tab4{font-size: x-large}</style>
+<style>#demo-main-tab4{font-size: x-large; color: green; font-style: italic}</style>
+
+<style>.fa-check {color: green}</style>
+
+<style>.fa-info-circle {color:rgb(221, 221, 15)}</style>
 
 <meta name="_token" content="{{csrf_token()}}" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -184,7 +188,7 @@
 					                    <div class="pull-right pad-rgt mar-btm">
 					                        <button type="button" class="previous btn btn-primary">Anterior</button>
 					                        <button type="button" class="next btn btn-primary">Siguiente</button>
-					                        <button type="button" class="finish btn btn-success" disabled>Finish</button>
+					                        <button type="button" class="finish btn btn-success" disabled>Fin</button>
 					                    </div>
 
 
@@ -234,7 +238,7 @@ window.Laravel = {!! json_encode([
 
     Dropzone.options.dropzone =
      {
-        maxFilesize: 12,
+        maxFilesize: 32,
 
         acceptedFiles: 'image/*,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
 
@@ -265,8 +269,14 @@ window.Laravel = {!! json_encode([
             {
             console.log(response);
             if(response.tipo=='ok'){
-            $('#demo-main-tab4').html(response.message);
+
+            $('#demo-main-tab4').html(response.message).before("<i class='fa fa-check fa-5x'></i>");
+
+            // $('#demo-main-tab4').html(response.message);
+
             $('.next').click();
+
+
             } else {
             toast_error(response.title,response.message);
             }

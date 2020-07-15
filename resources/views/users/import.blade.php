@@ -119,6 +119,12 @@
                                                         <h4>Recuerde que si altera la parametrización de su empresa (Departamentos/Centros/Horarios/Ciclos) deberá volver a descargarla para asegurar que tiene los datos actualizados</h4>
                                                         <br>
 
+                                                        <div class="pull-right pad-rgt mar-btm">
+
+                                                            <button type="button" class="next btn btn-primary">Siguiente</button>
+
+                                                        </div>
+
 					                            </div>
 
 					                            <!--Second tab-->
@@ -152,6 +158,12 @@
 
                                                     <h4>Una vez rellenada la plantilla pulse "Siguiente"</h4>
 
+                                                    <div class="pull-right pad-rgt mar-btm">
+                                                        <button type="button" class="previous btn btn-primary">Anterior</button>
+                                                        <button type="button" class="next btn btn-primary">Siguiente</button>
+
+                                                    </div>
+
 					                            </div>
 
 					                            <!--Third tab-->
@@ -174,22 +186,37 @@
                                                             class="dropzone" id="dropzone">
                                                             @csrf
                                                         </form>
+                                                        <br><br>
+                                                        <div class="pull-right pad-rgt mar-btm">
+                                                            <button type="button" class="previous btn btn-primary">Anterior</button>
+
+
+                                                        </div>
+
 					                            </div>
 
 					                            <!--Fourth tab-->
 					                            <div id="demo-main-tab4" class="tab-pane">
+
+                                                    <div class="pull-right pad-rgt mar-btm">
+
+
+                                                    </div>
 
 					                            </div>
 					                        </div>
 					                    </div>
 
 
-					                    <!--Footer buttons-->
-					                    <div class="pull-right pad-rgt mar-btm">
+                                        <!--Footer buttons-->
+
+                                        <button type="button" class="finish btn btn-success" style="margin-bottom: 30px" disabled>Fin</button>
+
+					                    {{-- <div class="pull-right pad-rgt mar-btm">
 					                        <button type="button" class="previous btn btn-primary">Anterior</button>
 					                        <button type="button" class="next btn btn-primary">Siguiente</button>
 					                        <button type="button" class="finish btn btn-success" disabled>Fin</button>
-					                    </div>
+					                    </div> --}}
 
 
                                 </div>

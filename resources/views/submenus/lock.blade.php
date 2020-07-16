@@ -40,7 +40,7 @@
 		                </div>
 		            </form>
 		            <div class="pad-ver">
-		                <a href="{{ url('/') }}" class="btn-link mar-rgt text-bold">Utilizar una cuenta distinta</a>
+		                <a href="{{ url('/logout') }}" class="btn-link mar-rgt text-bold">Utilizar una cuenta distinta</a>
 		            </div>
 		        </div>
 		    </div>

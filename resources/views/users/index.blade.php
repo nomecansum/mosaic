@@ -46,7 +46,7 @@
 
         @if(count($usersObjects) == 0)
             <div class="panel-body text-center">
-                <h4>No Users Available.</h4>
+                <h4>No hay usuarios</h4>
             </div>
         @else
         <div class="panel-body panel-body-with-table">

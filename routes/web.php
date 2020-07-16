@@ -48,6 +48,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('image/upload/store','ImageUploadController@fileStore');
     Route::post('image/delete','ImageUploadController@fileDestroy');
 
+    Route::get('submenu/locker', 'SubmenuController@create')->name('index.locker');
+
 
 
     Route::get('/bitacoras', 'BitacorasController@index')->name('bitacoras.bitacora.index');

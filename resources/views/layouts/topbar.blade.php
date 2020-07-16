@@ -156,7 +156,7 @@
                         <a href="#"><span class="label label-success pull-right">New</span><i class="demo-pli-gear icon-lg icon-fw"></i> Settings</a>
                     </li>
                     <li>
-                        <a href="#"><i class="demo-pli-computer-secure icon-lg icon-fw"></i> Lock screen</a>
+                        <a href="{{ route('index.locker') }}"><i class="demo-pli-computer-secure icon-lg icon-fw"></i> Lock screen</a>
                     </li>
                     <li>
                         <a href="{{url('/logout')}}"><i class="demo-pli-unlock icon-lg icon-fw"></i> Logout</a>

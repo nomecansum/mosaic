@@ -37,17 +37,8 @@ class SubmenuController extends Controller
         return view('submenus.lock');
     }
 
-    /* function edit($id)
+    function settings()
     {
-        $users = users::findOrFail($id);
-
-        $Perfiles = niveles_acceso::all();
-
-        $clientescombo = Cliente::all();
-
-        $timezone = users::get('val_timezone');
-
-
-        return view('users.edit', compact('users','Perfiles','clientescombo', 'timezone'));
-    } */
+        return view('submenus.settings');
+    }
 }

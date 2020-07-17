@@ -1,6 +1,5 @@
 
 
-
 <!--OPTIONAL : ADD YOUR LOGO TO THE NAVIGATION-->
 <!--It will only appear on small screen devices.-->
 <!--================================
@@ -34,7 +33,7 @@
                     </div>
                     <a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
                         <span class="pull-right dropdown-toggle">
-                            <i class="dropdown-caret"></i>
+                            {{-- <i class="dropdown-caret"></i> --}}
                         </span>
                         <p class="mnp-name">{{ Auth::user()->name }}</p>
                         <span class="mnp-desc">{{Auth::user()->email}}</span>
@@ -44,10 +43,12 @@
                     <a href={{ route('users.users.edit', Auth::user()->id ) }} class="list-group-item">
                         <i class="demo-pli-male icon-lg icon-fw"></i> View Profile
                     </a>
-                    <a href="#" class="list-group-item">
+
+                    <a href="{{ route('index.settings') }}" class="list-group-item">
                         <i class="demo-pli-gear icon-lg icon-fw"></i> Settings
                     </a>
-                    
+
+
                     <a href="{{url('/logout')}}" class="list-group-item">
                         <i class="demo-pli-unlock icon-lg icon-fw"></i> Logout
                     </a>

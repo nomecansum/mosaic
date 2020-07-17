@@ -50,7 +50,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 
     Route::get('submenu/locker', 'SubmenuController@locker')->name('index.locker');
-    // Route::get('submenu/edit', 'SubmenuController@edit')->name('index.edit');
+    Route::get('submenu/settings', 'SubmenuController@settings')->name('index.settings');
 
 
     Route::get('/bitacoras', 'BitacorasController@index')->name('bitacoras.bitacora.index');

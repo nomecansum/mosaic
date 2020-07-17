@@ -153,7 +153,7 @@
                         <a href="#"><span class="badge badge-danger pull-right">9</span><i class="demo-pli-mail icon-lg icon-fw"></i> Messages</a>
                     </li> --}}
                     <li>
-                        <a href="#"><span class="label label-success pull-right">New</span><i class="demo-pli-gear icon-lg icon-fw"></i> Settings</a>
+                        <a href="{{ route('index.settings') }}"><span class="label label-success pull-right">New</span><i class="demo-pli-gear icon-lg icon-fw"></i> Settings</a>
                     </li>
                     <li>
                         <a href="{{ route('index.locker') }}"><i class="demo-pli-computer-secure icon-lg icon-fw"></i> Lock screen</a>

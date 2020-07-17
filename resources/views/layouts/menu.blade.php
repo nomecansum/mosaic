@@ -47,9 +47,7 @@
                     <a href="#" class="list-group-item">
                         <i class="demo-pli-gear icon-lg icon-fw"></i> Settings
                     </a>
-                    <a href="#" class="list-group-item">
-                        <i class="demo-pli-information icon-lg icon-fw"></i> Help
-                    </a>
+                    
                     <a href="{{url('/logout')}}" class="list-group-item">
                         <i class="demo-pli-unlock icon-lg icon-fw"></i> Logout
                     </a>

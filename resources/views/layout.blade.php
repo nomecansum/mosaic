@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="{{ URL('/css/materialdesignicons.min.css') }}">
     {{--  FontAwesome  --}}
     <link href="{{ url('/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/5f5af38cfc.js" crossorigin="anonymous"></script>
 
     <!--Mosaic custom CSS [ REQUIRED ]-->
     <link href="{{ url('/css/mosaic.css') }}" rel="stylesheet">

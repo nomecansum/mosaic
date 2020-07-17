@@ -41,7 +41,7 @@
                     </a>
                 </div>
                 <div id="profile-nav" class="collapse list-group bg-trans">
-                    <a href="#" class="list-group-item">
+                    <a href={{ route('users.users.edit', Auth::user()->id ) }} class="list-group-item">
                         <i class="demo-pli-male icon-lg icon-fw"></i> View Profile
                     </a>
                     <a href="#" class="list-group-item">
